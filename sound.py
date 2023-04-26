@@ -1,6 +1,5 @@
 import librosa
 from spleeter.separator import Separator
-import pickle
 
 
 class SoundFormInfo:
@@ -18,13 +17,16 @@ def convert():
     pass
 def inputfile(directory):
     y, sr = librosa.load(directory)
-    filename=_filename_fetch(directory)
-    song = SoundFormInfo(filename, y, sr)
-    return song
+    #filename=_filename_fetch(directory)
+    song = SoundFormInfo(None, y, sr)
+    _seperate(directory)
+    return
 
 
 def _seperate(directory):
     separator = Separator('spleeter:2stems')
-    separator.separate_to_file(directory, './temp')
+    separator.separate_to_file(directory, '.\\temp')
+    return
 
-    pass
+if __name__=='__main__':
+    inputfile('.\\THORNAPPLE-Blue_Spring.mp3')
