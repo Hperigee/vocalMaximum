@@ -3,6 +3,7 @@ import os
 import analysis
 
 from spleeter.separator import Separator
+from pydub import AudioSegment
 
 
 class SoundFormInfo:
@@ -17,8 +18,10 @@ class SoundFormInfo:
         self.health = None  # 체력 지수
 
 
-def _converter():
-    pass
+def _wav_to_mp3(filename):
+    directory = ".\\temp\\" + filename + '\\aaaaaaaaa.wav'
+    origin = AudioSegment.from_wav(directory)
+    origin.export(".\\additionalData\\" + filename + "\\" + filename + '.mp3', format='mp3')
 
 
 def _filename_fetch(directory):
@@ -43,7 +46,7 @@ def input_file(directory):
     _separate(directory)  # 음원 분리
 
     filename = _filename_fetch(directory)
-    analysis.analysis(filename)  # 보컬 정보
+    analysis.analysis(filename)  # 보컬 정보 추출
 
     _remove_vocal_file(filename)
     return
