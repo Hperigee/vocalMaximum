@@ -11,8 +11,10 @@ class SoundFormInfo:
     def analysis(self):
         pass
 
-def _filename_fetch():
-    pass
+def _filename_fetch(directory):
+    assert isinstance(directory, str)
+    ind = directory.rfind('\\')
+    return directory[ind + 1:]
 def convert():
     pass
 def inputfile(directory):
