@@ -3,3 +3,4 @@ import spleeter
 import pickle
 
 def load():
+    pass
