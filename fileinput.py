@@ -27,7 +27,7 @@ def _filename_fetch(directory):
     return directory[ind + 1:-4]
 
 
-def _seperate(directory):
+def _separate(directory):
     separator = Separator('spleeter:2stems')
     separator.separate_to_file(directory, '.\\temp')
     return
@@ -39,8 +39,8 @@ def _remove_vocal_file(filename):
     return
 
 
-def inputfile(directory):
-    _seperate(directory)  # 음원 분리
+def input_file(directory):
+    _separate(directory)  # 음원 분리
 
     filename = _filename_fetch(directory)
     analysis.analysis(filename)  # 보컬 정보
@@ -50,4 +50,4 @@ def inputfile(directory):
 
 
 if __name__ == '__main__':
-    safd = inputfile('.\\THORNAPPLE-Blue_Spring.mp3')
+    safd = input_file('.\\THORNAPPLE-Blue_Spring.mp3')
