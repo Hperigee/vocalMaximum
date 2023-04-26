@@ -1,4 +1,4 @@
-import librosa as lrs
+import librosa
 
 filename = librosa.example('nutcracker')
 
