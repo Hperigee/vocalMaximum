@@ -19,38 +19,47 @@ class SoundFormInfo:
 
 
 def _wav_to_mp3(filename):
-    directory = ".\\temp\\" + filename + '\\aaaaaaaaa.wav'
+    directory = "./temp/" + filename + '/accompaniment.wav'
     origin = AudioSegment.from_wav(directory)
-    origin.export(".\\additionalData\\" + filename + "\\" + filename + '.mp3', format='mp3')
+    os.mkdir('./additionalData/' + filename)
+    new_file = './additionalData/' + filename + '/' + filename + '.mp3'
+    origin.export(new_file, format='mp3')
 
 
 def _filename_fetch(directory):
     assert isinstance(directory, str)
-    ind = directory.rfind('\\')
+    ind = directory.rfind('/')
     return directory[ind + 1:-4]
 
 
 def _separate(directory):
     separator = Separator('spleeter:2stems')
-    separator.separate_to_file(directory, '.\\temp')
+    separator.separate_to_file(directory, './temp')
     return
 
 
 def _remove_vocal_file(filename):
-    remove_directory = '.\\temp\\' + filename + '\\' + 'vocals.wav'
+    remove_directory = './temp/' + filename + '/' + 'vocals.wav'
     os.remove(remove_directory)
     return
 
 
 def input_file(directory):
-    _separate(directory)  # 음원 분리
-
     filename = _filename_fetch(directory)
+
+    _separate(directory)  # 음원 분리
+    _wav_to_mp3(filename)   # MR은 따로 저장
+
     analysis.analysis(filename)  # 보컬 정보 추출
 
-    _remove_vocal_file(filename)
+    _remove_vocal_file(filename)  # 보컬 음원 삭제
     return
 
 
 if __name__ == '__main__':
-    safd = input_file('.\\THORNAPPLE-Blue_Spring.mp3')
+    import time
+
+    stt = time.time()
+    input_file('./THORNAPPLE-Blue_Spring.mp3')
+    d = time.time() - stt
+    print(d, 'seconds')
