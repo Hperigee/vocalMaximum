@@ -4,6 +4,7 @@ import analysis
 
 from spleeter.separator import Separator
 from pydub import AudioSegment
+from shutil import rmtree
 
 
 class SoundFormInfo:
@@ -24,6 +25,7 @@ def _wav_to_mp3(filename):
     os.mkdir('./additionalData/' + filename)
     new_file = './additionalData/' + filename + '/' + filename + '.mp3'
     origin.export(new_file, format='mp3')
+    os.remove(directory)
 
 
 def _filename_fetch(directory):
@@ -38,21 +40,21 @@ def _separate(directory):
     return
 
 
-def _remove_vocal_file(filename):
-    remove_directory = './temp/' + filename + '/' + 'vocals.wav'
-    os.remove(remove_directory)
+def _remove_tmp(filename):
+    remove_directory = './temp/' + filename
+    rmtree(remove_directory)
     return
 
 
-def input_file(directory):
+def input_file(directory, max_hz):
     filename = _filename_fetch(directory)
 
     _separate(directory)  # 음원 분리
-    _wav_to_mp3(filename)   # MR은 따로 저장
+    _wav_to_mp3(filename)   # MR은 따로 저장 / wav 삭제
 
-    analysis.analysis(filename)  # 보컬 정보 추출
+    analysis.file_analysis(filename, max_hz)  # 보컬 정보 추출
 
-    _remove_vocal_file(filename)  # 보컬 음원 삭제
+    #_remove_tmp(filename)  # tmp 삭제
     return
 
 
@@ -60,6 +62,6 @@ if __name__ == '__main__':
     import time
 
     stt = time.time()
-    input_file('./THORNAPPLE-Blue_Spring.mp3')
-    d = time.time() - stt
-    print(d, 'seconds')
+    input_file('.\\닐로  지나오다.mp3', 1319)
+    stt = time.time() - stt
+    print(stt, 'seconds')
