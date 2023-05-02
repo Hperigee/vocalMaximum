@@ -21,25 +21,38 @@ def _score_func(L):
     return 123
 
 
-def _find_peek(S, frame, max_ind):  # return list of peek frequency and dB weight
+def _find_peek(S, frame):  # return list of peek frequency and dB weight
 
-    L = []
+    threshold = 123  # constant
+
     freq_list = librosa.fft_frequencies()
-    R = [0] * 200
+    scores = [0] * 200
     para_list = []
 
     for i in range(6, 206):
-        para_list = []
-        
-        R[i-6] = _score_func(1234567890)
 
-    return L  # [] or [[...], [...], [...]]
+        for j in range(i, 206, i):
+            para_list.append(S[j][frame])
+        
+        scores[i-6] = _score_func(para_list)
+        para_list = []
+
+    bass_ind = -1
+    mx = 0
+    for i in range(200):
+        if scores[i] > mx: bass_ind = i
+
+    if mx > threshold: return [[freq_list[bass_ind], S[bass_ind][frame]],
+                               [freq_list[2 * bass_ind], S[2 * bass_ind][frame]],
+                               [freq_list[3 * bass_ind], S[3 * bass_ind][frame]]]
+    return []
+    # [] or [[hz, dB], [hz, dB], [hz, dB]]
 
 
 def _export_melody(vocal_feature):
     L = []  # L[frame] -> hz  or  -1
     for i in vocal_feature:
-        if len(i) != 0: L.append(i[0][0])
+        if len(i) != 0: L.append(i[1][0])
         else: L.append(-1)
     return L
 
@@ -60,17 +73,18 @@ def file_analysis(filename, max_hz):
     # spectrogram_db[level][frame]
     # 1 frame == 512 / sr=22050 sec
     # use librosa.fft_frequencies() to learn
-
+    '''
     freq_list = librosa.fft_frequencies()
     max_ind = 222
     for i in range(len(freq_list)):
         if freq_list[i] > max_hz:
             max_ind = i
             break
+    '''
 
     vocal_feature = []
     for i in range(len(spectrogram_db[0])):
-        vocal_feature.append(_find_peek(spectrogram_db, i, max_ind))
+        vocal_feature.append(_find_peek(spectrogram_db, i))
     # now vocal_feature has 3 harmonics hz and dB of vocal with format: vocal_feature[frame][1~3rd harmonics]
 
     melody = _export_melody(vocal_feature)
