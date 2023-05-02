@@ -53,4 +53,4 @@ def input_file(directory):
 
 
 if __name__ == '__main__':
-    safd = input_file('.\\THORNAPPLE-Blue_Spring.mp3')
+    safd = input_file('')
