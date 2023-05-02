@@ -65,3 +65,4 @@ if __name__ == '__main__':
     input_file('.\\닐로  지나오다.mp3', 1319)
     stt = time.time() - stt
     print(stt, 'seconds')
+
