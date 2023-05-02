@@ -17,56 +17,21 @@ def _plt_show(spectrogram_db):
         plt.show()
 
 
+def _score_func(L):
+    return 123
+
+
 def _find_peek(S, frame, max_ind):  # return list of peek frequency and dB weight
-    # sorry for fckin' unstructured code
 
     L = []
-    weight, mid_freq, ind = -1, -1, -1
     freq_list = librosa.fft_frequencies()
+    R = [0] * 200
+    para_list = []
 
-    for i in range(min(210, max_ind)):
-        if S[i][frame] > -40.0 and S[i][frame] > S[i + 1][frame]:
-            weight = S[i - 3][frame] + S[i - 2][frame] + S[i - 1][frame] + S[i][frame] + S[i + 1][frame] \
-                     + S[i + 2][frame] + 80.0 * 6
-            mid_freq = (freq_list[i - 3] * (S[i - 3][frame] + 80.0) + freq_list[i - 2] * (S[i - 2][frame] + 80.0)
-                        + freq_list[i - 1] * (S[i - 1][frame] + 80.0) + freq_list[i] * (S[i][frame] + 80.0)
-                        + freq_list[i + 1] * (S[i + 1][frame] + 80.0) + freq_list[i + 2] * (
-                                    S[i + 2][frame] + 80.0)) / weight
-            L.append([mid_freq, weight])
-            ind = i
-            break
-    print(ind)
-    ind = ind * 2 - 10 if ind != -1 else False
-
-    if ind is not False:
-        flag = True
-        for i in range(ind, ind + 20):
-            if S[i][frame] > -50.0 and S[i][frame] > S[i + 1][frame]:
-                weight = S[i - 3][frame] + S[i - 2][frame] + S[i - 1][frame] + S[i][frame] + S[i + 1][frame] \
-                         + S[i + 2][frame] + 80.0 * 6
-                mid_freq = (freq_list[i - 3] * (S[i - 3][frame] + 80.0) + freq_list[i - 2] * (S[i - 2][frame] + 80.0)
-                            + freq_list[i - 1] * (S[i - 1][frame] + 80.0) + freq_list[i] * (S[i][frame] + 80.0)
-                            + freq_list[i + 1] * (S[i + 1][frame] + 80.0) + freq_list[i + 2] * (
-                                        S[i + 2][frame] + 80.0)) / weight
-                L.append([mid_freq, weight, 1])
-                flag = False
-                break
-        if flag: L.append([freq_list[ind + 10], 0])
-        flag = True
-        ind = (ind + 10) // 2 * 3 - 10 if ind != -1 else 0
-
-        for i in range(ind, ind + 20):
-            if S[i][frame] > -50.0 and S[i][frame] > S[i + 1][frame]:
-                weight = S[i - 3][frame] + S[i - 2][frame] + S[i - 1][frame] + S[i][frame] + S[i + 1][frame] \
-                         + S[i + 2][frame] + 80.0 * 6
-                mid_freq = (freq_list[i - 3] * (S[i - 3][frame] + 80.0) + freq_list[i - 2] * (S[i - 2][frame] + 80.0)
-                            + freq_list[i - 1] * (S[i - 1][frame] + 80.0) + freq_list[i] * (S[i][frame] + 80.0)
-                            + freq_list[i + 1] * (S[i + 1][frame] + 80.0) + freq_list[i + 2] * (
-                                        S[i + 2][frame] + 80.0)) / weight
-                L.append([mid_freq, weight, 2])
-                flag = False
-                break
-        if flag: L.append([freq_list[ind + 10], 0])
+    for i in range(6, 206):
+        para_list = []
+        
+        R[i-6] = _score_func(1234567890)
 
     return L  # [] or [[...], [...], [...]]
 
@@ -118,7 +83,7 @@ def file_analysis(filename, max_hz):
         pickle.dump(strength, f)
     del strength
 
-    #  _plt_show(spectrogram_db)
+    _plt_show(spectrogram_db)
 
-
-#file_analysis("THORNAPPLE-Blue_Spring", 1661)
+#print(librosa.fft_frequencies()[206])
+#file_analysis("Wild Flower 야생화", 6000)
