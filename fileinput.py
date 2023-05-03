@@ -46,13 +46,13 @@ def _remove_tmp(filename):
     return
 
 
-def input_file(directory, max_hz):
+def input_file(directory):
     filename = _filename_fetch(directory)
 
     _separate(directory)  # 음원 분리
     _wav_to_mp3(filename)   # MR은 따로 저장 / wav 삭제
 
-    analysis.file_analysis(filename, max_hz)  # 보컬 정보 추출
+    analysis.file_analysis(filename)  # 보컬 정보 추출
 
     #_remove_tmp(filename)  # tmp 삭제
     return
@@ -62,7 +62,7 @@ if __name__ == '__main__':
     import time
 
     stt = time.time()
-    input_file('.\\닐로  지나오다.mp3', 1319)
+    input_file('.\\Wild_Flower.mp3')
     stt = time.time() - stt
     print(stt, 'seconds')
 

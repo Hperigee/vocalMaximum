@@ -2,6 +2,7 @@ import librosa
 import librosa.display
 import numpy as np
 import pickle
+import time
 
 
 def _plt_show(spectrogram_db):
@@ -18,12 +19,12 @@ def _plt_show(spectrogram_db):
 
 
 def _score_func(L):
-    return 123
+    return sum(L) / len(L)
 
 
 def _find_peek(S, frame):  # return list of peek frequency and dB weight
 
-    threshold = 123  # constant
+    threshold = -70.0  # constant
 
     freq_list = librosa.fft_frequencies()
     scores = [0] * 200
@@ -31,18 +32,17 @@ def _find_peek(S, frame):  # return list of peek frequency and dB weight
 
     for i in range(6, 206):
 
-        for j in range(i, 206, i):
-            para_list.append(S[j][frame])
+        for j in range(i, 24 * i + 1, i):
+            if j < 1024: para_list += [S[j-1][frame], S[j][frame], S[j+2][frame]]
+            else: para_list += [-80.0]
         
         scores[i-6] = _score_func(para_list)
         para_list = []
 
-    bass_ind = -1
-    mx = 0
-    for i in range(200):
-        if scores[i] > mx: bass_ind = i
+    mx = max(scores)
+    bass_ind = scores.index(mx) + 6
 
-    if mx > threshold: return [[freq_list[bass_ind], S[bass_ind][frame]],
+    if mx > threshold and bass_ind: return [[freq_list[bass_ind], S[bass_ind][frame]],
                                [freq_list[2 * bass_ind], S[2 * bass_ind][frame]],
                                [freq_list[3 * bass_ind], S[3 * bass_ind][frame]]]
     return []
@@ -65,7 +65,7 @@ def _export_strength(vocal_feature):
     return L
 
 
-def file_analysis(filename, max_hz):
+def file_analysis(filename):
     song_directory = '.\\temp\\' + filename + '\\' + 'vocals.wav'
     raw_wave, sr = librosa.load(song_directory)
     spectrogram_db = librosa.stft(y=raw_wave)
@@ -97,7 +97,13 @@ def file_analysis(filename, max_hz):
         pickle.dump(strength, f)
     del strength
 
+    print(time.time()-delta)
+
     _plt_show(spectrogram_db)
 
-#print(librosa.fft_frequencies()[206])
-#file_analysis("Wild Flower 야생화", 6000)
+
+print('start run')
+delta = time.time()
+
+# print(len(librosa.fft_frequencies()))
+file_analysis("Wild_Flower")
