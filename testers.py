@@ -1,15 +1,18 @@
 import pickle
 import time
 from os import system
+import matplotlib.pyplot as plt
 
 if __name__ == '__main__':
     with open('additionalData/Wild_Flower\\mel.dat', 'rb') as f:
         s = pickle.load(f)
 
 
-    system('start C:\\Users\\829ho\\Documents\\GitHub\\vocalMaximum\\temp\\Wild_Flower\\vocals.wav')
-    stt = time.time()
+    system('start D:\\Document\\GitHub\\vocalMaximum\\temp\\Wild_Flower\\vocals.wav')
 
+    plt.plot(s)
+    plt.show()
 
+    stt=time.time()
     while True:
         print(s[int((time.time()-stt)*22050/512)])

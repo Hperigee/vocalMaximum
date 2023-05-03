@@ -3,7 +3,7 @@ import librosa.display
 import numpy as np
 import pickle
 import time
-
+import copy
 
 def _plt_show(spectrogram_db):
     if __name__ == '__main__':
@@ -19,12 +19,18 @@ def _plt_show(spectrogram_db):
 
 
 def _score_func(L):
-    return sum(L) / len(L)
+    n=len(L)
+    sum=0
+    k=1
+    for db in L:
+       sum+=(10**(int(db/10+8)))/(k**2)
+       k+=1
+    return sum*(n**2)
 
 
 def _find_peek(S, frame):  # return list of peek frequency and dB weight
 
-    threshold = -70.0  # constant
+    threshold = 0  # constant
 
     freq_list = librosa.fft_frequencies()
     scores = [0] * 200
@@ -33,7 +39,7 @@ def _find_peek(S, frame):  # return list of peek frequency and dB weight
     for i in range(6, 206):
 
         for j in range(i, 24 * i + 1, i):
-            if j < 1024: para_list += [S[j-1][frame], S[j][frame], S[j+2][frame]]
+            if j < 1024: para_list += [S[j][frame]]
             else: para_list += [-80.0]
         
         scores[i-6] = _score_func(para_list)
@@ -67,7 +73,8 @@ def _export_strength(vocal_feature):
 
 def file_analysis(filename):
     song_directory = '.\\temp\\' + filename + '\\' + 'vocals.wav'
-    raw_wave, sr = librosa.load(song_directory)
+    y, sr = librosa.load(song_directory)
+    raw_wave= librosa.resample(y, orig_sr=sr, target_sr=11025)
     spectrogram_db = librosa.stft(y=raw_wave)
     spectrogram_db = librosa.amplitude_to_db(np.abs(spectrogram_db), ref=np.max)
     # spectrogram_db[level][frame]
@@ -88,9 +95,20 @@ def file_analysis(filename):
     # now vocal_feature has 3 harmonics hz and dB of vocal with format: vocal_feature[frame][1~3rd harmonics]
 
     melody = _export_melody(vocal_feature)
+    '''
+    print(len(melody))
+    newmelody=copy.deepcopy(melody)
+    for i in range(len(melody)):
+        if melody[i]==-1:
+            for j in range(i,i+5):
+                if j<= len(melody)-1:
+                    newmelody[j]=-1
+    '''
+
     with open(".\\additionalData\\" + filename + "\\mel.dat", 'wb') as f:
         pickle.dump(melody, f)
     del melody
+    #del newmelody
 
     strength = _export_strength(vocal_feature)
     with open(".\\additionalData\\" + filename + "\\str.dat", 'wb') as f:
@@ -105,5 +123,5 @@ def file_analysis(filename):
 print('start run')
 delta = time.time()
 
-# print(len(librosa.fft_frequencies()))
+#print(len(librosa.fft_frequencies()))
 file_analysis("Wild_Flower")
