@@ -1,255 +1,113 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>VocalMaximize</class>
- <widget class="QMainWindow" name="VocalMaximize">
-  <property name="enabled">
-   <bool>true</bool>
-  </property>
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1050</width>
-    <height>1080</height>
+    <width>753</width>
+    <height>506</height>
    </rect>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>1050</width>
-    <height>1080</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>1050</width>
-    <height>1080</height>
-   </size>
-  </property>
-  <property name="font">
-   <font>
-    <family>Arial</family>
-   </font>
   </property>
   <property name="windowTitle">
    <string>VocalMaximize</string>
   </property>
-  <property name="windowIcon">
-   <iconset resource="Resources.qrc">
-    <normaloff>:/icon/logo.ico</normaloff>:/icon/logo.ico</iconset>
-  </property>
-  <property name="styleSheet">
-   <string notr="true">background-color: rgb(255, 255, 255)</string>
-  </property>
-  <property name="locale">
-   <locale language="Korean" country="SouthKorea"/>
-  </property>
-  <property name="iconSize">
-   <size>
-    <width>256</width>
-    <height>256</height>
-   </size>
-  </property>
-  <property name="documentMode">
-   <bool>false</bool>
-  </property>
-  <property name="tabShape">
-   <enum>QTabWidget::Rounded</enum>
-  </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>0</y>
-      <width>1006</width>
-      <height>1055</height>
-     </rect>
-    </property>
-    <layout class="QGridLayout" name="gridLayout_2">
-     <item row="9" column="0">
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <property name="sizeConstraint">
-        <enum>QLayout::SetFixedSize</enum>
-       </property>
-      </layout>
-     </item>
-     <item row="3" column="0">
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QFrame" name="frame">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <layout class="QVBoxLayout" name="sidebar">
          <item>
-          <widget class="QPushButton" name="pushButton_2">
-           <property name="minimumSize">
-            <size>
-             <width>200</width>
-             <height>100</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">#pushButton_2{
-color: white;
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(20, 20, 255, 255), stop:1 rgba(0, 0, 200, 255));
-	border-radius: 10px;
-font: 13pt &quot;Arial&quot;;
-}
-
-#pushButton_2:hover:!pressed{
-color: white;
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(50, 50, 255, 255), stop:1 rgba(30, 30, 200, 255));
-	border-radius: 10px;
-font: 13pt &quot;Arial&quot;;
-}
-#pushButton_2:hover:pressed{
-color: white;
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(20, 20, 200, 255), stop:1 rgba(0, 0, 150, 255));
-	border-radius: 10px;
-font: 13pt &quot;Arial&quot;;
-}</string>
-           </property>
+          <widget class="QLabel" name="Name">
            <property name="text">
-            <string>Recommendation</string>
+            <string>VocalMaximize</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_3">
-           <property name="minimumSize">
-            <size>
-             <width>200</width>
-             <height>100</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">#pushButton_3{
-color: white;
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(20, 20, 255, 255), stop:1 rgba(0, 0, 200, 255));
-	border-radius: 10px;
-font: 13pt &quot;Arial&quot;;
-}
-
-#pushButton_3:hover:!pressed{
-color: white;
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(50, 50, 255, 255), stop:1 rgba(30, 30, 200, 255));
-	border-radius: 10px;
-font: 13pt &quot;Arial&quot;;
-}
-#pushButton_3:hover:pressed{
-color: white;
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(20, 20, 200, 255), stop:1 rgba(0, 0, 150, 255));
-	border-radius: 10px;
-font: 13pt &quot;Arial&quot;;
-}</string>
-           </property>
+          <layout class="QVBoxLayout" name="buttons" stretch="0,0,0,0">
+           <item>
+            <widget class="QPushButton" name="Recommend_button">
+             <property name="text">
+              <string>Recommend</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="Feedback_button">
+             <property name="text">
+              <string>Feedback</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="Setting_button">
+             <property name="text">
+              <string>Setting</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="Sidebar_spacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item row="0" column="1">
+        <layout class="QVBoxLayout" name="Songlist_area">
+         <item>
+          <widget class="QLabel" name="Songlist_label">
            <property name="text">
-            <string>Feedback</string>
+            <string>Songlist</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton">
-           <property name="minimumSize">
-            <size>
-             <width>200</width>
-             <height>100</height>
-            </size>
+          <widget class="QScrollArea" name="Songlist_scrollArea">
+           <property name="widgetResizable">
+            <bool>true</bool>
            </property>
-           <property name="font">
-            <font>
-             <family>Arial</family>
-             <pointsize>13</pointsize>
-             <weight>50</weight>
-             <italic>false</italic>
-             <bold>false</bold>
-            </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">#pushButton{
-color: white;
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(20, 20, 255, 255), stop:1 rgba(0, 0, 200, 255));
-	border-radius: 10px;
-font: 13pt &quot;Arial&quot;;
-}
-
-#pushButton:hover:!pressed{
-color: white;
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(50, 50, 255, 255), stop:1 rgba(30, 30, 200, 255));
-	border-radius: 10px;
-font: 13pt &quot;Arial&quot;;
-}
-#pushButton:hover:pressed{
-color: white;
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(20, 20, 200, 255), stop:1 rgba(0, 0, 150, 255));
-	border-radius: 10px;
-font: 13pt &quot;Arial&quot;;
-}</string>
-           </property>
-           <property name="text">
-            <string>Settings</string>
-           </property>
+           <widget class="QWidget" name="Contents">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>0</y>
+              <width>620</width>
+              <height>446</height>
+             </rect>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_6"/>
+           </widget>
           </widget>
          </item>
         </layout>
        </item>
       </layout>
-     </item>
-     <item row="1" column="0" alignment="Qt::AlignHCenter">
-      <widget class="QLabel" name="label">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>200</width>
-         <height>200</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>1024</width>
-         <height>1024</height>
-        </size>
-       </property>
-       <property name="autoFillBackground">
-        <bool>false</bool>
-       </property>
-       <property name="styleSheet">
-        <string notr="true"/>
-       </property>
-       <property name="locale">
-        <locale language="English" country="UnitedStates"/>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="pixmap">
-        <pixmap resource="Resources.qrc">:/icon/logo.png</pixmap>
-       </property>
-       <property name="scaledContents">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="label_2">
-       <property name="styleSheet">
-        <string notr="true">color:black;
-background-color:white;
-font: 9pt &quot;Arial&quot;;</string>
-       </property>
-       <property name="text">
-        <string>Made by. Joshua Kim Lee, Hongeun Ji, Korea Science Academy of KAIST</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
- <resources>
-  <include location="Resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

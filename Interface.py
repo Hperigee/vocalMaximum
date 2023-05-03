@@ -1,27 +1,30 @@
 import sys
-from PyQt5.QtWidgets import *
-from PyQt5 import uic
+from PyQt5 import uic, QtWidgets
 
-#UI파일 연결
-#단, UI파일은 Python 코드 파일과 같은 디렉토리에 위치해야한다.
-form_class = uic.loadUiType(".\\UI\\Main.ui")[0]
+# Load the UI file
+qtCreatorFile = ".\\UI\\Main.ui"  # Your UI file name
+Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile)
 
-#화면을 띄우는데 사용되는 Class 선언
-class WindowClass(QMainWindow, form_class) :
-    def __init__(self) :
-        super().__init__()
+class MyApp(QtWidgets.QMainWindow, Ui_MainWindow):
+    def __init__(self):
+        QtWidgets.QMainWindow.__init__(self)
+        Ui_MainWindow.__init__(self)
         self.setupUi(self)
 
-if __name__ == "__main__" :
+        # Add a widget to the scroll area
+class Songdata(QtWidgets.QWidget):
+    pass
 
-    #QApplication : 프로그램을 실행시켜주는 클래스
-    app = QApplication(sys.argv)
 
-    #WindowClass의 인스턴스 생성
-    myWindow = WindowClass()
+if __name__ == "__main__":
+    app = QtWidgets.QApplication(sys.argv)
+    window = MyApp()
+    window.show()
 
-    #프로그램 화면을 보여주는 코드
-    myWindow.show()
+    widget_list = []
 
-    #프로그램을 이벤트루프로 진입시키는(프로그램을 작동시키는) 코드
-    app.exec_()
+    for i in range(100):
+        label = QtWidgets.QLabel(f"Label {i}")
+        window.Contents.layout().addWidget(label)
+
+    sys.exit(app.exec_())
