@@ -6,17 +6,29 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>753</width>
-    <height>506</height>
+    <width>435</width>
+    <height>589</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>VocalMaximize</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="minimumSize">
+    <size>
+     <width>336</width>
+     <height>589</height>
+    </size>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
      <widget class="QFrame" name="frame">
+      <property name="minimumSize">
+       <size>
+        <width>318</width>
+        <height>571</height>
+       </size>
+      </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
       </property>
@@ -24,19 +36,74 @@
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
+       <item row="1" column="0">
         <layout class="QVBoxLayout" name="sidebar">
          <item>
-          <widget class="QLabel" name="Name">
-           <property name="text">
-            <string>VocalMaximize</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <layout class="QVBoxLayout" name="buttons" stretch="0,0,0,0">
+          <layout class="QVBoxLayout" name="buttons" stretch="0,0,0,0,0,0">
+           <item>
+            <spacer name="verticalSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Minimum</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="Home_button">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>400</width>
+               <height>80</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>Noto Sans KR</family>
+               <pointsize>20</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
+             <property name="text">
+              <string>VocalMaximize</string>
+             </property>
+            </widget>
+           </item>
            <item>
             <widget class="QPushButton" name="Recommend_button">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>400</width>
+               <height>80</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>Noto Sans KR</family>
+               <pointsize>20</pointsize>
+              </font>
+             </property>
              <property name="text">
               <string>Recommend</string>
              </property>
@@ -44,6 +111,24 @@
            </item>
            <item>
             <widget class="QPushButton" name="Feedback_button">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>400</width>
+               <height>80</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>Noto Sans KR</family>
+               <pointsize>20</pointsize>
+              </font>
+             </property>
              <property name="text">
               <string>Feedback</string>
              </property>
@@ -51,6 +136,24 @@
            </item>
            <item>
             <widget class="QPushButton" name="Setting_button">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>400</width>
+               <height>80</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>Noto Sans KR</family>
+               <pointsize>20</pointsize>
+              </font>
+             </property>
              <property name="text">
               <string>Setting</string>
              </property>
@@ -70,35 +173,6 @@
             </spacer>
            </item>
           </layout>
-         </item>
-        </layout>
-       </item>
-       <item row="0" column="1">
-        <layout class="QVBoxLayout" name="Songlist_area">
-         <item>
-          <widget class="QLabel" name="Songlist_label">
-           <property name="text">
-            <string>Songlist</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QScrollArea" name="Songlist_scrollArea">
-           <property name="widgetResizable">
-            <bool>true</bool>
-           </property>
-           <widget class="QWidget" name="Contents">
-            <property name="geometry">
-             <rect>
-              <x>0</x>
-              <y>0</y>
-              <width>620</width>
-              <height>446</height>
-             </rect>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_6"/>
-           </widget>
-          </widget>
          </item>
         </layout>
        </item>
