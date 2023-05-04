@@ -2,47 +2,47 @@ from PyQt5.QtWidgets import *
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import Qt
 from PyQt5 import uic
+from assets import song_file, CustomScrollBar
 
 # Load the UI file
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        # Load the main form created in Qt Designer
         self.ui = loadUi('.\\UI\\Main.ui', self)
         self.setMinimumSize(1280,720)
-        # Create a stacked widget to hold the child widgets
-        self.stacked_widget = QStackedWidget(self)
-        self.ui.centralwidget.layout().addWidget(self.stacked_widget)
+        self.main_stacked_widget = QStackedWidget(self)
+        self.ui.widgetChange.layout().addWidget(self.main_stacked_widget)
 
-        # Load the child widgets from separate .ui files
+
         self.SongListView=uic.loadUi(".\\UI\\SongListView.ui")
         self.RecommendListView = uic.loadUi(".\\UI\\RecommendListView.ui")
         self.Settings = uic.loadUi(".\\UI\\Settings.ui")
         self.child_widget_1 = uic.loadUi("child_widget_1.ui")
 
+        self.set_custom_scroll_bar()
+
+        self.main_stacked_widget.addWidget(self.SongListView)
+        self.main_stacked_widget.addWidget(self.RecommendListView)
+        self.main_stacked_widget.addWidget(self.Settings)
+        self.main_stacked_widget.addWidget(self.child_widget_1)
 
 
-        # Add the child widgets to the stacked widget
-        self.stacked_widget.addWidget(self.SongListView)
-        self.stacked_widget.addWidget(self.RecommendListView)
-        self.stacked_widget.addWidget(self.Settings)
-        self.stacked_widget.addWidget(self.child_widget_1)
-
-        self.ui.Home_button.font().setPointSizeF(0.7*self.ui.Home_button.height())
-
-        # Connect the sidebar buttons to switch between the child widgets
-        self.ui.Home_button.clicked.connect(lambda: self.stacked_widget.setCurrentWidget(self.SongListView))
-        self.ui.Recommend_button.clicked.connect(lambda: self.stacked_widget.setCurrentWidget(self.RecommendListView))
-        self.ui.Feedback_button.clicked.connect(lambda: self.stacked_widget.setCurrentWidget(self.child_widget_1))
-        self.ui.Setting_button.clicked.connect(lambda: self.stacked_widget.setCurrentWidget(self.Settings))
+        self.ui.Home_button.clicked.connect(lambda: self.main_stacked_widget.setCurrentWidget(self.SongListView))
+        self.ui.Recommend_button.clicked.connect(lambda: self.main_stacked_widget.setCurrentWidget(self.RecommendListView))
+        self.ui.Feedback_button.clicked.connect(lambda: self.main_stacked_widget.setCurrentWidget(self.child_widget_1))
+        self.ui.Setting_button.clicked.connect(lambda: self.main_stacked_widget.setCurrentWidget(self.Settings))
         self.Settings.Reset_button.clicked.connect(lambda: self.open_dialog(".\\UI\\ResetConfirm.ui"))
+
+        song_widget_list=[]
         for i in range(1000):
-            song_widget = song_file(f"example{1000-i}", "00:00")
+            song_widget = song_file(self.get_widget_number_from_list()+1,f"example{i}", f"exampleartist{i}","00:00")
             song_widget.clicked.connect(self.handle_song_file_click)
-            self.SongListView.Contents.layout().addWidget(song_widget)
-        for i in range(1000,2):
-            self.SongListView.Contents.removeWidget(song_widget)
+            song_widget_list.append(song_widget)
+            self.add_widget_in_list(song_widget)
+
+        deleted=self.remove_widget_from_list(2,song_widget_list)
+        self.SongListView.Contents.layout().addWidget(deleted)
 
         self.show()
 
@@ -53,29 +53,32 @@ class MainWindow(QMainWindow):
         result = new_window.exec_()
         if result==QDialog.Accepted:
             pass
-        else:
-            pass
+            #implement reset code
 
+    def get_widget_number_from_list(self):
+        return self.SongListView.Contents_Layout.count()
 
+    def remove_widget_from_list(self,i,L):
+        widget1 = self.SongListView.Contents.layout().itemAt(i).widget()
+        self.SongListView.Contents.layout().removeWidget(widget1)
+        L.pop(i)
+        return widget1
+    def add_widget_in_list(self,song_widget):
+        self.SongListView.Contents.layout().addWidget(song_widget)
+
+    def show_songInfo(self):
+        pass
     def handle_song_file_click(self):
         song = self.sender()
         print(f"{song.objectName()} was clicked.")
-class song_file(QPushButton):
-    def __init__(self,name, duration):
-        super().__init__()
-        self.setObjectName(name)
-        self.label1 = QLabel(name)
-        self.label2 = QLabel(duration)
-        # Create the spacer
-        spacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-        layout = QHBoxLayout()
 
-        # Add the labels and spacer to the layout
-        layout.addWidget(self.label1)
-        layout.addItem(spacer)
-        layout.addWidget(self.label2)
-        self.setLayout(layout)
-        self.setFixedHeight(50)
+    def set_custom_scroll_bar(self):
+        scroll_area = self.SongListView.Songlist_scrollArea
+        scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        custom_scrollbar = CustomScrollBar()
+        scroll_area.setVerticalScrollBar(custom_scrollbar)
+
+
 
 
 
