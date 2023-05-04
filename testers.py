@@ -8,11 +8,11 @@ if __name__ == '__main__':
         s = pickle.load(f)
 
 
-    system('start D:\\Document\\GitHub\\vocalMaximum\\temp\\Wild_Flower\\vocals.wav')
+    #system('start D:\\Document\\GitHub\\vocalMaximum\\temp\\Wild_Flower\\vocals.wav')
 
     plt.plot(s)
     plt.show()
 
-    stt=time.time()
-    while True:
-        print(s[int((time.time()-stt)*22050/512)])
+    #stt=time.time()
+    #while True:
+    #    print(s[int((time.time()-stt)*22050/512)])
