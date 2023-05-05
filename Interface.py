@@ -24,6 +24,7 @@ class MainWindow(QMainWindow):
         self.Settings = loadUi(".\\UI\\uiFiles\\Settings.ui")
         self.NullSongInfo = loadUi(".\\UI\\uiFiles\\NullSongInfo.ui")
 
+        self.NullSongInfo.label.setAlignment(Qt.AlignCenter)
         self._set_custom_scroll_bar()
 
         self.mainStackedWidget.addWidget(self.SongListView)
