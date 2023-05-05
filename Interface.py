@@ -90,8 +90,12 @@ class MainWindow(QMainWindow):
         stopMin = self.songInfo.StopMinuteValue.value()
         stopSec = self.songInfo.StopSecondValue.value()
 
+
+        if stopMin*60+stopSec - startMin*60+startSec < 15 or stopMin*60+stopSec>self.secDuration+self.minuteDuration*60:
+            return
         self._show_sidetab(self._make_record_display())
-        self._disable_songlist()
+        self._disable_mainButton()
+        self._disable_main_scroll_area()
 
         # call scoring function
 
@@ -103,7 +107,8 @@ class MainWindow(QMainWindow):
         stopSec = self.songInfo.StopSecondValue.value()
 
         self._show_sidetab(self.previous)
-        self._enable_songlist()
+        self._enable_mainButton()
+        self._enable_main_scroll_area()
 
         # call scoring function
 
@@ -139,10 +144,17 @@ class MainWindow(QMainWindow):
 
         self.songInfo = loadUi(".\\UI\\uiFiles\\SongInfo.ui")
 
+
+        self._centering(self.songInfo.songInfoContainer)
+        self._centering(self.songInfo)
+
         self.songInfo.SongName.setText(song_name)
         self.songInfo.Artist.setText(artist)
         self.songInfo.Duration.setText(duration)
-        self.songInfo.StopMinuteValue.setMaximum(int(duration[:2]))
+        self.minuteDuration = int(duration[:2])
+        self.secDuration = int(duration[3:])
+        self.songInfo.StopMinuteValue.setMaximum(self.minuteDuration)
+
 
         self.songInfo.RecordButton.clicked.connect(self._handle_record_button_click)
 
@@ -153,17 +165,36 @@ class MainWindow(QMainWindow):
         self.record_display.CancelButton.clicked.connect(self._handle_record_cancel_button_click)
         return self.record_display
 
-    def _disable_songlist(self):
-        widgets = self.SongListView.contents
+    def _disable_mainButton(self):
+        widgets=self.ui.buttonWidget
+        self._disable_button(widgets)
+
+    def _enable_mainButton(self):
+        widgets=self.ui.buttonWidget
+        self._enable_button(widgets)
+
+    def _disable_main_scroll_area(self):
+        widgets = self.SongListView
+        self._disable_scroll_bar(widgets)
+    def _enable_main_scroll_area(self):
+        widgets = self.SongListView
+        self._enable_scroll_bar(widgets)
+    def _disable_button(self,widgets):
         for widget in widgets.findChildren(QPushButton):
             widget.setEnabled(False)
 
-    def _enable_songlist(self):
-        widgets = self.SongListView.contents
+    def _enable_button(self,widgets):
         for widget in widgets.findChildren(QPushButton):
             widget.setEnabled(True)
-
-
+    def _disable_scroll_bar(self,widgets):
+        for widget in widgets.findChildren(QScrollArea):
+            widget.setEnabled(False)
+    def _enable_scroll_bar(self,widgets):
+        for widget in widgets.findChildren(QScrollArea):
+            widget.setEnabled(True)
+    def _centering(self,widgets):
+        for widget in widgets.findChildren(QLabel):
+            widget.setAlignment(Qt.AlignCenter)
 class NewDialog(QDialog):
     def __init__(self, uiName):
         super().__init__()

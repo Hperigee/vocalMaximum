@@ -1,7 +1,7 @@
 
         QPushButton {
             background-color: #eeeeee;
-            border-radius: 35px;
+            border-radius: 10px;
         }
 
         QPushButton:hover {
@@ -10,31 +10,48 @@
 
         QPushButton:pressed {
             background-color: #999999;
-            padding-top: 15px;
-            padding-bottom: 5px;
         }
 
         QLabel#index{
         background-color: transparent;
-        font: 12pt "Noto Sans KR medium";
+        font: 10pt "Noto Sans KR medium";
         color:#444444;
         }
 
         QLabel#name{
         background-color: transparent;
-        font: 14pt "Noto Sans KR medium";
+        font: 12pt "Noto Sans KR medium";
         color:black;
         }
 
         QLabel#artist{
         background-color:transparent;
-        font: 10pt "Noto Sans KR";
+        font: 8pt "Noto Sans KR";
         color:#444444;
         }
 
         QLabel#duration{
         background-color:transparent;
-        font: 12pt "Noto Sans KR";
+        font: 10pt "Noto Sans KR";
         color:#444444;
         }
+
+        QLabel#index:disabled{
+        color:#aaaaaa;
+        }
+
+        QLabel#name:disabled{
+        color:#888888;
+        }
+
+        QLabel#artist:disabled{
+        color:#aaaaaa;
+        }
+
+        QLabel#duration:disabled{
+        color:#aaaaaa;
+        }
+
+
+
         

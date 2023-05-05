@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1414</width>
-    <height>441</height>
+    <width>1094</width>
+    <height>460</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -44,25 +44,44 @@
       <item>
        <widget class="QWidget" name="sideTab" native="true">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-          <horstretch>0</horstretch>
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+          <horstretch>1</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
         <property name="minimumSize">
          <size>
-          <width>500</width>
+          <width>0</width>
           <height>0</height>
          </size>
         </property>
         <property name="styleSheet">
          <string notr="true">background-color:#0000ff;</string>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout"/>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+        </layout>
        </widget>
       </item>
       <item>
        <widget class="QWidget" name="mainWidget" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <horstretch>3</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <property name="spacing">
           <number>0</number>
@@ -91,36 +110,46 @@
             <enum>QFrame::Raised</enum>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <property name="leftMargin">
+             <number>3</number>
+            </property>
             <property name="topMargin">
-             <number>18</number>
+             <number>6</number>
+            </property>
+            <property name="rightMargin">
+             <number>3</number>
+            </property>
+            <property name="bottomMargin">
+             <number>3</number>
             </property>
             <item>
-             <layout class="QHBoxLayout" name="buttonLayout">
-              <property name="spacing">
-               <number>10</number>
-              </property>
-              <item>
-               <widget class="QPushButton" name="homeButton">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>250</width>
-                  <height>50</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Noto Sans KR</family>
-                  <pointsize>12</pointsize>
-                 </font>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QPushButton {
+             <widget class="QWidget" name="buttonWidget" native="true">
+              <layout class="QHBoxLayout" name="buttonLayout">
+               <property name="spacing">
+                <number>10</number>
+               </property>
+               <item>
+                <widget class="QPushButton" name="homeButton">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>250</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Noto Sans KR</family>
+                   <pointsize>12</pointsize>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton {
                         background-color: rgb(7, 3, 122);
                         border-radius: 15px;
 						color: white;
@@ -131,36 +160,40 @@
                         }
 
                     QPushButton:pressed {
-                        background-color: rgb(97, 108, 255)
+                        background-color: rgb(97, 108, 255);
+                        }
+
+					QPushButton:disabled {
+                        background-color: rgb(167, 167, 167);
                         }</string>
-                </property>
-                <property name="text">
-                 <string>VocalMaximize</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="recommendButton">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>250</width>
-                  <height>50</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Noto Sans KR</family>
-                  <pointsize>12</pointsize>
-                 </font>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QPushButton {
+                 </property>
+                 <property name="text">
+                  <string>VocalMaximize</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="recommendButton">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>250</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Noto Sans KR</family>
+                   <pointsize>12</pointsize>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton {
                         background-color: white;
                         border-radius: 15px;
 						color: rgb(7, 3, 122);
@@ -172,36 +205,38 @@
 
                     QPushButton:pressed {
                         background-color: #999999;
-
+                        }
+					QPushButton:disabled {
+                        color: rgb(167, 167, 167);
                         }</string>
-                </property>
-                <property name="text">
-                 <string>Recommend</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="settingButton">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>250</width>
-                  <height>50</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Noto Sans KR</family>
-                  <pointsize>12</pointsize>
-                 </font>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QPushButton {
+                 </property>
+                 <property name="text">
+                  <string>Recommend</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="settingButton">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>250</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Noto Sans KR</family>
+                   <pointsize>12</pointsize>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton {
                         background-color: white;
                         border-radius: 15px;
 						color: rgb(7, 3, 122);
@@ -213,14 +248,18 @@
 
                     QPushButton:pressed {
                         background-color: #999999;
+                        }
+					QPushButton:disabled {
+                        color: rgb(167, 167, 167);
                         }</string>
-                </property>
-                <property name="text">
-                 <string>Setting</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
+                 </property>
+                 <property name="text">
+                  <string>Setting</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
             </item>
            </layout>
           </widget>
@@ -228,7 +267,7 @@
          <item>
           <widget class="QFrame" name="widgetChange">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
