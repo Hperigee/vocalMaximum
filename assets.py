@@ -23,8 +23,9 @@ class song_file(QPushButton):
 
         spacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        filename = "UI/styleSheets/song_file.qss.qss"
+        filename = "UI/styleSheets/song_file.qss"
         file = QFile(filename)
+        style=''
         if file.open(QFile.ReadOnly | QFile.Text):
             stream = QTextStream(file)
             style = stream.readAll()
@@ -52,7 +53,9 @@ class CustomScrollBar(QScrollBar):
         # Set the stylesheet to disable the default scrollbar
         filename = "UI/styleSheets/CustomScrollBar.qss"
         file = QFile(filename)
+        style = ''
         if file.open(QFile.ReadOnly | QFile.Text):
             stream = QTextStream(file)
             style = stream.readAll()
+
         self.setStyleSheet(style)
