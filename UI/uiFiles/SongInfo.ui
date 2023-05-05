@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>408</width>
+    <width>583</width>
     <height>340</height>
    </rect>
   </property>
@@ -17,36 +17,8 @@
    <string notr="true">background-color:white;</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
-   <item row="0" column="0">
+   <item row="1" column="0">
     <layout class="QGridLayout" name="gridLayout">
-     <item row="2" column="1">
-      <widget class="QLabel" name="label_6">
-       <property name="text">
-        <string>3.54</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLabel" name="Duration">
-       <property name="text">
-        <string>Duration</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>음역대</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_5">
-       <property name="text">
-        <string>리듬감</string>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="0">
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
@@ -65,12 +37,125 @@
        </item>
       </layout>
      </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>리듬감</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLabel" name="label_6">
+       <property name="text">
+        <string>3.54</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLabel" name="Duration">
+       <property name="text">
+        <string>Duration</string>
+       </property>
+      </widget>
+     </item>
      <item row="1" column="1">
       <widget class="QLabel" name="label_7">
        <property name="text">
         <string>A4 ~ C5</string>
        </property>
       </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QPushButton" name="RecordButton">
+       <property name="text">
+        <string>Record</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>음역대</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <layout class="QHBoxLayout" name="DurationSetHbox">
+       <item>
+        <widget class="QLabel" name="StartText">
+         <property name="text">
+          <string>start</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="DurationSetGrid_1">
+         <item row="0" column="1">
+          <widget class="QSpinBox" name="StartSecondValue">
+           <property name="maximum">
+            <number>59</number>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QSpinBox" name="StartMinuteValue">
+           <property name="maximum">
+            <number>59</number>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QLabel" name="StartSecond">
+           <property name="text">
+            <string>초</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QLabel" name="StartMinute">
+           <property name="text">
+            <string>분</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QLabel" name="StopText">
+         <property name="text">
+          <string>stop</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="DurationSetGrid_2">
+         <item row="1" column="1">
+          <widget class="QLabel" name="StopMinute">
+           <property name="text">
+            <string>초</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="StopSecond">
+           <property name="text">
+            <string>분</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QSpinBox" name="StopMinuteValue"/>
+         </item>
+         <item row="1" column="0">
+          <widget class="QSpinBox" name="StopSecondValue">
+           <property name="maximum">
+            <number>59</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
      </item>
     </layout>
    </item>

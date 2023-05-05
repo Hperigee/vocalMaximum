@@ -2,7 +2,7 @@ class SoundFormInfo:
     def __init__(self,filename, artist):
         self.name = filename
         self.artist=artist
-        self.duration='00:00'
+        self.duration='10:00'
         self.notes = None  # 시간에 따른 음높이
         self.express = None  # 시간에 따른 표현도
         self.highest_note = None  # 최고음
