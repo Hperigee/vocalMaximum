@@ -1,7 +1,12 @@
-import librosa
-import spleeter
-import pickle
+from Interface import MainWindow, NewDialog
+from PyQt5.QtWidgets import *
 
 
-def load():
-    pass
+
+app = QApplication([])
+window = MainWindow()
+app.exec_()
+
+
+
+

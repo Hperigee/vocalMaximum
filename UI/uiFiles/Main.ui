@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1414</width>
-    <height>449</height>
+    <height>441</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -131,55 +131,11 @@
                         }
 
                     QPushButton:pressed {
-                        background-color: #999999;
-                        padding-top: 15px;
-                        padding-bottom: 5px;
+                        background-color: rgb(97, 108, 255)
                         }</string>
                 </property>
                 <property name="text">
                  <string>VocalMaximize</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="feedbackButton">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>250</width>
-                  <height>50</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Noto Sans KR</family>
-                  <pointsize>12</pointsize>
-                 </font>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QPushButton {
-                        background-color: white;
-                        border-radius: 15px;
-						color: rgb(7, 3, 122);
-                        }
-
-                    QPushButton:hover {
-                        background-color: rgb(244, 244, 244);
-                        }
-
-                    QPushButton:pressed {
-                        background-color: #999999;
-                        padding-top: 15px;
-                        padding-bottom: 5px;
-                        }</string>
-                </property>
-                <property name="text">
-                 <string>Feedback</string>
                 </property>
                </widget>
               </item>
@@ -216,8 +172,7 @@
 
                     QPushButton:pressed {
                         background-color: #999999;
-                        padding-top: 15px;
-                        padding-bottom: 5px;
+
                         }</string>
                 </property>
                 <property name="text">
@@ -235,7 +190,7 @@
                 </property>
                 <property name="minimumSize">
                  <size>
-                  <width>25</width>
+                  <width>250</width>
                   <height>50</height>
                  </size>
                 </property>
@@ -258,8 +213,6 @@
 
                     QPushButton:pressed {
                         background-color: #999999;
-                        padding-top: 15px;
-                        padding-bottom: 5px;
                         }</string>
                 </property>
                 <property name="text">
@@ -281,8 +234,7 @@
             </sizepolicy>
            </property>
            <property name="styleSheet">
-            <string notr="true">
-</string>
+            <string notr="true"/>
            </property>
            <property name="frameShape">
             <enum>QFrame::StyledPanel</enum>
