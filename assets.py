@@ -1,13 +1,16 @@
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
+from PyQt5.QtCore import QFile, QTextStream
+from PyQt5.uic import loadUi
 
 
-class song_file(QPushButton):
-    def __init__(self, i, name, artist, duration):
+
+class SongFile(QPushButton):
+    def __init__(self, i, song):
+
         super().__init__()
         self.setFixedHeight(100)
+        name, artist, duration = song.name, song.artist, song.duration
         self.setObjectName(name)
-
         self.label0 = QLabel(str(i))
         self.label1 = QLabel(name)
         self.label2 = QLabel(artist)
@@ -23,9 +26,9 @@ class song_file(QPushButton):
 
         spacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        filename = "UI/styleSheets/song_file.qss"
+        filename = "UI/styleSheets/SongFile.qss"
         file = QFile(filename)
-        style=''
+        style = ''
         if file.open(QFile.ReadOnly | QFile.Text):
             stream = QTextStream(file)
             style = stream.readAll()
@@ -59,3 +62,7 @@ class CustomScrollBar(QScrollBar):
             style = stream.readAll()
 
         self.setStyleSheet(style)
+
+
+
+

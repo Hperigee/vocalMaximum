@@ -1,10 +1,9 @@
 from PyQt5.QtWidgets import *
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import Qt
-from PyQt5 import uic
-from assets import song_file, CustomScrollBar
-import Resources_rc
-
+from assets import SongFile, CustomScrollBar
+from  SoundFormInfo import SoundFormInfo
+import pickle
 # Load the UI file
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -15,11 +14,15 @@ class MainWindow(QMainWindow):
         self.mainStackedWidget = QStackedWidget(self)
         self.ui.widgetChange.layout().addWidget(self.mainStackedWidget)
 
+        self.sideTabStackedWidget = QStackedWidget(self)
+        self.sideTab.layout().addWidget(self.sideTabStackedWidget)
 
-        self.SongListView=uic.loadUi(".\\UI\\uiFiles\\SongListView.ui")
-        self.RecommendListView = uic.loadUi(".\\UI\\uiFiles\\RecommendListView.ui")
-        self.Settings = uic.loadUi(".\\UI\\uiFiles\\Settings.ui")
-        self.child_widget_1 = uic.loadUi("child_widget_1.ui")
+
+        self.SongListView=loadUi(".\\UI\\uiFiles\\SongListView.ui")
+        self.RecommendListView = loadUi(".\\UI\\uiFiles\\RecommendListView.ui")
+        self.Settings = loadUi(".\\UI\\uiFiles\\Settings.ui")
+        self.child_widget_1 = loadUi("child_widget_1.ui")
+        self.NullSongInfo = loadUi(".\\UI\\uiFiles\\NullSongInfo.ui")
 
         self._set_custom_scroll_bar()
 
@@ -27,6 +30,7 @@ class MainWindow(QMainWindow):
         self.mainStackedWidget.addWidget(self.RecommendListView)
         self.mainStackedWidget.addWidget(self.Settings)
         self.mainStackedWidget.addWidget(self.child_widget_1)
+        self.sideTabStackedWidget.addWidget(self.NullSongInfo)
 
 
         self.ui.homeButton.clicked.connect(lambda: self.mainStackedWidget.setCurrentWidget(self.SongListView))
@@ -35,11 +39,16 @@ class MainWindow(QMainWindow):
         self.ui.settingButton.clicked.connect(lambda: self.mainStackedWidget.setCurrentWidget(self.Settings))
         self.Settings.resetButton.clicked.connect(lambda: self.open_dialog(".\\UI\\uiFiles\\ResetConfirm.ui"))
 
+        self.sideTabStackedWidget.setCurrentWidget(self.NullSongInfo)
 
-        for i in range(1000):
-            song_widget = song_file(self._get_widget_number_from_song_list()+1,f"example{i}", f"exampleartist{i}","00:00")
-            song_widget.clicked.connect(self._handle_song_file_click)
-            self._add_widget_in_song_list(song_widget)
+        #below is testing
+        example_song_1= SoundFormInfo("exampleSound", "artist1")
+
+        song_widget = SongFile(self._get_widget_number_from_song_list()+1,example_song_1)
+
+        song_widget.clicked.connect(self._handle_song_file_click)
+
+        self._add_widget_in_song_list(song_widget)
 
 
         self.show()
@@ -59,8 +68,15 @@ class MainWindow(QMainWindow):
     def _handle_song_file_click(self):
         song = self.sender()
         layout = self.SongListView.contentsLayout
-        print(f"{song.objectName()} is removed.")
-        self._remove_widget_from_song_list(layout.indexOf(song))
+        name=song.objectName()
+        directory= name + '.dat'
+        with open(directory, 'rb') as file:
+           songInfo = pickle.load(file)
+
+        file.close()
+
+        self._show_song_info(songInfo)
+
 
     def _remove_widget_from_song_list(self, i):
         layout = self.SongListView.contentsLayout
@@ -76,8 +92,10 @@ class MainWindow(QMainWindow):
         layout = self.SongListView.contentsLayout
         layout.addWidget(song_widget)
 
-    def show_song_info(self):
-        pass
+    def _show_song_info(self,song):
+        ToDisplay=self._make_song_info_display(song)
+        self.sideTabStackedWidget.addWidget(ToDisplay)
+        self.sideTabStackedWidget.setCurrentWidget(ToDisplay)
 
 
     def _set_custom_scroll_bar(self):
@@ -85,8 +103,16 @@ class MainWindow(QMainWindow):
         scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
         custom_scrollbar = CustomScrollBar()
         scroll_area.setVerticalScrollBar(custom_scrollbar)
+    def _make_song_info_display(self, song):
+        song_name, artist, duration = song.name, song.artist, song.duration
 
+        songInfo = loadUi(".\\UI\\uiFiles\\SongInfo.ui")
 
+        songInfo.SongName.setText(song_name)
+        songInfo.Artist.setText(artist)
+        songInfo.Duration.setText(duration)
+
+        return songInfo
 
 
 
