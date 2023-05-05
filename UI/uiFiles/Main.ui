@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>mainWindow</class>
+ <widget class="QMainWindow" name="mainWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1094</width>
+    <width>1414</width>
     <height>449</height>
    </rect>
   </property>
@@ -58,57 +58,7 @@
         <property name="styleSheet">
          <string notr="true">background-color:#0000ff;</string>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout">
-         <item>
-          <widget class="QFrame" name="sideTabFrame">
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
-           <layout class="QVBoxLayout" name="verticalLayout_5">
-            <item>
-             <widget class="QWidget" name="infoText" native="true">
-              <layout class="QGridLayout" name="gridLayout_2">
-               <property name="leftMargin">
-                <number>0</number>
-               </property>
-               <property name="topMargin">
-                <number>0</number>
-               </property>
-               <property name="rightMargin">
-                <number>0</number>
-               </property>
-               <property name="bottomMargin">
-                <number>0</number>
-               </property>
-               <property name="horizontalSpacing">
-                <number>0</number>
-               </property>
-               <item row="0" column="0">
-                <widget class="QLabel" name="label">
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">background-color:white;</string>
-                 </property>
-                 <property name="text">
-                  <string>Select Song to See Info</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </item>
-        </layout>
+        <layout class="QVBoxLayout" name="verticalLayout"/>
        </widget>
       </item>
       <item>
@@ -132,7 +82,7 @@
          <item>
           <widget class="QFrame" name="buttonFrame">
            <property name="styleSheet">
-            <string notr="true">background-color:#00AF23</string>
+            <string notr="true">background-color:rgb(214, 214, 214)</string>
            </property>
            <property name="frameShape">
             <enum>QFrame::StyledPanel</enum>
@@ -147,10 +97,10 @@
             <item>
              <layout class="QHBoxLayout" name="buttonLayout">
               <property name="spacing">
-               <number>30</number>
+               <number>10</number>
               </property>
               <item>
-               <widget class="QPushButton" name="Home_button">
+               <widget class="QPushButton" name="homeButton">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
                   <horstretch>0</horstretch>
@@ -159,8 +109,8 @@
                 </property>
                 <property name="minimumSize">
                  <size>
-                  <width>200</width>
-                  <height>0</height>
+                  <width>250</width>
+                  <height>50</height>
                  </size>
                 </property>
                 <property name="font">
@@ -170,7 +120,21 @@
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">background-color:white;</string>
+                 <string notr="true">QPushButton {
+                        background-color: rgb(7, 3, 122);
+                        border-radius: 15px;
+						color: white;
+                        }
+
+                    QPushButton:hover {
+                        background-color: rgb(42, 1, 179);
+                        }
+
+                    QPushButton:pressed {
+                        background-color: #999999;
+                        padding-top: 15px;
+                        padding-bottom: 5px;
+                        }</string>
                 </property>
                 <property name="text">
                  <string>VocalMaximize</string>
@@ -178,7 +142,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="Feedback_button">
+               <widget class="QPushButton" name="feedbackButton">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
                   <horstretch>0</horstretch>
@@ -187,8 +151,8 @@
                 </property>
                 <property name="minimumSize">
                  <size>
-                  <width>200</width>
-                  <height>0</height>
+                  <width>250</width>
+                  <height>50</height>
                  </size>
                 </property>
                 <property name="font">
@@ -198,7 +162,21 @@
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">background-color:white;</string>
+                 <string notr="true">QPushButton {
+                        background-color: white;
+                        border-radius: 15px;
+						color: rgb(7, 3, 122);
+                        }
+
+                    QPushButton:hover {
+                        background-color: rgb(244, 244, 244);
+                        }
+
+                    QPushButton:pressed {
+                        background-color: #999999;
+                        padding-top: 15px;
+                        padding-bottom: 5px;
+                        }</string>
                 </property>
                 <property name="text">
                  <string>Feedback</string>
@@ -206,7 +184,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="Recommend_button">
+               <widget class="QPushButton" name="recommendButton">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
                   <horstretch>0</horstretch>
@@ -215,8 +193,8 @@
                 </property>
                 <property name="minimumSize">
                  <size>
-                  <width>200</width>
-                  <height>0</height>
+                  <width>250</width>
+                  <height>50</height>
                  </size>
                 </property>
                 <property name="font">
@@ -226,7 +204,21 @@
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">background-color:white;</string>
+                 <string notr="true">QPushButton {
+                        background-color: white;
+                        border-radius: 15px;
+						color: rgb(7, 3, 122);
+                        }
+
+                    QPushButton:hover {
+                        background-color: rgb(244, 244, 244);
+                        }
+
+                    QPushButton:pressed {
+                        background-color: #999999;
+                        padding-top: 15px;
+                        padding-bottom: 5px;
+                        }</string>
                 </property>
                 <property name="text">
                  <string>Recommend</string>
@@ -234,7 +226,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="Setting_button">
+               <widget class="QPushButton" name="settingButton">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
                   <horstretch>0</horstretch>
@@ -243,8 +235,8 @@
                 </property>
                 <property name="minimumSize">
                  <size>
-                  <width>200</width>
-                  <height>0</height>
+                  <width>25</width>
+                  <height>50</height>
                  </size>
                 </property>
                 <property name="font">
@@ -254,7 +246,21 @@
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">background-color:white;</string>
+                 <string notr="true">QPushButton {
+                        background-color: white;
+                        border-radius: 15px;
+						color: rgb(7, 3, 122);
+                        }
+
+                    QPushButton:hover {
+                        background-color: rgb(244, 244, 244);
+                        }
+
+                    QPushButton:pressed {
+                        background-color: #999999;
+                        padding-top: 15px;
+                        padding-bottom: 5px;
+                        }</string>
                 </property>
                 <property name="text">
                  <string>Setting</string>
@@ -275,7 +281,8 @@
             </sizepolicy>
            </property>
            <property name="styleSheet">
-            <string notr="true">background-color:#000000;</string>
+            <string notr="true">
+</string>
            </property>
            <property name="frameShape">
             <enum>QFrame::StyledPanel</enum>

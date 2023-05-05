@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Songlist</class>
- <widget class="QWidget" name="Songlist">
+ <class>songList</class>
+ <widget class="QWidget" name="songList">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -30,15 +30,15 @@
     <number>0</number>
    </property>
    <item>
-    <layout class="QVBoxLayout" name="Songlist_area">
+    <layout class="QVBoxLayout" name="songListArea">
      <property name="spacing">
       <number>0</number>
      </property>
      <item>
       <widget class="QFrame" name="frame">
        <property name="styleSheet">
-        <string notr="true">background-color: #cdcdcd;
-border-bottom: 1px solid #bbbbbb;</string>
+        <string notr="true">background-color: #eee;
+border-bottom: 1px solid #555;</string>
        </property>
        <property name="frameShape">
         <enum>QFrame::StyledPanel</enum>
@@ -47,10 +47,20 @@ border-bottom: 1px solid #bbbbbb;</string>
         <enum>QFrame::Raised</enum>
        </property>
        <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="0">
-         <widget class="QLabel" name="Songlist_label">
+        <item row="0" column="1">
+         <widget class="QLabel" name="songListLabel">
           <property name="enabled">
            <bool>true</bool>
+          </property>
+          <property name="font">
+           <font>
+            <family>Noto Sans KR medium</family>
+            <pointsize>16</pointsize>
+            <weight>50</weight>
+            <italic>false</italic>
+            <bold>false</bold>
+            <stylestrategy>PreferAntialias</stylestrategy>
+           </font>
           </property>
           <property name="styleSheet">
            <string notr="true">font: 16pt &quot;Noto Sans KR medium&quot;;
@@ -62,11 +72,27 @@ border:none;</string>
           </property>
          </widget>
         </item>
+        <item row="0" column="0">
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
        </layout>
       </widget>
      </item>
      <item>
-      <widget class="QScrollArea" name="Songlist_scrollArea">
+      <widget class="QScrollArea" name="songListScrollArea">
        <property name="styleSheet">
         <string notr="true">background-color: #eeeeee;
 border: none;</string>
@@ -74,7 +100,7 @@ border: none;</string>
        <property name="widgetResizable">
         <bool>true</bool>
        </property>
-       <widget class="QWidget" name="Contents">
+       <widget class="QWidget" name="contents">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -83,7 +109,11 @@ border: none;</string>
           <height>282</height>
          </rect>
         </property>
-        <layout class="QVBoxLayout" name="Contents_Layout"/>
+        <layout class="QVBoxLayout" name="contentsLayout">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+        </layout>
        </widget>
       </widget>
      </item>
