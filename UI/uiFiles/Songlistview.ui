@@ -36,6 +36,12 @@
      </property>
      <item>
       <widget class="QFrame" name="frame">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>1</verstretch>
+        </sizepolicy>
+       </property>
        <property name="styleSheet">
         <string notr="true">background-color: #eee;
 border-bottom: 1px solid #555;</string>
@@ -47,10 +53,32 @@ border-bottom: 1px solid #555;</string>
         <enum>QFrame::Raised</enum>
        </property>
        <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="0">
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
         <item row="0" column="1">
          <widget class="QLabel" name="songListLabel">
           <property name="enabled">
            <bool>true</bool>
+          </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>1</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
           </property>
           <property name="font">
            <font>
@@ -72,27 +100,112 @@ border:none;</string>
           </property>
          </widget>
         </item>
-        <item row="0" column="0">
-         <spacer name="horizontalSpacer">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
+        <item row="0" column="4">
+         <widget class="QPushButton" name="AddSong">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+            <horstretch>1</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
           </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::Fixed</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
+          <property name="minimumSize">
            <size>
-            <width>20</width>
-            <height>20</height>
+            <width>70</width>
+            <height>10</height>
            </size>
           </property>
-         </spacer>
+          <property name="maximumSize">
+           <size>
+            <width>257</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+                        background-color: white;
+                        border-radius: 15px;
+						color: rgb(7, 3, 122);
+border:none;
+	font: 12pt &quot;Noto Sans KR&quot;;
+                        }
+
+                    QPushButton:hover {
+                        background-color: rgb(244, 244, 244);
+                        }
+
+                    QPushButton:pressed {
+                        background-color: #999999;
+                        }
+					QPushButton:disabled {
+                        color: rgb(167, 167, 167);
+                        }</string>
+          </property>
+          <property name="text">
+           <string>Add song</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLineEdit" name="lineEdit">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+            <horstretch>3</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color:white;
+border:none;
+border-radius:15px;
+font: 12pt &quot;Noto Sans KR&quot;;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <widget class="QPushButton" name="pushButton">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+            <horstretch>1</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+                        background-color: rgb(7, 3, 122);
+                        border-radius: 15px;
+						color: white;
+						border:none;
+	font: 12pt &quot;Noto Sans KR&quot;;
+                        }
+
+                    QPushButton:hover {
+                        background-color: rgb(42, 1, 179);
+                        }
+
+                    QPushButton:pressed {
+                        background-color: rgb(97, 108, 255);
+                        }
+
+					QPushButton:disabled {
+                        background-color: rgb(167, 167, 167);
+                        }</string>
+          </property>
+          <property name="text">
+           <string>Search</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
      </item>
      <item>
       <widget class="QScrollArea" name="songListScrollArea">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>11</verstretch>
+        </sizepolicy>
+       </property>
        <property name="styleSheet">
         <string notr="true">background-color: #eeeeee;
 border: none;</string>

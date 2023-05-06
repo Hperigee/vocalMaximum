@@ -1,10 +1,11 @@
 from PyQt5.QtWidgets import *
 from PyQt5.uic import loadUi
-from PyQt5.QtCore import Qt
-from assets import SongFile, CustomScrollBar
-from SoundFormInfo import SoundFormInfo
+from PyQt5.QtCore import Qt, QFile, QTextStream
 import pickle
 import os
+import public_functions
+import assets
+
 
 # Load the UI file
 class MainWindow(QMainWindow):
@@ -19,29 +20,32 @@ class MainWindow(QMainWindow):
         self.sideTabStackedWidget = QStackedWidget(self)
         self.sideTab.layout().addWidget(self.sideTabStackedWidget)
 
-        self.SongListView = loadUi(".\\UI\\uiFiles\\SongListView.ui")
-        self.RecommendListView = loadUi(".\\UI\\uiFiles\\RecommendListView.ui")
-        self.Settings = loadUi(".\\UI\\uiFiles\\Settings.ui")
-        self.NullSongInfo = loadUi(".\\UI\\uiFiles\\NullSongInfo.ui")
+        self.SongListView = SongListView(self)
+        self.RecommendListView = RecommendListView()
+        self.Settings = Settings()
 
+        self.NullSongInfo = loadUi(".\\UI\\uiFiles\\NullSongInfo.ui")
         self.NullSongInfo.label.setAlignment(Qt.AlignCenter)
-        self._set_custom_scroll_bar()
 
         self.mainStackedWidget.addWidget(self.SongListView)
         self.mainStackedWidget.addWidget(self.RecommendListView)
         self.mainStackedWidget.addWidget(self.Settings)
         self.sideTabStackedWidget.addWidget(self.NullSongInfo)
 
+        self._get_qss()
+
         self.previous = None
 
         self.ui.homeButton.clicked.connect(lambda: self.mainStackedWidget.setCurrentWidget(self.SongListView))
         self.ui.recommendButton.clicked.connect(lambda: self.mainStackedWidget.setCurrentWidget(self.RecommendListView))
         self.ui.settingButton.clicked.connect(lambda: self.mainStackedWidget.setCurrentWidget(self.Settings))
-        self.Settings.resetButton.clicked.connect(lambda: self.open_dialog(".\\UI\\uiFiles\\ResetConfirm.ui"))
+        self.ui.homeButton.clicked.connect(self._home_selected)
+        self.ui.recommendButton.clicked.connect(self._recommend_selected)
+        self.ui.settingButton.clicked.connect(self._setting_selected)
 
         self.sideTabStackedWidget.setCurrentWidget(self.NullSongInfo)
 
-        # below is test code
+        # below is tested code
         folder_path = '.\\testData'
         file_list = [os.path.join(folder_path, f) for f in os.listdir(folder_path) if f.endswith('.dat')]
         data = []
@@ -52,158 +56,173 @@ class MainWindow(QMainWindow):
             file.close()
 
         for datum in data:
-            song_widget = SongFile(self._get_widget_number_from_song_list() + 1, datum)
-            song_widget.clicked.connect(self._handle_song_file_click)
-            self._add_widget_in_song_list(song_widget)
+            self.SongListView.add_widget_in_song_list(datum)
 
         del data
 
         self.show()
 
-    def open_dialog(self, uiName):
-        # Create a new window
-        new_window = NewDialog(uiName)
-        # Show the new window and wait for user response
-        result = new_window.exec_()
-        if result == QDialog.Accepted:
-            pass
-            # implement reset code
+    def _get_qss(self):
+        selected = QFile("UI/styleSheets/Selected.qss")
+        not_selected = QFile("UI/styleSheets/NotSelected.qss")
+        self.selected_style = ''
+        self.not_selected_style = ''
+        if selected.open(QFile.ReadOnly | QFile.Text):
+            stream1 = QTextStream(selected)
+            self.selected_style = stream1.readAll()
+        if not_selected.open(QFile.ReadOnly | QFile.Text):
+            stream2 = QTextStream(not_selected)
+            self.not_selected_style = stream2.readAll()
 
-    def _get_widget_number_from_song_list(self):
-        return self.SongListView.contentsLayout.count()
-
-    def _handle_song_file_click(self):
-        song = self.sender()
-        name = song.objectName()
-        # below is test code
-        directory = f'.\\testData\\{name}.dat'
-
-        with open(directory, 'rb') as file:
-            songInfo = pickle.load(file)
-        file.close()
-
-        self._show_sidetab(self._make_song_info_display(songInfo))
-
-    def _handle_record_button_click(self):
-
-        startMin = self.songInfo.StartMinuteValue.value()
-        startSec = self.songInfo.StartSecondValue.value()
-        stopMin = self.songInfo.StopMinuteValue.value()
-        stopSec = self.songInfo.StopSecondValue.value()
-
-
-        if stopMin*60+stopSec - startMin*60+startSec < 15 or stopMin*60+stopSec>self.secDuration+self.minuteDuration*60:
-            return
-        self._show_sidetab(self._make_record_display())
-        self._disable_mainButton()
-        self._disable_main_scroll_area()
-
-        # call scoring function
-
-    def _handle_record_cancel_button_click(self):
-        song = self.sender()
-        startMin = self.songInfo.StartMinuteValue.value()
-        startSec = self.songInfo.StartSecondValue.value()
-        stopMin = self.songInfo.StopMinuteValue.value()
-        stopSec = self.songInfo.StopSecondValue.value()
-
-        self._show_sidetab(self.previous)
-        self._enable_mainButton()
-        self._enable_main_scroll_area()
-
-        # call scoring function
-
-    def _remove_widget_from_song_list(self, i):
-        layout = self.SongListView.contentsLayout
-        widget = self.SongListView.contentsLayout.itemAt(i).widget()
-        layout.removeWidget(widget)
-        widget.deleteLater()
-        for j in range(i, self._get_widget_number_from_song_list()):
-            change = self.SongListView.contentsLayout.itemAt(j).widget()
-            change.label0.setText(str(j + 1))
-            change.update()
-
-    def _add_widget_in_song_list(self, song_widget):
-        layout = self.SongListView.contentsLayout
-        layout.addWidget(song_widget)
-
-    def _show_sidetab(self, ToDisplay):
+    def show_sidetab(self, ToDisplay):
         del self.previous
         self.previous = self.sideTabStackedWidget.widget(0)
         self.sideTabStackedWidget.removeWidget(self.sideTabStackedWidget.widget(0))
         self.sideTabStackedWidget.addWidget(ToDisplay)
         self.sideTabStackedWidget.setCurrentWidget(ToDisplay)
 
+    def _home_selected(self):
+        self.ui.homeButton.setStyleSheet(self.selected_style)
+        self.ui.recommendButton.setStyleSheet(self.not_selected_style)
+        self.ui.settingButton.setStyleSheet(self.not_selected_style)
+
+    def _recommend_selected(self):
+        self.ui.homeButton.setStyleSheet(self.not_selected_style)
+        self.ui.recommendButton.setStyleSheet(self.selected_style)
+        self.ui.settingButton.setStyleSheet(self.not_selected_style)
+
+    def _setting_selected(self):
+        self.ui.homeButton.setStyleSheet(self.not_selected_style)
+        self.ui.recommendButton.setStyleSheet(self.not_selected_style)
+        self.ui.settingButton.setStyleSheet(self.selected_style)
+
+    def disable_mainWidget(self):
+        self.mainWidget.setEnabled(False)
+
+    def enable_mainWidget(self):
+        self.mainWidget.setEnabled(True)
+
+
+class SongListView(QWidget):
+    def __init__(self,mainui):
+        super().__init__()
+        self.main=mainui
+        self.ui = loadUi(".\\UI\\uiFiles\\SongListView.ui")
+        self.ui.AddSong.clicked.connect(public_functions.open_file_dialog)
+        self.layout = self.ui.contentsLayout
+        self._set_custom_scroll_bar()
+        display = QHBoxLayout()
+        display.setContentsMargins(0, 0, 0, 0)
+        display.addWidget(self.ui)
+        self.setLayout(display)
+
+    def get_widget_number_from_song_list(self):
+        return self.layout.count()
+
+    def remove_widget_from_song_list(self, i):
+        widget = self.layout.itemAt(i).widget()
+        self.layout.removeWidget(widget)
+        widget.deleteLater()
+        for j in range(i, self.get_widget_number_from_song_list()):
+            change = self.layout.itemAt(j).widget()
+            change.label0.setText(str(j + 1))
+            change.update()
+
+    def add_widget_in_song_list(self, song_file):
+        song_widget = assets.SongFile(self.get_widget_number_from_song_list() + 1, song_file)
+        song_widget.clicked.connect(self._handle_song_file_click)
+        self.layout.addWidget(song_widget)
+
+    def _handle_song_file_click(self):
+        song = self.sender()
+        name = song.objectName()
+        # below is tested code
+        directory = f'.\\testData\\{name}.dat'
+
+        with open(directory, 'rb') as file:
+            song_info = pickle.load(file)
+        file.close()
+        self.main.show_sidetab(SongInfo(song_info, self.main))
+
     def _set_custom_scroll_bar(self):
-        scroll_area = self.SongListView.songListScrollArea
+        scroll_area = self.ui.songListScrollArea
         scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
-        custom_scrollbar = CustomScrollBar()
+        custom_scrollbar = assets.CustomScrollBar()
         scroll_area.setVerticalScrollBar(custom_scrollbar)
 
-    def _make_song_info_display(self, song):
+
+class SongInfo(QWidget):
+    def __init__(self, song, mainui):
+        super().__init__()
+
         song_name, artist, duration = song.name, song.artist, song.duration
+        self.main = mainui
+        self.ui = loadUi(".\\UI\\uiFiles\\SongInfo.ui")
 
-        self.songInfo = loadUi(".\\UI\\uiFiles\\SongInfo.ui")
+        public_functions.centering(self.ui)
 
-
-        self._centering(self.songInfo.songInfoContainer)
-        self._centering(self.songInfo)
-
-        self.songInfo.SongName.setText(song_name)
-        self.songInfo.Artist.setText(artist)
-        self.songInfo.Duration.setText(duration)
+        self.ui.SongName.setText(song_name)
+        self.ui.Artist.setText(artist)
+        self.ui.Duration.setText(duration)
         self.minuteDuration = int(duration[:2])
         self.secDuration = int(duration[3:])
-        self.songInfo.StopMinuteValue.setMaximum(self.minuteDuration)
+        self.ui.StopMinuteValue.setMaximum(self.minuteDuration)
+
+        self.ui.RecordButton.clicked.connect(self._handle_record_button_click)
+        self.ui.UploadButton.clicked.connect(public_functions.open_file_dialog)
+
+        display = QHBoxLayout()
+        display.setContentsMargins(0, 0, 0, 0)
+        display.addWidget(self.ui)
+        self.setLayout(display)
+
+    def _handle_record_button_click(self):
+        startMin = self.ui.StartMinuteValue.value()
+        startSec = self.ui.StartSecondValue.value()
+        stopMin = self.ui.StopMinuteValue.value()
+        stopSec = self.ui.StopSecondValue.value()
+
+        if stopMin * 60 + stopSec - startMin * 60 + startSec < 15 or stopMin * 60 + stopSec > self.secDuration + self.minuteDuration * 60:
+            return
+
+        self.main.show_sidetab(RecordDisplay(self.main))
+        self.main.disable_mainWidget()
+
+        # call scoring function
 
 
-        self.songInfo.RecordButton.clicked.connect(self._handle_record_button_click)
-
-        return self.songInfo
-
-    def _make_record_display(self):
-        self.record_display = loadUi(".\\UI\\uiFiles\\Recording.ui")
-        self.record_display.CancelButton.clicked.connect(self._handle_record_cancel_button_click)
-        return self.record_display
-
-    def _disable_mainButton(self):
-        widgets=self.ui.buttonWidget
-        self._disable_button(widgets)
-
-    def _enable_mainButton(self):
-        widgets=self.ui.buttonWidget
-        self._enable_button(widgets)
-
-    def _disable_main_scroll_area(self):
-        widgets = self.SongListView
-        self._disable_scroll_bar(widgets)
-    def _enable_main_scroll_area(self):
-        widgets = self.SongListView
-        self._enable_scroll_bar(widgets)
-    def _disable_button(self,widgets):
-        for widget in widgets.findChildren(QPushButton):
-            widget.setEnabled(False)
-
-    def _enable_button(self,widgets):
-        for widget in widgets.findChildren(QPushButton):
-            widget.setEnabled(True)
-    def _disable_scroll_bar(self,widgets):
-        for widget in widgets.findChildren(QScrollArea):
-            widget.setEnabled(False)
-    def _enable_scroll_bar(self,widgets):
-        for widget in widgets.findChildren(QScrollArea):
-            widget.setEnabled(True)
-    def _centering(self,widgets):
-        for widget in widgets.findChildren(QLabel):
-            widget.setAlignment(Qt.AlignCenter)
-class NewDialog(QDialog):
-    def __init__(self, uiName):
+class RecordDisplay(QWidget):
+    def __init__(self, mainui):
         super().__init__()
-        self.ui = loadUi(uiName, self)
-        self.ui.buttonBox.accepted.connect(self.accept)
-        self.ui.buttonBox.rejected.connect(self.reject)
-        self.show()
+        self.main = mainui
+        self.ui = loadUi(".\\UI\\uiFiles\\Recording.ui")
+        self.ui.CancelButton.clicked.connect(self._handle_record_cancel_button_click)
+        display = QHBoxLayout()
+        display.setContentsMargins(0, 0, 0, 0)
+        display.addWidget(self.ui)
+        self.setLayout(display)
+
+    def _handle_record_cancel_button_click(self):
+        self.main.show_sidetab(self.main.previous)
+        self.main.enable_mainWidget()
 
 
-def _profile_exist():
-    return False
+class RecommendListView(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.ui = loadUi(".\\UI\\uiFiles\\RecommendListView.ui")
+        display = QHBoxLayout()
+        display.setContentsMargins(0, 0, 0, 0)
+        display.addWidget(self.ui)
+        self.setLayout(display)
+
+
+class Settings(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.ui = loadUi(".\\UI\\uiFiles\\Settings.ui")
+        self.ui.resetButton.clicked.connect(public_functions.open_ok_or_cancel_dialog)
+        display = QHBoxLayout()
+        display.setContentsMargins(0, 0, 0, 0)
+        display.addWidget(self.ui)
+        self.setLayout(display)

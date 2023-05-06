@@ -1,0 +1,19 @@
+QPushButton {
+                        background-color: rgb(7, 3, 122);
+                        border-radius: 15px;
+						color: white;
+
+	font: 12pt "Noto Sans KR";
+                        }
+
+                    QPushButton:hover {
+                        background-color: rgb(42, 1, 179);
+                        }
+
+                    QPushButton:pressed {
+                        background-color: rgb(97, 108, 255);
+                        }
+
+					QPushButton:disabled {
+                        background-color: rgb(167, 167, 167);
+                        }

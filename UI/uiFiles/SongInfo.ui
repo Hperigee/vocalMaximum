@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>366</width>
-    <height>543</height>
+    <height>562</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -414,6 +414,96 @@ border-radius: 40px;</string>
       <property name="bottomMargin">
        <number>18</number>
       </property>
+      <item row="1" column="0">
+       <widget class="QWidget" name="StartTimeSet" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>3</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 12pt &quot;Noto Sans KR&quot;;
+color:black;
+background-color: white;
+border-radius: 15px;
+text-align: center;</string>
+        </property>
+        <layout class="QGridLayout" name="DurationSetGrid_1">
+         <item row="2" column="2">
+          <widget class="QLabel" name="StartSecond">
+           <property name="styleSheet">
+            <string notr="true">font: 12pt &quot;Noto Sans KR&quot;;</string>
+           </property>
+           <property name="text">
+            <string>초</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QLabel" name="StartMinute">
+           <property name="styleSheet">
+            <string notr="true">font: 12pt &quot;Noto Sans KR&quot;;</string>
+           </property>
+           <property name="text">
+            <string>분</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QSpinBox" name="StartMinuteValue">
+           <property name="styleSheet">
+            <string notr="true">font: 11pt &quot;Noto Sans KR&quot;;
+border: 1px solid black;
+border-radius:0px;</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+           <property name="buttonSymbols">
+            <enum>QAbstractSpinBox::NoButtons</enum>
+           </property>
+           <property name="maximum">
+            <number>59</number>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QSpinBox" name="StartSecondValue">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <horstretch>3</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="layoutDirection">
+            <enum>Qt::LeftToRight</enum>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">font: 11pt &quot;Noto Sans KR&quot;;
+border: 1px solid black;
+border-radius:0px;</string>
+           </property>
+           <property name="wrapping">
+            <bool>false</bool>
+           </property>
+           <property name="frame">
+            <bool>false</bool>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+           <property name="buttonSymbols">
+            <enum>QAbstractSpinBox::NoButtons</enum>
+           </property>
+           <property name="maximum">
+            <number>59</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
       <item row="1" column="1">
        <widget class="QWidget" name="StopTimeSet" native="true">
         <property name="styleSheet">
@@ -512,96 +602,6 @@ text-align: center;</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
-       <widget class="QWidget" name="StartTimeSet" native="true">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>3</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font: 12pt &quot;Noto Sans KR&quot;;
-color:black;
-background-color: white;
-border-radius: 15px;
-text-align: center;</string>
-        </property>
-        <layout class="QGridLayout" name="DurationSetGrid_1">
-         <item row="2" column="2">
-          <widget class="QLabel" name="StartSecond">
-           <property name="styleSheet">
-            <string notr="true">font: 12pt &quot;Noto Sans KR&quot;;</string>
-           </property>
-           <property name="text">
-            <string>초</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="2">
-          <widget class="QLabel" name="StartMinute">
-           <property name="styleSheet">
-            <string notr="true">font: 12pt &quot;Noto Sans KR&quot;;</string>
-           </property>
-           <property name="text">
-            <string>분</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QSpinBox" name="StartMinuteValue">
-           <property name="styleSheet">
-            <string notr="true">font: 11pt &quot;Noto Sans KR&quot;;
-border: 1px solid black;
-border-radius:0px;</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-           <property name="buttonSymbols">
-            <enum>QAbstractSpinBox::NoButtons</enum>
-           </property>
-           <property name="maximum">
-            <number>59</number>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QSpinBox" name="StartSecondValue">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-             <horstretch>3</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="layoutDirection">
-            <enum>Qt::LeftToRight</enum>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">font: 11pt &quot;Noto Sans KR&quot;;
-border: 1px solid black;
-border-radius:0px;</string>
-           </property>
-           <property name="wrapping">
-            <bool>false</bool>
-           </property>
-           <property name="frame">
-            <bool>false</bool>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-           <property name="buttonSymbols">
-            <enum>QAbstractSpinBox::NoButtons</enum>
-           </property>
-           <property name="maximum">
-            <number>59</number>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
       <item row="0" column="0">
        <widget class="QLabel" name="StartText">
         <property name="sizePolicy">
@@ -622,6 +622,17 @@ text-align: center;</string>
         </property>
        </widget>
       </item>
+      <item row="2" column="0" colspan="2">
+       <widget class="QLabel" name="label_12">
+        <property name="styleSheet">
+         <string notr="true">font: 10pt &quot;Noto Sans KR&quot;;
+color:white;</string>
+        </property>
+        <property name="text">
+         <string>노래를 부를 구간을 선택해주세요</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -630,7 +641,7 @@ text-align: center;</string>
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
        <horstretch>0</horstretch>
-       <verstretch>4</verstretch>
+       <verstretch>2</verstretch>
       </sizepolicy>
      </property>
      <property name="styleSheet">
@@ -640,7 +651,7 @@ text-align: center;</string>
 
 QPushButton {
                         background-color: white;
-                        border-radius: 40px;
+                        border-radius: 20px;
 						background-color:rgb(124, 124, 124);
 						font: 20pt &quot;Noto Sans KR&quot;;
 						color: white;
@@ -657,6 +668,41 @@ QPushButton {
      </property>
      <property name="text">
       <string>Record</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="UploadButton">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>2</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">
+
+
+
+QPushButton {
+                        background-color: white;
+                        border-radius: 20px;
+						background-color:rgb(124, 124, 124);
+						font: 20pt &quot;Noto Sans KR&quot;;
+						color: white;
+                        }
+
+                    QPushButton:hover {
+                        background-color: rgb(171, 171, 171);
+                        }
+
+                    QPushButton:pressed {
+                        background-color: rgb(63, 63, 63);
+                        }
+	</string>
+     </property>
+     <property name="text">
+      <string>Upload</string>
      </property>
     </widget>
    </item>
