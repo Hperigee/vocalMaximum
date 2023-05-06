@@ -1,11 +1,13 @@
 from  SoundFormInfo import SoundFormInfo
 import pickle
 
-for i in range(100):
+testlist=[]
+for i in range(5000):
     example=SoundFormInfo(f"exampleSound{i}", "artist")
+    testlist.append(example)
 
-    with open(f'.\\testData\\exampleSound{i}.dat', 'wb') as file:
-        pickle.dump(example, file)
-        del example
+with open(f'.\\testData\\exampleSoundList.dat', 'wb') as file:
+    pickle.dump(testlist, file)
+    del testlist
 
-    file.close()
+file.close()

@@ -56,11 +56,12 @@ class MainWindow(QMainWindow):
                 songInfo = pickle.load(file)
                 data.append(songInfo)
             file.close()
+        songlist=data[0]
 
-        for i in range(len(data)):
-            self.SongListView.add_widget_in_song_list(data[i])
+        for i in range(len(songlist)):
+            self.SongListView.add_widget_in_song_list(songlist[i])
         for i in range(0, len(data), 2):
-            self.RecommendListView.add_widget_in_recommend_list(data[i])
+            self.RecommendListView.add_widget_in_recommend_list(songlist[i])
         del data
 
         self.show()

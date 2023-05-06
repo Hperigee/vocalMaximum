@@ -1,7 +1,6 @@
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import QFile, QTextStream
-from PyQt5.uic import loadUi
-
+from PyQt5.QtCore import QFile, QTextStream, Qt
+import public_functions
 
 
 class SongFile(QPushButton):
@@ -20,11 +19,13 @@ class SongFile(QPushButton):
         self.label1.setObjectName("name")
         self.label2.setObjectName("artist")
         self.label3.setObjectName("duration")
+        self.label0.setFixedWidth(50)
 
         self.label1.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.label2.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        spacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        public_functions.centering(self.label0)
+        spacer2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         filename = "UI/styleSheets/SongFile.qss"
         file = QFile(filename)
@@ -36,16 +37,17 @@ class SongFile(QPushButton):
 
         layout = QHBoxLayout()
         layout.setContentsMargins(30, 10, 30, 10)
-        layout.setSpacing(30)
+        layout.setSpacing(10)
         vlayout = QVBoxLayout()
         vlayout.setSpacing(0)
 
         # Add the labels and spacer to the layout
+
         vlayout.addWidget(self.label1)
         vlayout.addWidget(self.label2)
         layout.addWidget(self.label0)
         layout.addLayout(vlayout)
-        layout.addItem(spacer)
+        layout.addItem(spacer2)
         layout.addWidget(self.label3)
         self.setLayout(layout)
 

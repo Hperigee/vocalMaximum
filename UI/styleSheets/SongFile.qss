@@ -16,6 +16,7 @@
         background-color: transparent;
         font: 10pt "Noto Sans KR medium";
         color:#444444;
+
         }
 
         QLabel#name{
