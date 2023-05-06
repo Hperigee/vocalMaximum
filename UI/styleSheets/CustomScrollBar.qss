@@ -1,5 +1,6 @@
 QScrollBar:vertical {
                                 background: transparent;
+                                background-color:#eee;
                                 width: 60px;
                                 margin: 30px 20px 30px 20px;
                                 border: none;
@@ -18,14 +19,14 @@ QScrollBar:vertical {
                             }
 
                             QScrollBar::add-line:vertical {
-                                background: #f1f1f1;
+                                background: #eee;
                                 height: 0px;
                                 subcontrol-position: bottom;
                                 subcontrol-origin: margin;
                             }
 
                             QScrollBar::sub-line:vertical {
-                                background: #f1f1f1;
+                                background: #eee;
                                 height: 0px;
                                 subcontrol-position: top;
                                 subcontrol-origin: margin;
@@ -33,3 +34,8 @@ QScrollBar:vertical {
 
                             QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
                                 background: none;
+                            }
+
+                            QScrollBar::handle:vertical:disabled {
+                                background: #999;
+                            }
