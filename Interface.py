@@ -58,10 +58,17 @@ class MainWindow(QMainWindow):
             file.close()
         self.songlist=data[0]
 
+        self.song_widget_list=[]
         for i in range(len(self.songlist)):
-            self.SongListView.add_widget_in_song_list(self.songlist[i])
-        for i in range(0, len(data), 2):
-            self.RecommendListView.add_widget_in_recommend_list(self.songlist[i])
+            song_widget = assets.SongFile(len(self.song_widget_list)+ 1, self.songlist[i])
+            song_widget.clicked.connect(self._handle_song_file_click)
+            self.song_widget_list.append(song_widget)
+            self.SongListView.add_widget_in_song_list(song_widget)
+
+
+        del self.songlist
+
+
 
         self.show()
 
@@ -109,6 +116,12 @@ class MainWindow(QMainWindow):
     def enable_window(self):
         self.setEnabled(True)
 
+    def _handle_song_file_click(self):
+        song = self.sender()
+        name = song.objectName()
+        # below is tested code
+        self.show_sidetab(SongInfo(song.root_file, self))
+
 
 class SongListView(QWidget):
     def __init__(self, mainui):
@@ -125,47 +138,45 @@ class SongListView(QWidget):
         self.setLayout(display)
 
     def search_in_whole_list(self):
-        name=self.ui.Search.text()
-        to_display=public_functions.search(self.main.songlist,name)
-        self.remove_whole_list()
-        for i in range(len(to_display)):
-            self.add_widget_in_song_list(to_display[i])
+        name = self.ui.Search.text()
+
+        if name == '':
+            # Show all widgets
+            for widget in self.main.song_widget_list:
+                widget.show()
+                self.layout.addWidget(widget)
+        else:
+            self.to_display = public_functions.search(self.main.song_widget_list, name)
+
+            # Hide all widgets
+            for widget in self.main.song_widget_list:
+                widget.hide()
+                self.layout.removeWidget(widget)
+
+            # Show widgets in search results
+            for widget in self.to_display:
+                widget.show()
+                self.layout.addWidget(widget)
+
+        self.update_index()
     def get_widget_number_from_song_list(self):
         return self.layout.count()
 
     def remove_widget_from_song_list(self, i):
         widget = self.layout.itemAt(i).widget()
         self.layout.removeWidget(widget)
-        widget.deleteLater()
-        for j in range(i, self.get_widget_number_from_song_list()):
-            change = self.layout.itemAt(j).widget()
-            change.label0.setText(str(j + 1))
-            change.update()
+        self.update_index()
 
-    def remove_whole_list(self):
-        for x in range(self.get_widget_number_from_song_list()):
-            widget = self.layout.itemAt(0).widget()
-            self.layout.removeWidget(widget)
-            widget.deleteLater()
+    def update_index(self):
+        visible_widget_count = 0
+        for index, widget in enumerate(self.to_display):
+            visible_widget_count += 1
+            widget.label0.setText(str(visible_widget_count))
+            widget.update()
 
-    def add_widget_in_song_list(self, song_file):
-        song_widget = assets.SongFile(self.get_widget_number_from_song_list() + 1, song_file)
-        song_widget.clicked.connect(self._handle_song_file_click)
+    def add_widget_in_song_list(self, song_widget):
         self.layout.addWidget(song_widget)
         self.layout.update()
-
-    def _handle_song_file_click(self):
-        song = self.sender()
-        name = song.objectName()
-        # below is tested code
-        index=0
-        for i in range(len(self.main.songlist)):
-            if self.main.songlist[i].name == name:
-                index=i
-                break
-
-
-        self.main.show_sidetab(SongInfo(self.main.songlist[index], self.main))
 
     def _set_custom_scroll_bar(self):
         scroll_area = self.ui.songListScrollArea
@@ -198,6 +209,7 @@ class SongInfo(QWidget):
         display.setContentsMargins(0, 0, 0, 0)
         display.addWidget(self.ui)
         self.setLayout(display)
+
 
     def _handle_record_button_click(self):
         startMin = self.ui.StartMinuteValue.value()
@@ -265,7 +277,6 @@ class RecommendListView(QWidget):
         for x in range(self.get_widget_number_from_recommend_list()):
             widget = self.layout.itemAt(0).widget()
             self.layout.removeWidget(widget)
-            widget.deleteLater()
 
     def change_widget(self):
         if public_functions.profile_exist():
@@ -283,24 +294,11 @@ class RecommendListView(QWidget):
             change.label0.setText(str(j + 1))
             change.update()
 
-    def add_widget_in_recommend_list(self, song_file):
-        song_widget = assets.SongFile(self.get_widget_number_from_recommend_list() + 1, song_file)
-        song_widget.clicked.connect(self._handle_song_file_click)
-
+    def add_widget_in_recommend_list(self, song_widget):
         self.layout.addWidget(song_widget)
         self.layout.update()
 
-    def _handle_song_file_click(self):
-        song = self.sender()
-        name = song.objectName()
-        # below is tested code
-        index = 0
-        for i in range(len(self.main.songlist)):
-            if self.main.songlist[i].name == name:
-                index = i
-                break
 
-        self.main.show_sidetab(SongInfo(self.main.songlist[index], self.main))
 
     def _set_custom_scroll_bar(self):
         scroll_area = self.RecommendListScrollArea

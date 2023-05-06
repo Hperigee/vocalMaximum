@@ -2,7 +2,7 @@ from  SoundFormInfo import SoundFormInfo
 import pickle
 
 testlist=[]
-for i in range(100):
+for i in range(10000):
     example=SoundFormInfo(f"exampleSound{i}", "artist")
     testlist.append(example)
 

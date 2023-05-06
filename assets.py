@@ -9,6 +9,7 @@ class SongFile(QPushButton):
         super().__init__()
         self.setFixedHeight(80)
         name, artist, duration = song.name, song.artist, song.duration
+        self.root_file=song
         self.setObjectName(name)
         self.label0 = QLabel(str(i))
         self.label1 = QLabel(name)

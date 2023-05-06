@@ -174,7 +174,7 @@ font: 12pt &quot;Noto Sans KR&quot;;</string>
         <item>
          <widget class="QStackedWidget" name="stackedWidget">
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="makeProfile">
            <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -218,13 +218,16 @@ record to make a profile.</string>
               <property name="widgetResizable">
                <bool>true</bool>
               </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+              </property>
               <widget class="QWidget" name="scrollAreaWidgetContents">
                <property name="geometry">
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>98</width>
-                 <height>28</height>
+                 <width>396</width>
+                 <height>304</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_2"/>
