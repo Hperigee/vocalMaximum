@@ -634,14 +634,14 @@ border-radius:0px;</string>
       <string notr="true">QPushButton {
                         background-color: white;
                         border-radius: 20px;
-						background-color:rgb(236, 236, 236);
+						background-color:transparent;
 						font: 20pt &quot;Noto Sans KR black&quot;;
 						color: black;
 border:none;
                         }
 
                     QPushButton:hover {
-                        background-color: rgb(171, 171, 171);
+                        background-color: rgb(236, 236, 236);
                         }
 
                     QPushButton:pressed {
@@ -666,14 +666,14 @@ border:none;
       <string notr="true">QPushButton {
                         background-color: white;
                         border-radius: 20px;
-						background-color:rgb(236, 236, 236);
+						background-color:transparent;
 						font: 20pt &quot;Noto Sans KR black&quot;;
 						color: black;
-border:none
+border:none;
                         }
 
                     QPushButton:hover {
-                        background-color: rgb(171, 171, 171);
+                        background-color: rgb(236, 236, 236);
                         }
 
                     QPushButton:pressed {
