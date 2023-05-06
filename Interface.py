@@ -56,13 +56,12 @@ class MainWindow(QMainWindow):
                 songInfo = pickle.load(file)
                 data.append(songInfo)
             file.close()
-        songlist=data[0]
+        self.songlist=data[0]
 
-        for i in range(len(songlist)):
-            self.SongListView.add_widget_in_song_list(songlist[i])
+        for i in range(len(self.songlist)):
+            self.SongListView.add_widget_in_song_list(self.songlist[i])
         for i in range(0, len(data), 2):
-            self.RecommendListView.add_widget_in_recommend_list(songlist[i])
-        del data
+            self.RecommendListView.add_widget_in_recommend_list(self.songlist[i])
 
         self.show()
 
@@ -146,12 +145,14 @@ class SongListView(QWidget):
         song = self.sender()
         name = song.objectName()
         # below is tested code
-        directory = f'.\\testData\\{name}.dat'
+        index=0
+        for i in range(len(self.main.songlist)):
+            if self.main.songlist[i].name == name:
+                index=i
+                break
 
-        with open(directory, 'rb') as file:
-            song_info = pickle.load(file)
-        file.close()
-        self.main.show_sidetab(SongInfo(song_info, self.main))
+
+        self.main.show_sidetab(SongInfo(self.main.songlist[index], self.main))
 
     def _set_custom_scroll_bar(self):
         scroll_area = self.ui.songListScrollArea
@@ -267,12 +268,13 @@ class RecommendListView(QWidget):
         song = self.sender()
         name = song.objectName()
         # below is tested code
-        directory = f'.\\testData\\{name}.dat'
+        index = 0
+        for i in range(len(self.main.songlist)):
+            if self.main.songlist[i].name == name:
+                index = i
+                break
 
-        with open(directory, 'rb') as file:
-            song_info = pickle.load(file)
-        file.close()
-        self.main.show_sidetab(SongInfo(song_info, self.main))
+        self.main.show_sidetab(SongInfo(self.main.songlist[index], self.main))
 
     def _set_custom_scroll_bar(self):
         scroll_area = self.RecommendListScrollArea
