@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import *
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import Qt, QFile, QTextStream
+from Resources_rc import *
 import pickle
 import os
 import public_functions
@@ -21,7 +22,7 @@ class MainWindow(QMainWindow):
         self.sideTab.layout().addWidget(self.sideTabStackedWidget)
 
         self.SongListView = SongListView(self)
-        self.RecommendListView = RecommendListView()
+        self.RecommendListView = RecommendListView(self)
         self.Settings = Settings()
 
         self.NullSongInfo = loadUi(".\\UI\\uiFiles\\NullSongInfo.ui")
@@ -37,6 +38,7 @@ class MainWindow(QMainWindow):
         self.previous = None
 
         self.ui.homeButton.clicked.connect(lambda: self.mainStackedWidget.setCurrentWidget(self.SongListView))
+        self.ui.recommendButton.clicked.connect(self.RecommendListView.change_widget)
         self.ui.recommendButton.clicked.connect(lambda: self.mainStackedWidget.setCurrentWidget(self.RecommendListView))
         self.ui.settingButton.clicked.connect(lambda: self.mainStackedWidget.setCurrentWidget(self.Settings))
         self.ui.homeButton.clicked.connect(self._home_selected)
@@ -55,9 +57,10 @@ class MainWindow(QMainWindow):
                 data.append(songInfo)
             file.close()
 
-        for datum in data:
-            self.SongListView.add_widget_in_song_list(datum)
-
+        for i in range(len(data)):
+            self.SongListView.add_widget_in_song_list(data[i])
+        for i in range(0, len(data), 2):
+            self.RecommendListView.add_widget_in_recommend_list(data[i])
         del data
 
         self.show()
@@ -104,9 +107,9 @@ class MainWindow(QMainWindow):
 
 
 class SongListView(QWidget):
-    def __init__(self,mainui):
+    def __init__(self, mainui):
         super().__init__()
-        self.main=mainui
+        self.main = mainui
         self.ui = loadUi(".\\UI\\uiFiles\\SongListView.ui")
         self.ui.AddSong.clicked.connect(public_functions.open_file_dialog)
         self.layout = self.ui.contentsLayout
@@ -132,6 +135,7 @@ class SongListView(QWidget):
         song_widget = assets.SongFile(self.get_widget_number_from_song_list() + 1, song_file)
         song_widget.clicked.connect(self._handle_song_file_click)
         self.layout.addWidget(song_widget)
+        self.layout.update()
 
     def _handle_song_file_click(self):
         song = self.sender()
@@ -208,13 +212,68 @@ class RecordDisplay(QWidget):
 
 
 class RecommendListView(QWidget):
-    def __init__(self):
+    def __init__(self, mainui):
         super().__init__()
+        self.main = mainui
         self.ui = loadUi(".\\UI\\uiFiles\\RecommendListView.ui")
+
+        self.StackedWidget = self.ui.stackedWidget
+
+        self.layout = self.ui.scrollAreaWidgetContents.layout()
+        self.RecommendListScrollArea = self.ui.RecommendListScrollArea
+        self.RecommendListScrollArea_widget = self.ui.RecommendListWidget
+
+        self.make_profile_widget = self.ui.makeProfile
+        public_functions.centering(self.make_profile_widget)
+
+        self.StackedWidget.setCurrentWidget(self.make_profile_widget)
+
+        self._set_custom_scroll_bar()
+
         display = QHBoxLayout()
         display.setContentsMargins(0, 0, 0, 0)
         display.addWidget(self.ui)
         self.setLayout(display)
+
+    def change_widget(self):
+        if public_functions.profile_exist():
+            self.StackedWidget.setCurrentWidget(self.RecommendListScrollArea_widget)
+
+    def get_widget_number_from_recommend_list(self):
+        return self.layout.count()
+
+    def remove_widget_from_recommend_list(self, i):
+        widget = self.layout.itemAt(i).widget()
+        self.layout.removeWidget(widget)
+        widget.deleteLater()
+        for j in range(i, self.get_widget_number_from_recommend_list()):
+            change = self.layout.itemAt(j).widget()
+            change.label0.setText(str(j + 1))
+            change.update()
+
+    def add_widget_in_recommend_list(self, song_file):
+        song_widget = assets.SongFile(self.get_widget_number_from_recommend_list() + 1, song_file)
+        song_widget.clicked.connect(self._handle_song_file_click)
+
+        self.layout.addWidget(song_widget)
+        self.layout.update()
+
+    def _handle_song_file_click(self):
+        song = self.sender()
+        name = song.objectName()
+        # below is tested code
+        directory = f'.\\testData\\{name}.dat'
+
+        with open(directory, 'rb') as file:
+            song_info = pickle.load(file)
+        file.close()
+        self.main.show_sidetab(SongInfo(song_info, self.main))
+
+    def _set_custom_scroll_bar(self):
+        scroll_area = self.RecommendListScrollArea
+        scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        custom_scrollbar = assets.CustomScrollBar()
+        scroll_area.setVerticalScrollBar(custom_scrollbar)
 
 
 class Settings(QWidget):

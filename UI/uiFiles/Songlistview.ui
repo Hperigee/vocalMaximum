@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>339</width>
-    <height>335</height>
+    <height>300</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -53,53 +53,6 @@ border-bottom: 1px solid #555;</string>
         <enum>QFrame::Raised</enum>
        </property>
        <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="0">
-         <spacer name="horizontalSpacer">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::Fixed</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="0" column="1">
-         <widget class="QLabel" name="songListLabel">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-            <horstretch>1</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="font">
-           <font>
-            <family>Noto Sans KR medium</family>
-            <pointsize>16</pointsize>
-            <weight>50</weight>
-            <italic>false</italic>
-            <bold>false</bold>
-            <stylestrategy>PreferAntialias</stylestrategy>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">font: 16pt &quot;Noto Sans KR medium&quot;;
-color: #000;
-border:none;</string>
-          </property>
-          <property name="text">
-           <string>Songlist</string>
-          </property>
-         </widget>
-        </item>
         <item row="0" column="4">
          <widget class="QPushButton" name="AddSong">
           <property name="sizePolicy">
@@ -145,8 +98,24 @@ border:none;
           </property>
          </widget>
         </item>
+        <item row="0" column="0">
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
         <item row="0" column="2">
-         <widget class="QLineEdit" name="lineEdit">
+         <widget class="QLineEdit" name="Search">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
             <horstretch>3</horstretch>
@@ -162,7 +131,7 @@ font: 12pt &quot;Noto Sans KR&quot;;</string>
          </widget>
         </item>
         <item row="0" column="3">
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="SearchButton">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
             <horstretch>1</horstretch>
@@ -195,6 +164,37 @@ font: 12pt &quot;Noto Sans KR&quot;;</string>
           </property>
          </widget>
         </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="songListLabel">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>1</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="font">
+           <font>
+            <family>Noto Sans KR medium</family>
+            <pointsize>16</pointsize>
+            <weight>50</weight>
+            <italic>false</italic>
+            <bold>false</bold>
+            <stylestrategy>PreferAntialias</stylestrategy>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font: 16pt &quot;Noto Sans KR medium&quot;;
+color: #000;
+border:none;</string>
+          </property>
+          <property name="text">
+           <string>Songlist</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
      </item>
@@ -219,7 +219,7 @@ border: none;</string>
           <x>0</x>
           <y>0</y>
           <width>337</width>
-          <height>282</height>
+          <height>247</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="contentsLayout">

@@ -15,7 +15,6 @@ class OkOrCancelDialog(QDialog):
 def profile_exist():
     return False
 
-
 def open_file_dialog():
     file_dialog = QFileDialog()
     file_path, _ = file_dialog.getOpenFileName(None, "Open File")
