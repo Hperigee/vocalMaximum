@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1094</width>
-    <height>460</height>
+    <height>470</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -105,7 +105,8 @@
          <item>
           <widget class="QFrame" name="buttonFrame">
            <property name="styleSheet">
-            <string notr="true">background-color:rgb(214, 214, 214)</string>
+            <string notr="true">background-color: white;
+border-bottom: 3px solid rgb(240, 240, 240);</string>
            </property>
            <property name="frameShape">
             <enum>QFrame::StyledPanel</enum>
@@ -128,6 +129,9 @@
             </property>
             <item>
              <widget class="QWidget" name="buttonWidget" native="true">
+              <property name="styleSheet">
+               <string notr="true">border:none;</string>
+              </property>
               <layout class="QHBoxLayout" name="buttonLayout">
                <property name="spacing">
                 <number>10</number>
@@ -148,8 +152,8 @@
                  </property>
                  <property name="font">
                   <font>
-                   <family>Noto Sans KR</family>
-                   <pointsize>12</pointsize>
+                   <family>Noto Sans KR Black</family>
+                   <pointsize>14</pointsize>
                    <weight>50</weight>
                    <italic>false</italic>
                    <bold>false</bold>
@@ -161,7 +165,7 @@
                         border-radius: 15px;
 						color: white;
 						
-	font: 12pt &quot;Noto Sans KR&quot;;
+	font: 14pt &quot;Noto Sans KR Black&quot;;
                         }
 
                     QPushButton:hover {
@@ -197,8 +201,8 @@
                  </property>
                  <property name="font">
                   <font>
-                   <family>Noto Sans KR</family>
-                   <pointsize>12</pointsize>
+                   <family>Noto Sans KR Black</family>
+                   <pointsize>14</pointsize>
                    <weight>50</weight>
                    <italic>false</italic>
                    <bold>false</bold>
@@ -209,11 +213,11 @@
                         background-color: white;
                         border-radius: 15px;
 						color: rgb(7, 3, 122);
-	font: 12pt &quot;Noto Sans KR&quot;;
+font: 14pt &quot;Noto Sans KR Black&quot;;
                         }
 
                     QPushButton:hover {
-                        background-color: rgb(244, 244, 244);
+                        background-color: rgb(236, 236, 236);
                         }
 
                     QPushButton:pressed {
@@ -244,8 +248,8 @@
                  </property>
                  <property name="font">
                   <font>
-                   <family>Noto Sans KR</family>
-                   <pointsize>12</pointsize>
+                   <family>Noto Sans KR Black</family>
+                   <pointsize>14</pointsize>
                    <weight>50</weight>
                    <italic>false</italic>
                    <bold>false</bold>
@@ -256,11 +260,11 @@
                         background-color: white;
                         border-radius: 15px;
 						color: rgb(7, 3, 122);
-	font: 12pt &quot;Noto Sans KR&quot;;
+font: 14pt &quot;Noto Sans KR Black&quot;;
                         }
 
                     QPushButton:hover {
-                        background-color: rgb(244, 244, 244);
+                        background-color: rgb(236, 236, 236);
                         }
 
                     QPushButton:pressed {

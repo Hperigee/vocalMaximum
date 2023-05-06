@@ -14,7 +14,8 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color:rgb(186, 186, 186);</string>
+   <string notr="true">background-color: white;
+border-right: 3px solid  rgb(220, 220, 220);</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
@@ -38,10 +39,11 @@
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color:rgb(124, 124, 124);
+      <string notr="true">background-color:rgb(236, 236, 236);
 border-radius: 40px;
-color:white;
-font: 14pt &quot;Noto Sans KR&quot;;</string>
+color: black;
+font: 14pt &quot;Noto Sans KR medium&quot;;
+border: none;</string>
      </property>
      <property name="text">
       <string>Select Song to See Info</string>

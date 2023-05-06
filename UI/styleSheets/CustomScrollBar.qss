@@ -1,6 +1,6 @@
 QScrollBar:vertical {
                                 background: transparent;
-                                background-color:#eee;
+                                background-color: white;
                                 width: 60px;
                                 margin: 30px 20px 30px 20px;
                                 border: none;

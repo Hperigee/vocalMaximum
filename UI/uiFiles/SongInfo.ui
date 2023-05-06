@@ -20,7 +20,8 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color:rgb(186, 186, 186);</string>
+   <string notr="true">background-color: white;
+border-right: 3px solid  rgb(240, 240, 240);</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -47,8 +48,9 @@
       </sizepolicy>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color:rgb(124, 124, 124);
-border-radius: 40px;</string>
+      <string notr="true">background-color: transparent;
+border-radius: 40px;
+border:none</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <property name="spacing">
@@ -75,7 +77,7 @@ border-radius: 40px;</string>
          </sizepolicy>
         </property>
         <property name="styleSheet">
-         <string notr="true">font:11pt &quot;Noto Sans KR&quot;;
+         <string notr="true">font:11pt &quot;Noto Sans KR black&quot;;
 color:white;
 background-color:rgb(7, 3, 122);
 border-radius: 15px;
@@ -95,9 +97,9 @@ align: center;</string>
          </sizepolicy>
         </property>
         <property name="styleSheet">
-         <string notr="true">font: 11pt &quot;Noto Sans KR&quot;;
-color: rgb(85, 85, 85);
-background-color: rgb(229, 229, 229);
+         <string notr="true">font: 9pt &quot;Noto Sans KR medium&quot;;
+color:black;
+background-color: transparent;
 border-radius: 15px;
 text-align: center;</string>
         </property>
@@ -114,12 +116,13 @@ text-align: center;</string>
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
-       <verstretch>8</verstretch>
+       <verstretch>10</verstretch>
       </sizepolicy>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color:rgb(124, 124, 124);
-border-radius: 40px;</string>
+      <string notr="true">background-color:rgb(236, 236, 236);
+border-radius: 40px;
+border:none;</string>
      </property>
      <layout class="QGridLayout" name="gridLayout">
       <property name="leftMargin">
@@ -140,8 +143,8 @@ border-radius: 40px;</string>
       <property name="verticalSpacing">
        <number>6</number>
       </property>
-      <item row="2" column="1">
-       <widget class="QLabel" name="label">
+      <item row="8" column="1">
+       <widget class="QLabel" name="label_10">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>2</horstretch>
@@ -149,49 +152,9 @@ border-radius: 40px;</string>
          </sizepolicy>
         </property>
         <property name="styleSheet">
-         <string notr="true">font: 9pt &quot;Noto Sans KR&quot;;
-color:black;
-background-color: rgb(229, 229, 229);
-border-radius: 20px;
-text-align: center;</string>
-        </property>
-        <property name="text">
-         <string>10:00</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="Duration">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>1</horstretch>
-          <verstretch>1</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font: 9pt &quot;Noto Sans KR&quot;;
+         <string notr="true">font: 9pt &quot;Noto Sans KR medium&quot;;
 color:white;
-background-color: rgb(62, 62, 62);
-border-radius: 20px;
-text-align: center;</string>
-        </property>
-        <property name="text">
-         <string>Duration</string>
-        </property>
-       </widget>
-      </item>
-      <item row="9" column="0">
-       <widget class="QLabel" name="label_8">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>1</horstretch>
-          <verstretch>1</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font: 9pt &quot;Noto Sans KR&quot;;
-color:white;
-background-color: rgb(62, 62, 62);
+background-color: rgb(52, 70, 236);
 border-radius: 20px;
 text-align: center;</string>
         </property>
@@ -209,94 +172,14 @@ text-align: center;</string>
          </sizepolicy>
         </property>
         <property name="styleSheet">
-         <string notr="true">font: 9pt &quot;Noto Sans KR&quot;;
-color:white;
-background-color: rgb(62, 62, 62);
+         <string notr="true">font: 9pt &quot;Noto Sans KR medium&quot;;
+color:black;
+background-color:rgb(236, 236, 236);
 border-radius: 20px;
 text-align: center;</string>
         </property>
         <property name="text">
          <string>리듬감</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1">
-       <widget class="QLabel" name="label_7">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>2</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font: 9pt &quot;Noto Sans KR&quot;;
-color:black;
-background-color: rgb(229, 229, 229);
-border-radius: 20px;
-text-align: center;</string>
-        </property>
-        <property name="text">
-         <string>A4 ~ C5</string>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="1">
-       <widget class="QLabel" name="label_9">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>2</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font: 9pt &quot;Noto Sans KR&quot;;
-color:black;
-background-color: rgb(229, 229, 229);
-border-radius: 20px;
-text-align: center;</string>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-       </widget>
-      </item>
-      <item row="8" column="1">
-       <widget class="QLabel" name="label_10">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>2</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font: 9pt &quot;Noto Sans KR&quot;;
-color:black;
-background-color: rgb(229, 229, 229);
-border-radius: 20px;
-text-align: center;</string>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-       </widget>
-      </item>
-      <item row="8" column="0">
-       <widget class="QLabel" name="label_4">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>1</horstretch>
-          <verstretch>1</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font: 9pt &quot;Noto Sans KR&quot;;
-color:white;
-background-color: rgb(62, 62, 62);
-border-radius: 20px;
-text-align: center;</string>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
         </property>
        </widget>
       </item>
@@ -309,9 +192,109 @@ text-align: center;</string>
          </sizepolicy>
         </property>
         <property name="styleSheet">
-         <string notr="true">font: 9pt &quot;Noto Sans KR&quot;;
+         <string notr="true">font: 9pt &quot;Noto Sans KR medium&quot;;
+color:black;
+background-color:rgb(236, 236, 236);
+border-radius: 20px;
+text-align: center;</string>
+        </property>
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLabel" name="label_7">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>2</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 9pt &quot;Noto Sans KR medium&quot;;
 color:white;
-background-color: rgb(62, 62, 62);
+background-color: rgb(52, 70, 236);
+border-radius: 20px;
+text-align: center;</string>
+        </property>
+        <property name="text">
+         <string>A4 ~ C5</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="0">
+       <widget class="QLabel" name="label_4">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>1</horstretch>
+          <verstretch>1</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 9pt &quot;Noto Sans KR medium&quot;;
+color:black;
+background-color:rgb(236, 236, 236);
+border-radius: 20px;
+text-align: center;</string>
+        </property>
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLabel" name="label">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>2</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 9pt &quot;Noto Sans KR medium&quot;;
+color:white;
+background-color: rgb(52, 70, 236);
+border-radius: 20px;
+text-align: center;</string>
+        </property>
+        <property name="text">
+         <string>10:00</string>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="0">
+       <widget class="QLabel" name="label_8">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>1</horstretch>
+          <verstretch>1</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 9pt &quot;Noto Sans KR medium&quot;;
+color:black;
+background-color:rgb(236, 236, 236);
+border-radius: 20px;
+text-align: center;</string>
+        </property>
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <widget class="QLabel" name="label_9">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>2</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 9pt &quot;Noto Sans KR medium&quot;;
+color:white;
+background-color: rgb(52, 70, 236);
 border-radius: 20px;
 text-align: center;</string>
         </property>
@@ -329,9 +312,9 @@ text-align: center;</string>
          </sizepolicy>
         </property>
         <property name="styleSheet">
-         <string notr="true">font: 9pt &quot;Noto Sans KR&quot;;
-color:white;
-background-color: rgb(62, 62, 62);
+         <string notr="true">font: 9pt &quot;Noto Sans KR medium&quot;;
+color:black;
+background-color:rgb(236, 236, 236);
 border-radius: 20px;
 text-align: center;</string>
         </property>
@@ -349,9 +332,9 @@ text-align: center;</string>
          </sizepolicy>
         </property>
         <property name="styleSheet">
-         <string notr="true">font: 9pt &quot;Noto Sans KR&quot;;
-color:black;
-background-color: rgb(229, 229, 229);
+         <string notr="true">font: 9pt &quot;Noto Sans KR medium&quot;;
+color:white;
+background-color: rgb(52, 70, 236);
 border-radius: 20px;
 text-align: center;</string>
         </property>
@@ -369,14 +352,34 @@ text-align: center;</string>
          </sizepolicy>
         </property>
         <property name="styleSheet">
-         <string notr="true">font: 9pt &quot;Noto Sans KR&quot;;
-color:black;
-background-color: rgb(229, 229, 229);
+         <string notr="true">font: 9pt &quot;Noto Sans KR medium&quot;;
+color:white;
+background-color: rgb(52, 70, 236);
 border-radius: 20px;
 text-align: center;</string>
         </property>
         <property name="text">
          <string>3.54</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="Duration">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>1</horstretch>
+          <verstretch>1</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 9pt &quot;Noto Sans KR medium&quot;;
+color:black;
+background-color:rgb(236, 236, 236);
+border-radius: 20px;
+text-align: center;</string>
+        </property>
+        <property name="text">
+         <string>Duration</string>
         </property>
        </widget>
       </item>
@@ -388,7 +391,7 @@ text-align: center;</string>
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
-       <verstretch>6</verstretch>
+       <verstretch>4</verstretch>
       </sizepolicy>
      </property>
      <property name="minimumSize">
@@ -398,8 +401,9 @@ text-align: center;</string>
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color:rgb(124, 124, 124);
-border-radius: 40px;</string>
+      <string notr="true">background-color:rgb(236, 236, 236);
+border-radius: 40px;
+border:none;</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <property name="leftMargin">
@@ -414,47 +418,76 @@ border-radius: 40px;</string>
       <property name="bottomMargin">
        <number>18</number>
       </property>
+      <item row="2" column="0" colspan="2">
+       <widget class="QLabel" name="label_12">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>1</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 10pt &quot;Noto Sans KR medium&quot;;
+color: black;</string>
+        </property>
+        <property name="text">
+         <string>노래를 부를 구간을 선택해주세요</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="StartText">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>1</horstretch>
+          <verstretch>1</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 12pt &quot;Noto Sans KR medium&quot;;
+color:black;
+background-color:rgb(236, 236, 236);
+border-radius: 20px;
+text-align: center;</string>
+        </property>
+        <property name="text">
+         <string>start</string>
+        </property>
+       </widget>
+      </item>
       <item row="1" column="0">
        <widget class="QWidget" name="StartTimeSet" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
-          <verstretch>3</verstretch>
+          <verstretch>1</verstretch>
          </sizepolicy>
         </property>
         <property name="styleSheet">
-         <string notr="true">font: 12pt &quot;Noto Sans KR&quot;;
+         <string notr="true">font: 12pt &quot;Noto Sans KR medium&quot;;
 color:black;
-background-color: white;
-border-radius: 15px;
+background-color:rgb(236, 236, 236);
+border-radius: 20px;
 text-align: center;</string>
         </property>
         <layout class="QGridLayout" name="DurationSetGrid_1">
-         <item row="2" column="2">
-          <widget class="QLabel" name="StartSecond">
-           <property name="styleSheet">
-            <string notr="true">font: 12pt &quot;Noto Sans KR&quot;;</string>
-           </property>
-           <property name="text">
-            <string>초</string>
-           </property>
-          </widget>
-         </item>
          <item row="1" column="2">
-          <widget class="QLabel" name="StartMinute">
-           <property name="styleSheet">
-            <string notr="true">font: 12pt &quot;Noto Sans KR&quot;;</string>
-           </property>
+          <widget class="QLabel" name="label_13">
            <property name="text">
-            <string>분</string>
+            <string>:</string>
            </property>
           </widget>
          </item>
-         <item row="2" column="1">
+         <item row="1" column="0">
           <widget class="QSpinBox" name="StartMinuteValue">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <horstretch>6</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="styleSheet">
             <string notr="true">font: 11pt &quot;Noto Sans KR&quot;;
-border: 1px solid black;
 border-radius:0px;</string>
            </property>
            <property name="alignment">
@@ -468,11 +501,11 @@ border-radius:0px;</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
+         <item row="1" column="3">
           <widget class="QSpinBox" name="StartSecondValue">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-             <horstretch>3</horstretch>
+             <horstretch>1</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
@@ -481,7 +514,6 @@ border-radius:0px;</string>
            </property>
            <property name="styleSheet">
             <string notr="true">font: 11pt &quot;Noto Sans KR&quot;;
-border: 1px solid black;
 border-radius:0px;</string>
            </property>
            <property name="wrapping">
@@ -504,31 +536,46 @@ border-radius:0px;</string>
         </layout>
        </widget>
       </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="StopText">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>1</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 12pt &quot;Noto Sans KR medium&quot;;
+color:black;
+background-color:rgb(236, 236, 236);
+border-radius: 20px;
+text-align: center;</string>
+        </property>
+        <property name="text">
+         <string>stop</string>
+        </property>
+       </widget>
+      </item>
       <item row="1" column="1">
        <widget class="QWidget" name="StopTimeSet" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>1</verstretch>
+         </sizepolicy>
+        </property>
         <property name="styleSheet">
-         <string notr="true">font: 12pt &quot;Noto Sans KR&quot;;
+         <string notr="true">font: 12pt &quot;Noto Sans KR medium&quot;;
 color:black;
-background-color: white;
-border-radius: 15px;
+background-color:rgb(236, 236, 236);
+border-radius: 20px;
 text-align: center;</string>
         </property>
         <layout class="QGridLayout" name="DurationSetGrid_2">
-         <item row="1" column="1">
-          <widget class="QLabel" name="StopMinute">
-           <property name="styleSheet">
-            <string notr="true">font: 12pt &quot;Noto Sans KR&quot;;</string>
-           </property>
-           <property name="text">
-            <string>초</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
+         <item row="0" column="2">
           <widget class="QSpinBox" name="StopSecondValue">
            <property name="styleSheet">
             <string notr="true">font: 11pt &quot;Noto Sans KR&quot;;
-border: 1px solid black;
 border-radius:0px;</string>
            </property>
            <property name="alignment">
@@ -542,22 +589,6 @@ border-radius:0px;</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
-          <widget class="QLabel" name="StopSecond">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>2</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">font: 12pt &quot;Noto Sans KR&quot;;</string>
-           </property>
-           <property name="text">
-            <string>분</string>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="0">
           <widget class="QSpinBox" name="StopMinuteValue">
            <property name="sizePolicy">
@@ -568,7 +599,6 @@ border-radius:0px;</string>
            </property>
            <property name="styleSheet">
             <string notr="true">font: 11pt &quot;Noto Sans KR&quot;;
-border: 1px solid black;
 border-radius:0px;</string>
            </property>
            <property name="alignment">
@@ -579,58 +609,14 @@ border-radius:0px;</string>
            </property>
           </widget>
          </item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="label_14">
+           <property name="text">
+            <string>:</string>
+           </property>
+          </widget>
+         </item>
         </layout>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLabel" name="StopText">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>1</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font: 12pt &quot;Noto Sans KR&quot;;
-color:white;
-background-color: rgb(62, 62, 62);
-border-radius: 20px;
-text-align: center;</string>
-        </property>
-        <property name="text">
-         <string>stop</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="StartText">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>1</horstretch>
-          <verstretch>1</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font: 12pt &quot;Noto Sans KR&quot;;
-color:white;
-background-color: rgb(62, 62, 62);
-border-radius: 20px;
-text-align: center;</string>
-        </property>
-        <property name="text">
-         <string>start</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0" colspan="2">
-       <widget class="QLabel" name="label_12">
-        <property name="styleSheet">
-         <string notr="true">font: 10pt &quot;Noto Sans KR&quot;;
-color:white;</string>
-        </property>
-        <property name="text">
-         <string>노래를 부를 구간을 선택해주세요</string>
-        </property>
        </widget>
       </item>
      </layout>
@@ -645,16 +631,13 @@ color:white;</string>
       </sizepolicy>
      </property>
      <property name="styleSheet">
-      <string notr="true">
-
-
-
-QPushButton {
+      <string notr="true">QPushButton {
                         background-color: white;
                         border-radius: 20px;
-						background-color:rgb(124, 124, 124);
-						font: 20pt &quot;Noto Sans KR&quot;;
-						color: white;
+						background-color:rgb(236, 236, 236);
+						font: 20pt &quot;Noto Sans KR black&quot;;
+						color: black;
+border:none;
                         }
 
                     QPushButton:hover {
@@ -680,16 +663,13 @@ QPushButton {
       </sizepolicy>
      </property>
      <property name="styleSheet">
-      <string notr="true">
-
-
-
-QPushButton {
+      <string notr="true">QPushButton {
                         background-color: white;
                         border-radius: 20px;
-						background-color:rgb(124, 124, 124);
-						font: 20pt &quot;Noto Sans KR&quot;;
-						color: white;
+						background-color:rgb(236, 236, 236);
+						font: 20pt &quot;Noto Sans KR black&quot;;
+						color: black;
+border:none
                         }
 
                     QPushButton:hover {

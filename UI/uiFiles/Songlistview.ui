@@ -43,8 +43,9 @@
         </sizepolicy>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: #eee;
-border-bottom: 1px solid #555;</string>
+        <string notr="true">background-color: white;
+border-bottom: 1px solid  rgb(220, 220, 220);
+border-radius:0px</string>
        </property>
        <property name="frameShape">
         <enum>QFrame::StyledPanel</enum>
@@ -79,11 +80,11 @@ border-bottom: 1px solid #555;</string>
                         border-radius: 15px;
 						color: rgb(7, 3, 122);
 border:none;
-	font: 12pt &quot;Noto Sans KR&quot;;
+	font: 14pt &quot;Noto Sans KR medium&quot;;
                         }
 
                     QPushButton:hover {
-                        background-color: rgb(244, 244, 244);
+                        background-color:rgb(236, 236, 236);
                         }
 
                     QPushButton:pressed {
@@ -123,7 +124,7 @@ border:none;
            </sizepolicy>
           </property>
           <property name="styleSheet">
-           <string notr="true">background-color:white;
+           <string notr="true">background-color:rgb(236, 236, 236);
 border:none;
 border-radius:15px;
 font: 12pt &quot;Noto Sans KR&quot;;</string>
@@ -144,7 +145,7 @@ font: 12pt &quot;Noto Sans KR&quot;;</string>
                         border-radius: 15px;
 						color: white;
 						border:none;
-	font: 12pt &quot;Noto Sans KR&quot;;
+	font: 14pt &quot;Noto Sans KR medium&quot;;
                         }
 
                     QPushButton:hover {
@@ -177,8 +178,8 @@ font: 12pt &quot;Noto Sans KR&quot;;</string>
           </property>
           <property name="font">
            <font>
-            <family>Noto Sans KR medium</family>
-            <pointsize>16</pointsize>
+            <family>Noto Sans KR black</family>
+            <pointsize>14</pointsize>
             <weight>50</weight>
             <italic>false</italic>
             <bold>false</bold>
@@ -186,7 +187,7 @@ font: 12pt &quot;Noto Sans KR&quot;;</string>
            </font>
           </property>
           <property name="styleSheet">
-           <string notr="true">font: 16pt &quot;Noto Sans KR medium&quot;;
+           <string notr="true">font: 14pt &quot;Noto Sans KR black&quot;;
 color: #000;
 border:none;</string>
           </property>
@@ -207,7 +208,7 @@ border:none;</string>
         </sizepolicy>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: #eeeeee;
+        <string notr="true">background-color: white;
 border: none;</string>
        </property>
        <property name="widgetResizable">
@@ -219,7 +220,7 @@ border: none;</string>
           <x>0</x>
           <y>0</y>
           <width>337</width>
-          <height>247</height>
+          <height>251</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="contentsLayout">

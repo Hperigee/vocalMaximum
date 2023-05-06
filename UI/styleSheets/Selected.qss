@@ -3,7 +3,7 @@ QPushButton {
                         border-radius: 15px;
 						color: white;
 
-	font: 12pt "Noto Sans KR";
+font: 14pt "Noto Sans KR Black";
                         }
 
                     QPushButton:hover {
