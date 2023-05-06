@@ -35,3 +35,10 @@ def open_ok_or_cancel_dialog(mainui):
         pass
     mainui.enable_window()
         # implement reset code
+
+def search(L,name): #L is list of SoundFormInfo
+    M=[]
+    for x in L:
+        if name in x.name:
+            M.append(x)
+    return M

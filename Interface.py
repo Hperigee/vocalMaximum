@@ -117,12 +117,19 @@ class SongListView(QWidget):
         self.ui = loadUi(".\\UI\\uiFiles\\SongListView.ui")
         self.ui.AddSong.clicked.connect(public_functions.open_file_dialog)
         self.layout = self.ui.contentsLayout
+        self.ui.SearchButton.clicked.connect(self.search_in_whole_list)
         self._set_custom_scroll_bar()
         display = QHBoxLayout()
         display.setContentsMargins(0, 0, 0, 0)
         display.addWidget(self.ui)
         self.setLayout(display)
 
+    def search_in_whole_list(self):
+        name=self.ui.Search.text()
+        to_display=public_functions.search(self.main.songlist,name)
+        self.remove_whole_list()
+        for i in range(len(to_display)):
+            self.add_widget_in_song_list(to_display[i])
     def get_widget_number_from_song_list(self):
         return self.layout.count()
 
@@ -134,6 +141,12 @@ class SongListView(QWidget):
             change = self.layout.itemAt(j).widget()
             change.label0.setText(str(j + 1))
             change.update()
+
+    def remove_whole_list(self):
+        for x in range(self.get_widget_number_from_song_list()):
+            widget = self.layout.itemAt(0).widget()
+            self.layout.removeWidget(widget)
+            widget.deleteLater()
 
     def add_widget_in_song_list(self, song_file):
         song_widget = assets.SongFile(self.get_widget_number_from_song_list() + 1, song_file)
@@ -231,7 +244,7 @@ class RecommendListView(QWidget):
 
         self.make_profile_widget = self.ui.makeProfile
         public_functions.centering(self.make_profile_widget)
-
+        self.ui.SearchButton.clicked.connect(self.search_in_recommended_list)
         self.StackedWidget.setCurrentWidget(self.make_profile_widget)
 
         self._set_custom_scroll_bar()
@@ -240,6 +253,19 @@ class RecommendListView(QWidget):
         display.setContentsMargins(0, 0, 0, 0)
         display.addWidget(self.ui)
         self.setLayout(display)
+
+    def search_in_recommended_list(self):
+        name=self.ui.Search.text()
+        L=[] # it will be recommended list
+        to_display=public_functions.search(L,name)
+        self.remove_whole_list()
+        for i in range(len(to_display)):
+            self.add_widget_in_recommend_list(to_display[i])
+    def remove_whole_list(self):
+        for x in range(self.get_widget_number_from_recommend_list()):
+            widget = self.layout.itemAt(0).widget()
+            self.layout.removeWidget(widget)
+            widget.deleteLater()
 
     def change_widget(self):
         if public_functions.profile_exist():

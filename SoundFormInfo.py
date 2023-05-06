@@ -1,7 +1,6 @@
 class SoundFormInfo:
     def __init__(self,filename, artist):
         self.name = filename
-        print(self.name)
         self.artist=artist
         self.duration='10:00'
         self.notes = None  # 시간에 따른 음높이
