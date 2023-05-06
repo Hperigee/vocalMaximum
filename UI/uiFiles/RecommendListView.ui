@@ -78,7 +78,7 @@ border-radius:0px;</string>
            <enum>Qt::Horizontal</enum>
           </property>
           <property name="sizeType">
-           <enum>QSizePolicy::Fixed</enum>
+           <enum>QSizePolicy::Preferred</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
@@ -95,8 +95,8 @@ border-radius:0px;</string>
           </property>
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-            <horstretch>2</horstretch>
-            <verstretch>0</verstretch>
+            <horstretch>1</horstretch>
+            <verstretch>1</verstretch>
            </sizepolicy>
           </property>
           <property name="font">
@@ -123,8 +123,8 @@ border:none;</string>
          <widget class="QLineEdit" name="Search">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-            <horstretch>4</horstretch>
-            <verstretch>0</verstretch>
+            <horstretch>2</horstretch>
+            <verstretch>1</verstretch>
            </sizepolicy>
           </property>
           <property name="styleSheet">
@@ -132,40 +132,6 @@ border:none;</string>
 border:none;
 border-radius:15px;
 font: 12pt &quot;Noto Sans KR&quot;;</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="SearchButton">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-            <horstretch>2</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QPushButton {
-                        background-color: rgb(7, 3, 122);
-                        border-radius: 15px;
-						color: white;
-						border:none;
-	font: 14pt &quot;Noto Sans KR medium&quot;;
-                        }
-
-                    QPushButton:hover {
-                        background-color: rgb(42, 1, 179);
-                        }
-
-                    QPushButton:pressed {
-                        background-color: rgb(97, 108, 255);
-                        }
-
-					QPushButton:disabled {
-                        background-color: rgb(167, 167, 167);
-                        }</string>
-          </property>
-          <property name="text">
-           <string>Search</string>
           </property>
          </widget>
         </item>

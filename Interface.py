@@ -117,7 +117,7 @@ class SongListView(QWidget):
         self.ui = loadUi(".\\UI\\uiFiles\\SongListView.ui")
         self.ui.AddSong.clicked.connect(public_functions.open_file_dialog)
         self.layout = self.ui.contentsLayout
-        self.ui.SearchButton.clicked.connect(self.search_in_whole_list)
+        self.ui.Search.textChanged.connect(self.search_in_whole_list)
         self._set_custom_scroll_bar()
         display = QHBoxLayout()
         display.setContentsMargins(0, 0, 0, 0)
@@ -244,7 +244,7 @@ class RecommendListView(QWidget):
 
         self.make_profile_widget = self.ui.makeProfile
         public_functions.centering(self.make_profile_widget)
-        self.ui.SearchButton.clicked.connect(self.search_in_recommended_list)
+        self.ui.Search.textChanged.connect(self.search_in_recommended_list)
         self.StackedWidget.setCurrentWidget(self.make_profile_widget)
 
         self._set_custom_scroll_bar()

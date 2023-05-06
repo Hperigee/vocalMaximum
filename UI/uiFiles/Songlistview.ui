@@ -44,7 +44,7 @@
        </property>
        <property name="styleSheet">
         <string notr="true">background-color: white;
-border-bottom: 1px solid  rgb(220, 220, 220);
+border-bottom: 3px solid  rgb(240, 240, 240);
 border-radius:0px</string>
        </property>
        <property name="frameShape">
@@ -54,25 +54,47 @@ border-radius:0px</string>
         <enum>QFrame::Raised</enum>
        </property>
        <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="4">
-         <widget class="QPushButton" name="AddSong">
+        <property name="verticalSpacing">
+         <number>0</number>
+        </property>
+        <item row="0" column="1">
+         <widget class="QLabel" name="songListLabel">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-            <horstretch>1</horstretch>
-            <verstretch>0</verstretch>
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>2</horstretch>
+            <verstretch>1</verstretch>
            </sizepolicy>
           </property>
-          <property name="minimumSize">
-           <size>
-            <width>70</width>
-            <height>10</height>
-           </size>
+          <property name="font">
+           <font>
+            <family>Noto Sans KR black</family>
+            <pointsize>14</pointsize>
+            <weight>50</weight>
+            <italic>false</italic>
+            <bold>false</bold>
+            <stylestrategy>PreferAntialias</stylestrategy>
+           </font>
           </property>
-          <property name="maximumSize">
-           <size>
-            <width>257</width>
-            <height>16777215</height>
-           </size>
+          <property name="styleSheet">
+           <string notr="true">font: 14pt &quot;Noto Sans KR black&quot;;
+color: #000;
+border:none;</string>
+          </property>
+          <property name="text">
+           <string>Songlist</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <widget class="QPushButton" name="AddSong">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>1</horstretch>
+            <verstretch>1</verstretch>
+           </sizepolicy>
           </property>
           <property name="styleSheet">
            <string notr="true">QPushButton {
@@ -105,7 +127,7 @@ border:none;
            <enum>Qt::Horizontal</enum>
           </property>
           <property name="sizeType">
-           <enum>QSizePolicy::Fixed</enum>
+           <enum>QSizePolicy::Preferred</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
@@ -120,7 +142,7 @@ border:none;
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
             <horstretch>3</horstretch>
-            <verstretch>0</verstretch>
+            <verstretch>1</verstretch>
            </sizepolicy>
           </property>
           <property name="styleSheet">
@@ -129,70 +151,8 @@ border:none;
 border-radius:15px;
 font: 12pt &quot;Noto Sans KR&quot;;</string>
           </property>
-         </widget>
-        </item>
-        <item row="0" column="3">
-         <widget class="QPushButton" name="SearchButton">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-            <horstretch>1</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QPushButton {
-                        background-color: rgb(7, 3, 122);
-                        border-radius: 15px;
-						color: white;
-						border:none;
-	font: 14pt &quot;Noto Sans KR medium&quot;;
-                        }
-
-                    QPushButton:hover {
-                        background-color: rgb(42, 1, 179);
-                        }
-
-                    QPushButton:pressed {
-                        background-color: rgb(97, 108, 255);
-                        }
-
-					QPushButton:disabled {
-                        background-color: rgb(167, 167, 167);
-                        }</string>
-          </property>
-          <property name="text">
-           <string>Search</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QLabel" name="songListLabel">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-            <horstretch>1</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="font">
-           <font>
-            <family>Noto Sans KR black</family>
-            <pointsize>14</pointsize>
-            <weight>50</weight>
-            <italic>false</italic>
-            <bold>false</bold>
-            <stylestrategy>PreferAntialias</stylestrategy>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">font: 14pt &quot;Noto Sans KR black&quot;;
-color: #000;
-border:none;</string>
-          </property>
-          <property name="text">
-           <string>Songlist</string>
+          <property name="clearButtonEnabled">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
@@ -220,7 +180,7 @@ border: none;</string>
           <x>0</x>
           <y>0</y>
           <width>337</width>
-          <height>251</height>
+          <height>249</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="contentsLayout">
