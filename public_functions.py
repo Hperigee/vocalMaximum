@@ -27,10 +27,11 @@ def centering(widgets):
         widget.setAlignment(Qt.AlignCenter)
 
 
-def open_ok_or_cancel_dialog():
+def open_ok_or_cancel_dialog(mainui):
     # Show the new window and wait for user response
     new_window = OkOrCancelDialog()
     result = new_window.exec_()
     if result == QDialog.Accepted:
         pass
+    mainui.enable_window()
         # implement reset code

@@ -23,7 +23,7 @@ class MainWindow(QMainWindow):
 
         self.SongListView = SongListView(self)
         self.RecommendListView = RecommendListView(self)
-        self.Settings = Settings()
+        self.Settings = Settings(self)
 
         self.NullSongInfo = loadUi(".\\UI\\uiFiles\\NullSongInfo.ui")
         self.NullSongInfo.label.setAlignment(Qt.AlignCenter)
@@ -104,6 +104,10 @@ class MainWindow(QMainWindow):
 
     def enable_mainWidget(self):
         self.mainWidget.setEnabled(True)
+    def disable_window(self):
+        self.setEnabled(False)
+    def enable_window(self):
+        self.setEnabled(True)
 
 
 class SongListView(QWidget):
@@ -277,10 +281,13 @@ class RecommendListView(QWidget):
 
 
 class Settings(QWidget):
-    def __init__(self):
+    def __init__(self, mainui):
+
         super().__init__()
+        self.main=mainui
         self.ui = loadUi(".\\UI\\uiFiles\\Settings.ui")
-        self.ui.resetButton.clicked.connect(public_functions.open_ok_or_cancel_dialog)
+        self.ui.resetButton.clicked.connect(self.main.disable_window)
+        self.ui.resetButton.clicked.connect(lambda: public_functions.open_ok_or_cancel_dialog(self.main))
         display = QHBoxLayout()
         display.setContentsMargins(0, 0, 0, 0)
         display.addWidget(self.ui)
