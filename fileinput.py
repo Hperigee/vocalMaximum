@@ -52,7 +52,7 @@ if __name__ == '__main__':
     import time
 
     stt = time.time()
-    input_file('.\\Wild_Flower.mp3')
+    input_file('.\\소찬휘 So Chan Whee  Tears.mp3')
     stt = time.time() - stt
     print(stt, 'seconds')
 
