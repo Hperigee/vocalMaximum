@@ -139,24 +139,17 @@ class SongListView(QWidget):
 
     def search_in_whole_list(self):
         name = self.ui.Search.text()
-
-        if name == '':
-            # Show all widgets
-            for widget in self.main.song_widget_list:
-                widget.show()
-                self.layout.addWidget(widget)
-        else:
-            self.to_display = public_functions.search(self.main.song_widget_list, name)
+        self.to_display = public_functions.search(self.main.song_widget_list, name)
 
             # Hide all widgets
-            for widget in self.main.song_widget_list:
-                widget.hide()
-                self.layout.removeWidget(widget)
+        for widget in self.main.song_widget_list:
+            widget.hide()
+            self.layout.removeWidget(widget)
 
             # Show widgets in search results
-            for widget in self.to_display:
-                widget.show()
-                self.layout.addWidget(widget)
+        for widget in self.to_display:
+            widget.show()
+            self.layout.addWidget(widget)
 
         self.update_index()
     def get_widget_number_from_song_list(self):
