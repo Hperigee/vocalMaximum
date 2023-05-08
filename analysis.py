@@ -127,6 +127,11 @@ def _export_strength(vocal_feature):
     return L
 
 
+def _denoise(S, threshold):
+    S = np.array(S)
+
+
+
 def file_analysis(filename):
     delta = time.time()
 
@@ -159,7 +164,11 @@ def file_analysis(filename):
         S = np.ravel(spectrogram_db[0:len(spectrogram_db), frame:frame + 1])[:630] + 80
         S_mat = np.tile(S, (612, 1))
         vocal_feature.append(_gpt_peek(S, freq, cos_mat, S_mat))
-    # now vocal_feature has 3 harmonics hz and dB of vocal with format: vocal_feature[frame][1~3rd harmonics]
+    # now vocal_feature has 3 harmonics hz and dB of vocal with format:
+    # vocal_feature[frame][1~3rd harmonics] -> [hz, dB sum of near hz]
+
+    print(vocal_feature[10379])
+    print(vocal_feature[10200])
 
     print("processed", time.time() - delta)
     delta = time.time()
@@ -233,4 +242,4 @@ def file_analysis(filename):
 #print('start run')
 
 # print(len(librosa.fft_frequencies()))
-#file_analysis("THORNAPPLE-Blue_Spring")
+file_analysis("Wild_Flower")
