@@ -36,11 +36,14 @@ def _remove_tmp(filename):
     return
 
 
-def input_file(directory):
+def input_file(directory, ttttt):
+
+
     filename = _filename_fetch(directory)
 
     _separate(directory)  # 음원 분리
     _wav_to_mp3(filename)   # MR은 따로 저장 / wav 삭제
+    print(time.time()-ttttt)
 
     analysis.file_analysis(filename)  # 보컬 정보 추출
 
@@ -52,7 +55,7 @@ if __name__ == '__main__':
     import time
 
     stt = time.time()
-    input_file('.\\소찬휘 So Chan Whee  Tears.mp3')
+    input_file('.\\성시경-너의_모든_순간.mp3', stt)
     stt = time.time() - stt
     print(stt, 'seconds')
 
