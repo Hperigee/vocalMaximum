@@ -18,6 +18,7 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.init_ui()
     def init_ui(self):
+        self.song_widget_list = []
         self.ui = loadUi('.\\UI\\uiFiles\\Main.ui', self)
         self.setMinimumSize(1600, 900)
         self.mainStackedWidget = QStackedWidget(self)
@@ -65,7 +66,7 @@ class MainWindow(QMainWindow):
             file.close()
         self.songlist = data[0]
 
-        self.song_widget_list = []
+
         for i in range(len(self.songlist)):
             song_widget = assets.SongFile(len(self.song_widget_list) + 1, self.songlist[i])
             song_widget.clicked.connect(self._handle_song_file_click)
@@ -132,6 +133,7 @@ class MainWindow(QMainWindow):
 class SongListView(QWidget):
     def __init__(self, mainui):
         super().__init__()
+        self.to_display = mainui.song_widget_list
         self.init_ui(mainui)
 
     def init_ui(self, mainui):
@@ -147,6 +149,7 @@ class SongListView(QWidget):
         display.addWidget(self.ui)
         self.setLayout(display)
 
+
     def start_input(self):
         notification_window = assets.NotiFication("File format\n Artist-SongName.mp3", 3000,
                                                   self.main)  # Display the notification for 3000 milliseconds (3 seconds)
@@ -157,7 +160,7 @@ class SongListView(QWidget):
         self.analysis_process = multiprocessing.Process(target=input_worker, args=(directory,result_queue,))
         self.analysis_process.start()
         QTimer.singleShot(1000, check_result_queue)
-        self.to_display=self.main.song_widget_list
+
 
 
     def handle_analysis_result(self, result):
@@ -209,9 +212,11 @@ class SongListView(QWidget):
     def add_new_widget(self,song_widget):
         self.layout.insertWidget(0, song_widget)
         self.main.song_widget_list=[song_widget]+self.main.song_widget_list
+        self.to_display = [song_widget] + self.to_display
         song_widget.clicked.connect(self.main._handle_song_file_click)
         self.layout.update()
         self.update_index()
+
     def _set_custom_scroll_bar(self):
         scroll_area = self.ui.songListScrollArea
         scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
@@ -226,12 +231,20 @@ class SongInfo(QWidget):
         song_name, artist, duration = song.name, song.artist, song.duration
         self.main = mainui
         self.ui = loadUi(".\\UI\\uiFiles\\SongInfo.ui")
+        with open(f".\\additionalData\\{song_name}\\{song_name}.dat", 'rb') as file:
+            AdvancedSongInfo = pickle.load(file)
 
         public_functions.centering(self.ui)
 
         self.ui.SongName.setText(song_name)
         self.ui.Artist.setText(artist)
         self.ui.Duration.setText(duration)
+        self.ui.HighestNote.setText(str(AdvancedSongInfo.highest_note))
+        self.ui.Expression.setText(str(AdvancedSongInfo.express))
+        self.ui.SoundRange.setText(str(AdvancedSongInfo.note_range))
+        self.ui.Breath.setText(str(AdvancedSongInfo.breath_hd))
+        self.ui.Health.setText(str(AdvancedSongInfo.health))
+
         self.minuteDuration = int(duration[:2])
         self.secDuration = int(duration[3:])
         self.ui.StopMinuteValue.setMaximum(self.minuteDuration)
@@ -358,7 +371,6 @@ def input_worker(directory,result_queue):
         from fileinput import input_file
         result = input_file(directory)
         result_queue.put(result)
-        print(result_queue.qsize())
 
 def check_result_queue():
     try:

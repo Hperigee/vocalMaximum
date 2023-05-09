@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pickle
 import time
+from collections import Counter
 import copy
 
 def _plt_show(spectrogram_db):
@@ -130,9 +131,25 @@ def _export_strength(vocal_feature):
 
 def _denoise(S, threshold):
     S = np.array(S)  # melody
+def express(L):
+    filtered_list = list(filter(lambda x: x != -1, L))
+    return np.std(filtered_list)
 
+def highest_note(lst):
+    counter = Counter(lst)
+    max_repeated_value = max([value for value, count in counter.items() if count >= 3])
+    return convert_to_octave(max_repeated_value)
 
-
+def convert_to_octave(a):
+    scale = int(a*12)
+    octave = scale//12
+    note = scale%12
+    A = ['도','도#','레','레#','미','파','파#','솔','솔#','라','라#','시']
+    return str(f'{octave}옥 '+ A[note])
+def note_range(L):
+    filtered_list = list(filter(lambda x: x != -1, L))
+    mean=np.mean(filtered_list)
+    pass
 def file_analysis(filename):
     delta = time.time()
 

@@ -43,8 +43,7 @@ class NotiFication(QMainWindow):
     def close_window(self):
         self.timer.stop()
         self.close()
-def profile_exist():
-    return False
+
 class SongFile(QPushButton):
     def __init__(self, i, song):
 
@@ -94,7 +93,6 @@ class SongFile(QPushButton):
         layout.addWidget(self.label3)
         self.setLayout(layout)
 
-
 class CustomScrollBar(QScrollBar):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -109,5 +107,7 @@ class CustomScrollBar(QScrollBar):
         self.setStyleSheet(style)
 
 
+def profile_exist():
+    return False
 
 

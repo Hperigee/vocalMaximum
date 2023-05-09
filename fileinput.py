@@ -40,9 +40,10 @@ def _remove_tmp(filename):
 
 def _export_basic_info(directory, filename):
     dash_index = filename.find('-')
+    M_index = filename.find('M')
     metadata = str(datetime.timedelta(seconds=MP3(directory).info.length))
     return SoundFormInfo.SoundFormInfo(filename[dash_index + 1:],
-                                      filename[:dash_index],
+                                      filename[M_index+8:dash_index],
                                       metadata[2:metadata.rfind('.')])
 
 
