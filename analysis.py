@@ -114,7 +114,7 @@ def _gpt_peek(S, freq, cos_mat, S_mat):
 def _export_melody(vocal_feature):
     L = []  # L[frame] -> hz  or  -1
     for i in vocal_feature:
-        if len(i) != 0: L.append(i[1][0])
+        if len(i) != 0: L.append(np.log2(i[1][0]/130.8128))
         else: L.append(-1)
     return L
 
@@ -122,13 +122,14 @@ def _export_melody(vocal_feature):
 def _export_strength(vocal_feature):
     L = []  # L[frame] -> strength: 0 ~ 2  or  -1
     for i in vocal_feature:
-        if len(i) != 0: L.append((1 * i[1][1] + 2 * i[2][1]) / (i[0][1] + i[1][1] + i[2][1]))
+        if len(i) != 0 and i[0][1] + i[1][1] + i[2][1] != 0:
+            L.append((i[1][1] + 2 * i[2][1]) / (i[0][1] + i[1][1] + i[2][1]))
         else: L.append(-1)
     return L
 
 
 def _denoise(S, threshold):
-    S = np.array(S)
+    S = np.array(S)  # melody
 
 
 
@@ -167,18 +168,17 @@ def file_analysis(filename):
     # now vocal_feature has 3 harmonics hz and dB of vocal with format:
     # vocal_feature[frame][1~3rd harmonics] -> [hz, dB sum of near hz]
 
-    print(vocal_feature[10379])
-    print(vocal_feature[10200])
-
     print("processed", time.time() - delta)
     delta = time.time()
 
     melody = _export_melody(vocal_feature)
+    strength = _export_strength(vocal_feature)
     timeline = np.arange(len(melody)) * 512 / 22050
 
     print("exported", time.time() - delta)
 
     plt.plot(timeline, melody, 'ro', ms=2)
+    plt.plot(timeline, strength, 'bo', ms=2)
 
     plt.show()
 
@@ -242,4 +242,4 @@ def file_analysis(filename):
 #print('start run')
 
 # print(len(librosa.fft_frequencies()))
-file_analysis("Wild_Flower")
+#file_analysis("Wild_Flower")
