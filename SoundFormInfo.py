@@ -1,8 +1,8 @@
 class SoundFormInfo:
-    def __init__(self,filename, artist):
+    def __init__(self,filename, artist, duration):
         self.name = filename
         self.artist = artist
-        self.duration = '10:00'
+        self.duration = duration
 
 
 class AdvancedInfo:
