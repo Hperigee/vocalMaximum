@@ -1,8 +1,50 @@
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import QFile, QTextStream, Qt
+from PyQt5.QtCore import QFile, QTextStream, QTimer,Qt
+from PyQt5.uic import loadUi
 import public_functions
 
+class NotiFication(QMainWindow):
+    def __init__(self,text,duration,main):
+        super().__init__()
+        self.main=main
+        self.duration = duration
+        self.text = text
 
+        self.init_ui()
+
+
+    def init_ui(self):
+        self.ui = loadUi(".\\UI\\uiFiles\\Notification.ui",self)
+        self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.FramelessWindowHint)
+        self.ui.message.setText(self.text)
+        self.ui.message.setStyleSheet("""
+                                        background-color:rgb(7, 3, 122);
+                                        color: white;
+                                        """)
+        public_functions.centering(self.ui)
+
+        # Calculate the position of the window
+        parent_geometry = self.main.geometry()
+
+        # Calculate the position of the window
+        window_width = self.geometry().width()
+        window_height = self.geometry().height()
+        x = parent_geometry.right() - window_width
+        y = parent_geometry.bottom() - window_height
+
+        # Set the position of the window
+        self.move(x, y)
+        # Start the timer to close the window after the specified duration
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.close_window)
+        self.timer.start(self.duration)
+
+        self.show()
+    def close_window(self):
+        self.timer.stop()
+        self.close()
+def profile_exist():
+    return False
 class SongFile(QPushButton):
     def __init__(self, i, song):
 

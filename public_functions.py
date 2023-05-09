@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QFileDialog, QLabel, QDialog
+from PyQt5.QtWidgets import QFileDialog, QLabel, QDialog, QMainWindow
 from PyQt5.QtCore import Qt
 from PyQt5.uic import loadUi
 
@@ -12,15 +12,16 @@ class OkOrCancelDialog(QDialog):
         self.show()
 
 
-def profile_exist():
-    return False
 
 def open_file_dialog():
     file_dialog = QFileDialog()
     file_path, _ = file_dialog.getOpenFileName(None, "Open File")
     if file_path:
-        print("Selected file:", file_path)
-
+        return file_path
+    else:
+        return None
+def profile_exist():
+    return False
 
 def centering(widgets):
     for widget in widgets.findChildren(QLabel):

@@ -1,18 +1,23 @@
 from PyQt5.QtWidgets import *
 from PyQt5.uic import loadUi
-from PyQt5.QtCore import Qt, QFile, QTextStream
+from PyQt5.QtCore import Qt, QFile, QTextStream, QTimer
 from Resources_rc import *
 import pickle
 import os
 import public_functions
 import assets
+import multiprocessing
+from queue import Empty
+import sys
+
 
 
 # Load the UI file
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-
+        self.init_ui()
+    def init_ui(self):
         self.ui = loadUi('.\\UI\\uiFiles\\Main.ui', self)
         self.setMinimumSize(1600, 900)
         self.mainStackedWidget = QStackedWidget(self)
@@ -33,6 +38,7 @@ class MainWindow(QMainWindow):
         self.mainStackedWidget.addWidget(self.Settings)
         self.sideTabStackedWidget.addWidget(self.NullSongInfo)
 
+
         self._get_qss()
 
         self.previous = None
@@ -48,6 +54,7 @@ class MainWindow(QMainWindow):
         self.sideTabStackedWidget.setCurrentWidget(self.NullSongInfo)
 
         # below is tested code
+
         folder_path = '.\\testData'
         file_list = [os.path.join(folder_path, f) for f in os.listdir(folder_path) if f.endswith('.dat')]
         data = []
@@ -56,18 +63,15 @@ class MainWindow(QMainWindow):
                 songInfo = pickle.load(file)
                 data.append(songInfo)
             file.close()
-        self.songlist=data[0]
+        self.songlist = data[0]
 
-        self.song_widget_list=[]
+        self.song_widget_list = []
         for i in range(len(self.songlist)):
-            song_widget = assets.SongFile(len(self.song_widget_list)+ 1, self.songlist[i])
+            song_widget = assets.SongFile(len(self.song_widget_list) + 1, self.songlist[i])
             song_widget.clicked.connect(self._handle_song_file_click)
-            self.song_widget_list.append(song_widget)
             self.SongListView.add_widget_in_song_list(song_widget)
 
-
         del self.songlist
-
 
 
         self.show()
@@ -111,8 +115,10 @@ class MainWindow(QMainWindow):
 
     def enable_mainWidget(self):
         self.mainWidget.setEnabled(True)
+
     def disable_window(self):
         self.setEnabled(False)
+
     def enable_window(self):
         self.setEnabled(True)
 
@@ -126,9 +132,13 @@ class MainWindow(QMainWindow):
 class SongListView(QWidget):
     def __init__(self, mainui):
         super().__init__()
+        self.init_ui(mainui)
+
+    def init_ui(self, mainui):
         self.main = mainui
+        self.analysis_process = None
         self.ui = loadUi(".\\UI\\uiFiles\\SongListView.ui")
-        self.ui.AddSong.clicked.connect(public_functions.open_file_dialog)
+        self.ui.AddSong.clicked.connect(self.start_input)
         self.layout = self.ui.contentsLayout
         self.ui.Search.textChanged.connect(self.search_in_whole_list)
         self._set_custom_scroll_bar()
@@ -137,11 +147,33 @@ class SongListView(QWidget):
         display.addWidget(self.ui)
         self.setLayout(display)
 
+    def start_input(self):
+        notification_window = assets.NotiFication("File format\n Artist-SongName.mp3", 3000,
+                                                  self.main)  # Display the notification for 3000 milliseconds (3 seconds)
+        notification_window.show()
+
+        directory = public_functions.open_file_dialog()
+
+        self.analysis_process = multiprocessing.Process(target=input_worker, args=(directory,result_queue,))
+        self.analysis_process.start()
+        QTimer.singleShot(1000, check_result_queue)
+        self.to_display=self.main.song_widget_list
+
+
+    def handle_analysis_result(self, result):
+        # Process the analysis result
+        new_song = assets.SongFile(1, result)
+        self.add_new_widget(new_song)
+
+        # Re-enable the button
+        notification_window = assets.NotiFication("New Song Uploaded", 3000,self.main)  # Display the notification for 3000 milliseconds (3 seconds)
+        notification_window.show()
+
     def search_in_whole_list(self):
         name = self.ui.Search.text()
         self.to_display = public_functions.search(self.main.song_widget_list, name)
 
-            # Hide all widgets
+        # Hide all widgets
         for widget in self.main.song_widget_list:
             widget.hide()
             self.layout.removeWidget(widget)
@@ -152,6 +184,7 @@ class SongListView(QWidget):
             self.layout.addWidget(widget)
 
         self.update_index()
+
     def get_widget_number_from_song_list(self):
         return self.layout.count()
 
@@ -169,8 +202,16 @@ class SongListView(QWidget):
 
     def add_widget_in_song_list(self, song_widget):
         self.layout.addWidget(song_widget)
+        song_widget.clicked.connect(self.main._handle_song_file_click)
+        self.main.song_widget_list.append(song_widget)
         self.layout.update()
 
+    def add_new_widget(self,song_widget):
+        self.layout.insertWidget(0, song_widget)
+        self.main.song_widget_list=[song_widget]+self.main.song_widget_list
+        song_widget.clicked.connect(self.main._handle_song_file_click)
+        self.layout.update()
+        self.update_index()
     def _set_custom_scroll_bar(self):
         scroll_area = self.ui.songListScrollArea
         scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
@@ -202,7 +243,6 @@ class SongInfo(QWidget):
         display.setContentsMargins(0, 0, 0, 0)
         display.addWidget(self.ui)
         self.setLayout(display)
-
 
     def _handle_record_button_click(self):
         startMin = self.ui.StartMinuteValue.value()
@@ -260,12 +300,13 @@ class RecommendListView(QWidget):
         self.setLayout(display)
 
     def search_in_recommended_list(self):
-        name=self.ui.Search.text()
-        L=[] # it will be recommended list
-        to_display=public_functions.search(L,name)
+        name = self.ui.Search.text()
+        L = []  # it will be recommended list
+        to_display = public_functions.search(L, name)
         self.remove_whole_list()
         for i in range(len(to_display)):
             self.add_widget_in_recommend_list(to_display[i])
+
     def remove_whole_list(self):
         for x in range(self.get_widget_number_from_recommend_list()):
             widget = self.layout.itemAt(0).widget()
@@ -291,8 +332,6 @@ class RecommendListView(QWidget):
         self.layout.addWidget(song_widget)
         self.layout.update()
 
-
-
     def _set_custom_scroll_bar(self):
         scroll_area = self.RecommendListScrollArea
         scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
@@ -302,9 +341,8 @@ class RecommendListView(QWidget):
 
 class Settings(QWidget):
     def __init__(self, mainui):
-
         super().__init__()
-        self.main=mainui
+        self.main = mainui
         self.ui = loadUi(".\\UI\\uiFiles\\Settings.ui")
         self.ui.resetButton.clicked.connect(self.main.disable_window)
         self.ui.resetButton.clicked.connect(lambda: public_functions.open_ok_or_cancel_dialog(self.main))
@@ -312,3 +350,34 @@ class Settings(QWidget):
         display.setContentsMargins(0, 0, 0, 0)
         display.addWidget(self.ui)
         self.setLayout(display)
+
+
+def input_worker(directory,result_queue):
+    print(directory)
+    if directory!= None:
+        from fileinput import input_file
+        result = input_file(directory)
+        result_queue.put(result)
+        print(result_queue.qsize())
+
+def check_result_queue():
+    try:
+        while True:
+            result= result_queue.get(block=False)
+            window.SongListView.handle_analysis_result(result)
+    except Empty:
+        pass
+    if window.SongListView.analysis_process and window.SongListView.analysis_process.is_alive():
+        # Schedule the next check after a delay
+        QTimer.singleShot(1000, check_result_queue)
+
+
+
+
+if __name__ == "__main__":
+
+    app = QApplication([])
+    window = MainWindow()
+    window.show()
+    result_queue=multiprocessing.Queue()
+    app.exec_()

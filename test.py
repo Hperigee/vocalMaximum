@@ -13,8 +13,8 @@ def generate_random_string(length):
     return random_string
 
 testlist=[]
-for i in range(500):
-    example=SoundFormInfo(generate_random_string(10), generate_random_string(5))
+for i in range(10):
+    example=SoundFormInfo(generate_random_string(10), generate_random_string(5),"10:00")
     testlist.append(example)
 
 testlist.sort(key=lambda x: x.name)
