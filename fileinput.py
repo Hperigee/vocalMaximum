@@ -1,17 +1,13 @@
 import datetime
-
-import librosa
 import os
 import analysis
 import SoundFormInfo
-
-from spleeter.separator import Separator
-from pydub import AudioSegment
 from shutil import rmtree
-from mutagen.mp3 import MP3
-
+import tinytag
+from spleeter.separator import Separator
 
 def _wav_to_mp3(filename):
+    from pydub import AudioSegment
     directory = "./temp/" + filename + '/accompaniment.wav'
     origin = AudioSegment.from_wav(directory)
     os.mkdir('./additionalData/' + filename)
@@ -21,14 +17,19 @@ def _wav_to_mp3(filename):
 
 
 def _filename_fetch(directory):
-    assert isinstance(directory, str)
-    ind = directory.rfind('\\')
-    return directory[ind + 1:-4]
+    filename = os.path.basename(directory)
+    filename[:-4]
+    return filename
 
+def rename_directory(old_name, new_name):
+    try:
+        os.rename(old_name, new_name)
+    except :
+        pass
 
 def _separate(directory):
     separator = Separator('spleeter:2stems')
-    separator.separate_to_file(directory, './temp')
+    separator.separate_to_file(directory, './temp',)
     return
 
 
@@ -38,27 +39,32 @@ def _remove_tmp(filename):
     return
 
 
+
 def _export_basic_info(directory, filename):
-    dash_index = filename.find('-')
-    M_index = filename.find('M')
-    metadata = str(datetime.timedelta(seconds=MP3(directory).info.length))
-    return SoundFormInfo.SoundFormInfo(filename[dash_index + 1:],
-                                      filename[M_index+8:dash_index],
-                                      metadata[2:metadata.rfind('.')])
+    file_path = directory
+    audio = tinytag.TinyTag.get(file_path)
+    metadata = str(datetime.timedelta(seconds=audio.duration))[2:-7]
+    name=filename.split('-')[1].strip()
+    artist=filename.split('-')[0].strip()[46:]
+    return SoundFormInfo.SoundFormInfo(name,
+                                       artist,
+                                       metadata)
+
+
 
 
 def input_file(directory):
 
     filename = _filename_fetch(directory)
-
+    print(filename)
     res = _export_basic_info(directory, filename)
 
-    #separate(directory)  # 음원 분리
-    #wav_to_mp3(filename)   # MR은 따로 저장 / wav 삭제
+    _separate(directory)  # 음원 분리
+    _wav_to_mp3(filename)   # MR은 따로 저장 / wav 삭제
 
-    #analysis.file_analysis(filename)  # 보컬 정보 추출
+    analysis.file_analysis(filename)  # 보컬 정보 추출
 
-    #_remove_tmp(filename)  # tmp 삭제
+    _remove_tmp(filename)  # tmp 삭제
     return res
 
 
@@ -66,7 +72,7 @@ if __name__ == '__main__':
     import time
 
     stt = time.time()
-    input_file('.\\성시경-너의_모든_순간.mp3')
+    input_file('.\\닐로-지나오다.mp3')
     stt = time.time() - stt
     print(stt, 'seconds')
 

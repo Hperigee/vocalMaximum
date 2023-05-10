@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QFileDialog, QLabel, QDialog, QMainWindow
 from PyQt5.QtCore import Qt
 from PyQt5.uic import loadUi
-
+from spleeter.separator import Separator
 
 class OkOrCancelDialog(QDialog):
     def __init__(self):
@@ -12,14 +12,21 @@ class OkOrCancelDialog(QDialog):
         self.show()
 
 
-
 def open_file_dialog():
     file_dialog = QFileDialog()
-    file_path, _ = file_dialog.getOpenFileName(None, "Open File")
-    if file_path:
-        return file_path
-    else:
-        return None
+    file_dialog.setFileMode(QFileDialog.ExistingFiles)
+    file_dialog.setNameFilter("MP3 Files (*.mp3)")
+
+    if file_dialog.exec_():
+        selected_files = file_dialog.selectedFiles()
+        mp3_files = [file for file in selected_files if file.endswith(".mp3")]
+
+        if mp3_files:
+            return mp3_files
+
+    return None
+
+
 def profile_exist():
     return False
 
@@ -40,3 +47,8 @@ def open_ok_or_cancel_dialog(mainui):
 def search(L, name):
     M = [x for x in L if name in x.root_file.name]
     return M
+
+def separate(directory):
+    separator = Separator('spleeter:2stems')
+    separator.separate_to_file(directory, './temp')
+    return

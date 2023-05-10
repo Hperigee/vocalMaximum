@@ -8,6 +8,8 @@ import public_functions
 import assets
 import multiprocessing
 from queue import Empty
+from fileinput import input_file
+import time
 import sys
 
 
@@ -159,7 +161,9 @@ class SongListView(QWidget):
 
         self.analysis_process = multiprocessing.Process(target=input_worker, args=(directory,result_queue,))
         self.analysis_process.start()
-        QTimer.singleShot(1000, check_result_queue)
+
+
+        QTimer.singleShot(1500, check_result_queue)
 
 
 
@@ -167,7 +171,6 @@ class SongListView(QWidget):
         # Process the analysis result
         new_song = assets.SongFile(1, result)
         self.add_new_widget(new_song)
-
         # Re-enable the button
         notification_window = assets.NotiFication("New Song Uploaded", 3000,self.main)  # Display the notification for 3000 milliseconds (3 seconds)
         notification_window.show()
@@ -231,7 +234,7 @@ class SongInfo(QWidget):
         song_name, artist, duration = song.name, song.artist, song.duration
         self.main = mainui
         self.ui = loadUi(".\\UI\\uiFiles\\SongInfo.ui")
-        with open(f".\\additionalData\\{song_name}\\{song_name}.dat", 'rb') as file:
+        with open(f".\\additionalData\\{artist}-{song_name}\\adv.dat", 'rb') as file:
             AdvancedSongInfo = pickle.load(file)
 
         public_functions.centering(self.ui)
@@ -366,9 +369,7 @@ class Settings(QWidget):
 
 
 def input_worker(directory,result_queue):
-    print(directory)
     if directory!= None:
-        from fileinput import input_file
         result = input_file(directory)
         result_queue.put(result)
 
@@ -381,13 +382,13 @@ def check_result_queue():
         pass
     if window.SongListView.analysis_process and window.SongListView.analysis_process.is_alive():
         # Schedule the next check after a delay
-        QTimer.singleShot(1000, check_result_queue)
+        QTimer.singleShot(2000, check_result_queue)
 
 
 
 
 if __name__ == "__main__":
-
+    import time
     app = QApplication([])
     window = MainWindow()
     window.show()

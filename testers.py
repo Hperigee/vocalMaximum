@@ -8,7 +8,7 @@ if __name__ == '__main__':
         s = pickle.load(f)
 
 
-    #system('start D:\\Document\\GitHub\\vocalMaximum\\temp\\Wild_Flower\\vocals.wav')
+    #system('start D:\\Document\\GitHub\\vocalMaximum\\temp\\야생화\\vocals.wav')
 
     plt.plot(s)
     plt.show()

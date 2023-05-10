@@ -5,7 +5,10 @@ import numpy as np
 import pickle
 import time
 from collections import Counter
-import copy
+import os
+
+import SoundFormInfo
+
 
 def _plt_show(spectrogram_db):
     if __name__ == '__main__':
@@ -137,7 +140,7 @@ def express(L):
 
 def highest_note(lst):
     counter = Counter(lst)
-    max_repeated_value = max([value for value, count in counter.items() if count >= 3])
+    max_repeated_value = max([value for value, count in counter.items() if count >= 4])
     return convert_to_octave(max_repeated_value)
 
 def convert_to_octave(a):
@@ -149,7 +152,13 @@ def convert_to_octave(a):
 def note_range(L):
     filtered_list = list(filter(lambda x: x != -1, L))
     mean=np.mean(filtered_list)
-    pass
+    return mean
+
+def breath():
+    return "develop"
+
+def health():
+    return "develop"
 def file_analysis(filename):
     delta = time.time()
 
@@ -190,37 +199,43 @@ def file_analysis(filename):
 
     melody = _export_melody(vocal_feature)
     strength = _export_strength(vocal_feature)
-    timeline = np.arange(len(melody)) * 512 / 22050
+    expression = round(express(strength),2)
+    highest = highest_note(melody)
+    range_of_note = round(note_range(melody),2)
+    breath_hd = breath()
+    health_hd = health()
+    adv_data = SoundFormInfo.AdvancedInfo(expression,highest,range_of_note,breath_hd,health_hd)
+    #timeline = np.arange(len(melody)) * 512 / 22050
 
     print("exported", time.time() - delta)
 
-    plt.plot(timeline, melody, 'ro', ms=2)
-    plt.plot(timeline, strength, 'bo', ms=2)
+    #plt.plot(timeline, melody, 'ro', ms=2)
+    #plt.plot(timeline, strength, 'bo', ms=2)
 
-    plt.show()
+    #plt.show()
+
+    folder_path = f"./additionalData/{filename}"
+
+    # Create the folder if it does not exist
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+    else:
+        pass
 
 
-
-    '''
-    print(len(melody))
-    newmelody=copy.deepcopy(melody)
-    for i in range(len(melody)):
-        if melody[i]==-1:
-            for j in range(i,i+5):
-                if j<= len(melody)-1:
-                    newmelody[j]=-1
-    '''
-    '''
     with open(".\\additionalData\\" + filename + "\\mel.dat", 'wb') as f:
         pickle.dump(melody, f)
     del melody
-    #del newmelody
 
-    strength = _export_strength(vocal_feature)
     with open(".\\additionalData\\" + filename + "\\str.dat", 'wb') as f:
         pickle.dump(strength, f)
     del strength
-    '''
+
+    with open(".\\additionalData\\" + filename + "\\adv.dat", 'wb') as f:
+        pickle.dump(adv_data, f)
+    del adv_data
+
+
     #iz = [3952.1235 / i for i in range(6, 206)]
     #cos_mat = np.array([np.cos(np.linspace(0, 3952.1235 / i, 630)) for i in range(6, 206)])
 
@@ -257,6 +272,6 @@ def file_analysis(filename):
 
 
 #print('start run')
-
+if __name__=="__main__":
 # print(len(librosa.fft_frequencies()))
-#file_analysis("Wild_Flower")
+    file_analysis("닐로 - 지나오다")
