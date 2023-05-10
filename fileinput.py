@@ -2,9 +2,14 @@ import datetime
 import os
 import analysis
 import SoundFormInfo
+import time
 from shutil import rmtree
 import tinytag
 from spleeter.separator import Separator
+
+
+
+
 
 def _wav_to_mp3(filename):
     from pydub import AudioSegment
@@ -14,11 +19,11 @@ def _wav_to_mp3(filename):
     new_file = './additionalData/' + filename + '/' + filename + '.mp3'
     origin.export(new_file, format='mp3')
     os.remove(directory)
+    return
 
 
 def _filename_fetch(directory):
-    filename = os.path.basename(directory)
-    filename[:-4]
+    filename = os.path.basename(directory)[:-4]
     return filename
 
 def rename_directory(old_name, new_name):
@@ -26,10 +31,10 @@ def rename_directory(old_name, new_name):
         os.rename(old_name, new_name)
     except :
         pass
+    return
 
-def _separate(directory):
-    separator = Separator('spleeter:2stems')
-    separator.separate_to_file(directory, './temp',)
+def _separate(directory,spl):
+    spl.separate_to_file(directory, './temp',)
     return
 
 
@@ -45,7 +50,7 @@ def _export_basic_info(directory, filename):
     audio = tinytag.TinyTag.get(file_path)
     metadata = str(datetime.timedelta(seconds=audio.duration))[2:-7]
     name=filename.split('-')[1].strip()
-    artist=filename.split('-')[0].strip()[46:]
+    artist=filename.split('-')[0].strip()
     return SoundFormInfo.SoundFormInfo(name,
                                        artist,
                                        metadata)
@@ -53,13 +58,12 @@ def _export_basic_info(directory, filename):
 
 
 
-def input_file(directory):
+def input_file(directory,spl):
 
     filename = _filename_fetch(directory)
-    print(filename)
     res = _export_basic_info(directory, filename)
 
-    _separate(directory)  # 음원 분리
+    _separate(directory,spl)  # 음원 분리
     _wav_to_mp3(filename)   # MR은 따로 저장 / wav 삭제
 
     analysis.file_analysis(filename)  # 보컬 정보 추출
@@ -71,8 +75,10 @@ def input_file(directory):
 if __name__ == '__main__':
     import time
 
+    GLOBAL_SPLITTER = Separator('spleeter:2stems')
     stt = time.time()
-    input_file('.\\닐로-지나오다.mp3')
+    input_file('.\\닐로-지나오다.mp3',GLOBAL_SPLITTER)
     stt = time.time() - stt
     print(stt, 'seconds')
+
 

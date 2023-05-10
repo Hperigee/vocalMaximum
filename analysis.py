@@ -225,15 +225,22 @@ def file_analysis(filename):
 
     with open(".\\additionalData\\" + filename + "\\mel.dat", 'wb') as f:
         pickle.dump(melody, f)
+    f.close()
     del melody
 
     with open(".\\additionalData\\" + filename + "\\str.dat", 'wb') as f:
         pickle.dump(strength, f)
     del strength
-
+    f.close()
     with open(".\\additionalData\\" + filename + "\\adv.dat", 'wb') as f:
         pickle.dump(adv_data, f)
     del adv_data
+    f.close()
+
+    del raw_wave
+    del cos_mat
+    del spectrogram_db
+    del freq
 
 
     #iz = [3952.1235 / i for i in range(6, 206)]
@@ -269,7 +276,7 @@ def file_analysis(filename):
 
     # print(vocal_feature)
     # _plt_show(spectrogram_db)
-
+    return
 
 #print('start run')
 if __name__=="__main__":

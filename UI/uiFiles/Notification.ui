@@ -52,7 +52,7 @@
      <property name="font">
       <font>
        <family>Noto Sans KR</family>
-       <pointsize>16</pointsize>
+       <pointsize>12</pointsize>
        <weight>75</weight>
        <bold>true</bold>
       </font>

@@ -1,24 +1,51 @@
 from PyQt5.QtWidgets import *
 from PyQt5.uic import loadUi
-from PyQt5.QtCore import Qt, QFile, QTextStream, QTimer
+from PyQt5.QtCore import Qt, QFile, QTextStream, QTimer, QThread, pyqtSlot, pyqtSignal
 from Resources_rc import *
 import pickle
-import os
 import public_functions
 import assets
-import multiprocessing
-from queue import Empty
+from queue import Queue
 from fileinput import input_file
-import time
-import sys
+from spleeter.separator import Separator
 
 
+global input_file_directory
+input_file_directory=None
+global to_process
+to_process = Queue()
+global GLOBAL_SPLITTER
+GLOBAL_SPLITTER = Separator('spleeter:2stems')
+
+class Thread(QThread):
+    analysis_result_ready = pyqtSignal(object)
+    def __init__(self):
+        super().__init__()
+    def enqueue_files(self):
+        global input_file_directory
+        try:
+            for file in input_file_directory:
+                print(file,"input success")
+                to_process.put(file)
+        except:
+            pass
+    @pyqtSlot()
+    def run(self):
+        self.enqueue_files()
+        while not to_process.empty():
+            file = to_process.get()
+            print(file, "start process")
+            res = input_file(file,GLOBAL_SPLITTER)
+            self.analysis_result_ready.emit(res)
+
+        self.finished.emit()
 
 # Load the UI file
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.init_ui()
+
     def init_ui(self):
         self.song_widget_list = []
         self.ui = loadUi('.\\UI\\uiFiles\\Main.ui', self)
@@ -41,7 +68,6 @@ class MainWindow(QMainWindow):
         self.mainStackedWidget.addWidget(self.Settings)
         self.sideTabStackedWidget.addWidget(self.NullSongInfo)
 
-
         self._get_qss()
 
         self.previous = None
@@ -57,8 +83,8 @@ class MainWindow(QMainWindow):
         self.sideTabStackedWidget.setCurrentWidget(self.NullSongInfo)
 
         # below is tested code
-
-        folder_path = '.\\testData'
+        '''
+        folder_path = 'Datas'
         file_list = [os.path.join(folder_path, f) for f in os.listdir(folder_path) if f.endswith('.dat')]
         data = []
         for file_path in file_list:
@@ -67,7 +93,8 @@ class MainWindow(QMainWindow):
                 data.append(songInfo)
             file.close()
         self.songlist = data[0]
-
+        '''
+        self.songlist = []
 
         for i in range(len(self.songlist)):
             song_widget = assets.SongFile(len(self.song_widget_list) + 1, self.songlist[i])
@@ -75,7 +102,6 @@ class MainWindow(QMainWindow):
             self.SongListView.add_widget_in_song_list(song_widget)
 
         del self.songlist
-
 
         self.show()
 
@@ -150,21 +176,18 @@ class SongListView(QWidget):
         display.setContentsMargins(0, 0, 0, 0)
         display.addWidget(self.ui)
         self.setLayout(display)
-
+        self.thread = Thread()
+        self.thread.analysis_result_ready.connect(self.handle_analysis_result)
 
     def start_input(self):
-        notification_window = assets.NotiFication("File format\n Artist-SongName.mp3", 3000,
+        notification_window = assets.NotiFication("File format\n Artist-SongName.mp3\n 시간이 조금 소요됩니다.", 3000,
                                                   self.main)  # Display the notification for 3000 milliseconds (3 seconds)
         notification_window.show()
 
-        directory = public_functions.open_file_dialog()
+        global input_file_directory
+        input_file_directory = public_functions.open_file_dialog()
 
-        self.analysis_process = multiprocessing.Process(target=input_worker, args=(directory,result_queue,))
-        self.analysis_process.start()
-
-
-        QTimer.singleShot(1500, check_result_queue)
-
+        self.thread.start()
 
 
     def handle_analysis_result(self, result):
@@ -212,9 +235,9 @@ class SongListView(QWidget):
         self.main.song_widget_list.append(song_widget)
         self.layout.update()
 
-    def add_new_widget(self,song_widget):
+    def add_new_widget(self, song_widget):
         self.layout.insertWidget(0, song_widget)
-        self.main.song_widget_list=[song_widget]+self.main.song_widget_list
+        self.main.song_widget_list = [song_widget] + self.main.song_widget_list
         self.to_display = [song_widget] + self.to_display
         song_widget.clicked.connect(self.main._handle_song_file_click)
         self.layout.update()
@@ -368,29 +391,15 @@ class Settings(QWidget):
         self.setLayout(display)
 
 
-def input_worker(directory,result_queue):
-    if directory!= None:
-        result = input_file(directory)
-        result_queue.put(result)
 
-def check_result_queue():
-    try:
-        while True:
-            result= result_queue.get(block=False)
-            window.SongListView.handle_analysis_result(result)
-    except Empty:
-        pass
-    if window.SongListView.analysis_process and window.SongListView.analysis_process.is_alive():
-        # Schedule the next check after a delay
-        QTimer.singleShot(2000, check_result_queue)
 
 
 
 
 if __name__ == "__main__":
     import time
+
     app = QApplication([])
     window = MainWindow()
     window.show()
-    result_queue=multiprocessing.Queue()
     app.exec_()

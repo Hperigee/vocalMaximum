@@ -12,6 +12,8 @@ class OkOrCancelDialog(QDialog):
         self.show()
 
 
+from PyQt5.QtWidgets import QFileDialog
+
 def open_file_dialog():
     file_dialog = QFileDialog()
     file_dialog.setFileMode(QFileDialog.ExistingFiles)
@@ -19,12 +21,12 @@ def open_file_dialog():
 
     if file_dialog.exec_():
         selected_files = file_dialog.selectedFiles()
-        mp3_files = [file for file in selected_files if file.endswith(".mp3")]
+        # Filter selected files to keep only .mp3 files
+        selected_files = [file for file in selected_files if file.endswith('.mp3')]
+        return selected_files
+    else:
+        return None
 
-        if mp3_files:
-            return mp3_files
-
-    return None
 
 
 def profile_exist():

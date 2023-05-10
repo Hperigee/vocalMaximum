@@ -1,26 +1,38 @@
-from  SoundFormInfo import SoundFormInfo
 import pickle
-import random
-import string
+import fileinput
+from queue import Queue
+from spleeter.separator import Separator
+import os
+import tensorflow as tf
 
-def generate_random_string(length):
-    # Define the characters to choose from
-    characters = string.ascii_letters + string.digits  # includes uppercase letters, lowercase letters, and digits
+global to_process
+to_process= Queue()
 
-    # Generate the random string
-    random_string = ''.join(random.choice(characters) for _ in range(length))
+def enqueue_files(filelist):
+    for file in filelist:
+        print(file, "input success")
+        to_process.put(file)
+    return
+def process(filelist,spl):
+    enqueue_files(filelist)
+    A=[]
+    while not to_process.empty():
+        file = to_process.get()
+        print(file, "start process")
+        res = fileinput.input_file(file,spl)
+        A.append(res)
+    return A
 
-    return random_string
+if __name__=="__main__":
 
-testlist=[]
-for i in range(10):
-    example=SoundFormInfo(generate_random_string(10), generate_random_string(5),"10:00")
-    testlist.append(example)
+    #print(tf.test.is_gpu_available())
+    GLOBAL_SPLITTER = Separator('spleeter:2stems', stft_backend='tensorflow', multiprocess=False)
+    testlist=[".\\닐로-지나오다.mp3",".\\소찬휘-Tears.mp3",".\\쏜애플-시퍼런봄.mp3",".\\박효신-야생화.mp3"]
 
-testlist.sort(key=lambda x: x.name)
+    data = process(testlist,GLOBAL_SPLITTER)
 
-with open(f'.\\testData\\exampleSoundList.dat', 'wb') as file:
-    pickle.dump(testlist, file)
-    del testlist
+    data.sort(key=lambda x: x.name)
 
-file.close()
+    with open(f'.\\testData\\Defaultlist.dat', 'wb') as file:
+        pickle.dump(data, file)
+        del data
