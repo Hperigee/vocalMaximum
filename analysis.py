@@ -6,7 +6,6 @@ import pickle
 import time
 from collections import Counter
 import os
-
 import SoundFormInfo
 
 
@@ -159,12 +158,12 @@ def breath():
 
 def health():
     return "develop"
-def file_analysis(filename):
+def file_analysis(vocal_waveform,filename):
+
     delta = time.time()
-
-    song_directory = '.\\temp\\' + filename + '\\' + 'vocals.wav'
-    raw_wave, sr = librosa.load(song_directory)
-
+    if vocal_waveform.ndim > 1:
+        vocal_waveform = np.mean(vocal_waveform, axis=1)
+    raw_wave = vocal_waveform
     spectrogram_db = librosa.stft(y=raw_wave)
     spectrogram_db = librosa.amplitude_to_db(np.abs(spectrogram_db), ref=np.max)
     # spectrogram_db[level][frame]
@@ -205,14 +204,14 @@ def file_analysis(filename):
     breath_hd = breath()
     health_hd = health()
     adv_data = SoundFormInfo.AdvancedInfo(expression,highest,range_of_note,breath_hd,health_hd)
-    #timeline = np.arange(len(melody)) * 512 / 22050
+    timeline = np.arange(len(melody)) * 512 / 22050
 
     print("exported", time.time() - delta)
 
-    #plt.plot(timeline, melody, 'ro', ms=2)
-    #plt.plot(timeline, strength, 'bo', ms=2)
+    plt.plot(timeline, melody, 'ro', ms=2)
+    plt.plot(timeline, strength, 'bo', ms=2)
 
-    #plt.show()
+    plt.show()
 
     folder_path = f"./additionalData/{filename}"
 
@@ -236,7 +235,6 @@ def file_analysis(filename):
         pickle.dump(adv_data, f)
     del adv_data
     f.close()
-
     del raw_wave
     del cos_mat
     del spectrogram_db

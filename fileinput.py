@@ -3,16 +3,14 @@ import os
 import analysis
 import SoundFormInfo
 import time
-from shutil import rmtree
 import tinytag
-from spleeter.separator import Separator
+from spleeter.separator import Separator, AudioAdapter
+import soundfile as sf
+import shutil
 
 
-
-
-
+'''
 def _wav_to_mp3(filename):
-    from pydub import AudioSegment
     directory = "./temp/" + filename + '/accompaniment.wav'
     origin = AudioSegment.from_wav(directory)
     os.mkdir('./additionalData/' + filename)
@@ -20,7 +18,7 @@ def _wav_to_mp3(filename):
     origin.export(new_file, format='mp3')
     os.remove(directory)
     return
-
+'''
 
 def _filename_fetch(directory):
     directory = os.path.abspath(directory)  # Convert to absolute path
@@ -34,16 +32,34 @@ def rename_directory(old_name, new_name):
         pass
     return
 
-def _separate(directory,spl):
-    spl.separate_to_file(directory, './temp')
-    return
+def _separate(directory,filename,spl):
 
+    audio_adapter = AudioAdapter.default()
+    raw_wave, _ = audio_adapter.load(directory)
+    stems = spl.separate(raw_wave)
+    accompaniment = stems["accompaniment"]
+    vocal = stems["vocals"]
 
+    directory = f'./additionalData/{filename}'
+
+    if os.path.exists(directory):
+        shutil.rmtree(directory)
+
+    os.mkdir(directory)
+
+    new_file = f'./additionalData/{filename}/{filename}.mp3'
+    new_file = os.path.abspath(new_file)
+
+    sf.write(new_file, accompaniment, samplerate=44100, format="MP3")
+    del accompaniment
+    return vocal
+
+'''
 def _remove_tmp(filename):
     remove_directory = './temp/' + filename
     rmtree(remove_directory)
     return
-
+'''
 
 
 def _export_basic_info(directory, filename):
@@ -63,11 +79,10 @@ def input_file(directory,spl):
 
     filename, abs_directory= _filename_fetch(directory)
     res = _export_basic_info(abs_directory, filename)
-    _separate(directory,spl)  # 음원 분리
-    _wav_to_mp3(filename)   # MR은 따로 저장 / wav 삭제
+    vocal_waveform = _separate(directory,filename,spl)  # 음원 분리
 
-    analysis.file_analysis(filename)  # 보컬 정보 추출
-    _remove_tmp(filename)  # tmp 삭제
+    analysis.file_analysis(vocal_waveform,filename)  # 보컬 정보 추출
+
     return res
 
 
