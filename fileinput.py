@@ -20,7 +20,7 @@ def _wav_to_mp3(filename):
     return
 '''
 
-def _filename_fetch(directory):
+def filename_fetch(directory):
     directory = os.path.abspath(directory)  # Convert to absolute path
     filename = os.path.basename(directory)[:-4]
     return filename, directory
@@ -80,7 +80,7 @@ def _export_basic_info(directory, filename):
 
 def input_file(directory,spl):
 
-    filename, abs_directory= _filename_fetch(directory)
+    filename, abs_directory= filename_fetch(directory)
     res = _export_basic_info(abs_directory, filename)
     vocal_waveform = _separate(directory,filename,spl)  # 음원 분리
 

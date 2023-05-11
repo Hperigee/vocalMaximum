@@ -6,7 +6,7 @@ import pickle
 import public_functions
 import assets
 from queue import Queue
-from fileinput import input_file
+from fileinput import input_file, filename_fetch
 from spleeter.separator import Separator
 import os
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
@@ -33,6 +33,7 @@ class Thread(QThread):
                 to_process.put(file)
         except:
             pass
+        QTimer.singleShot(1000,self.enqueue_files)
     @pyqtSlot()
     def run(self):
         self.enqueue_files()
@@ -40,7 +41,12 @@ class Thread(QThread):
             file = to_process.get()
             print(file, "start process")
             res = input_file(file,GLOBAL_SPLITTER)
+            filename=filename_fetch(file)
+            with open(f'./Datas/{filename}.tmpdat', 'wb') as file:
+                pickle.dump(res, file)
+
             self.analysis_result_ready.emit(res)
+
 
         self.finished.emit()
 
@@ -86,19 +92,29 @@ class MainWindow(QMainWindow):
 
         self.sideTabStackedWidget.setCurrentWidget(self.NullSongInfo)
 
-        # below is tested code
-        '''
+
         folder_path = 'Datas'
         file_list = [os.path.join(folder_path, f) for f in os.listdir(folder_path) if f.endswith('.dat')]
+        new_file_list = [os.path.join(folder_path, f) for f in os.listdir(folder_path) if f.endswith('.tmpdat')]
         data = []
+        new_data =[]
+        for file_path in new_file_list:
+            with open(file_path, 'rb') as file:
+                songInfo = pickle.load(file)
+                new_data.append(songInfo)
+            file.close()
+
+        with open(f'{file_list}/Addedlist.dat', 'wb') as f:
+            pickle.dump(new_data, f)
+        f.close()
+
         for file_path in file_list:
             with open(file_path, 'rb') as file:
                 songInfo = pickle.load(file)
-                data.append(songInfo)
+                data+= songInfo
             file.close()
-        self.songlist = data[0]
-        '''
-        self.songlist = []
+
+        self.songlist = data
 
         for i in range(len(self.songlist)):
             song_widget = assets.SongFile(len(self.song_widget_list) + 1, self.songlist[i])

@@ -144,7 +144,7 @@ def express(L):
 
 def highest_note(lst):
     counter = Counter(lst)
-    max_repeated_value = max([value for value, count in counter.items() if count >= 4])
+    max_repeated_value = max([value for value, count in counter.items() if count >= 8])
     return convert_to_octave(max_repeated_value)
 
 def convert_to_octave(a):
@@ -153,6 +153,7 @@ def convert_to_octave(a):
     note = scale%12
     A = ['도','도#','레','레#','미','파','파#','솔','솔#','라','라#','시']
     return str(f'{octave}옥 '+ A[note])
+
 def note_range(L):
     filtered_list = list(filter(lambda x: x != -1, L))
     mean=np.mean(filtered_list)
