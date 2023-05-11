@@ -83,7 +83,7 @@ class RealTime(QThread):
 
         self.finished.emit()
     def stop_analysis(self):
-        test.Stop = True # flag
+        test.STOP = True # flag
         to_display.put("STOP")
         print("stopped")
 class analysis_thread(QThread):
@@ -93,7 +93,7 @@ class analysis_thread(QThread):
 
     def run(self):
         test.asdf(to_display) # analysis function ,startMin,startSec,stopMin,stopSec)
-        test.STOP = False
+        test.STOP = False # flag reset
         print("stopped")
     def stop_thread(self):
         print("called")
