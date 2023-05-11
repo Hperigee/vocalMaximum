@@ -7,6 +7,7 @@ import time
 from collections import Counter
 import os
 import SoundFormInfo
+import pyaudio
 
 
 def _plt_show(spectrogram_db):
@@ -278,10 +279,49 @@ def file_analysis(vocal_waveform,filename):
     # _plt_show(spectrogram_db)
     return
 
+
+def live_analysis():
+
+    CHUNK = 2048
+    FORMAT = pyaudio.paInt16
+    CHANNELS = 1
+    RATE = 22050
+
+    p = pyaudio.PyAudio()
+
+    stream = p.open(format=FORMAT,
+                    channels=CHANNELS,
+                    rate=RATE,
+                    input=True,
+                    frames_per_buffer=CHUNK,
+                    input_device_index=1)
+
+    print('start recording')
+
+    frames = []
+    seconds = 2
+    for i in range(0, int(RATE / CHUNK * seconds)):
+        data = stream.read(CHUNK)
+        frames.append(data)
+
+    print('record stopped')
+
+    stream.stop_stream()
+    stream.close()
+    p.terminate()
+
+    import wave
+
+    wf = wave.open("output.wav", 'wb')
+    wf.setnchannels(CHANNELS)
+    wf.setsampwidth(p.get_sample_size(FORMAT))
+    wf.setframerate(RATE)
+    wf.writeframes(b''.join(frames))
+    wf.close()
+
+
 #print('start run')
 if __name__=="__main__":
-# print(len(librosa.fft_frequencies()))
+    # print(len(librosa.fft_frequencies()))
     #file_analysis("닐로 - 지나오다")
-
-    asdf = np.array([[2, 4, 2, 4, 2, 4], [8, 10]])
-    print(np.mean(asdf, axis=1))
+    live_analysis()
