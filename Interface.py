@@ -13,6 +13,8 @@ os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 import tensorflow as tf
 
 
+import test
+
 
 global input_file_directory
 input_file_directory=None
@@ -20,6 +22,8 @@ global to_process
 to_process = Queue()
 global GLOBAL_SPLITTER
 GLOBAL_SPLITTER = Separator('spleeter:2stems', stft_backend='tensorflow', multiprocess=False)
+global to_display
+to_display = Queue()
 
 class Thread(QThread):
     analysis_result_ready = pyqtSignal(object)
@@ -48,22 +52,53 @@ class Thread(QThread):
 
             self.analysis_result_ready.emit(res)
 
-
         self.finished.emit()
 
 class RealTime(QThread):
-    analysis_finished = pyqtSignal(object)
-    def __init__(self):
+    display_new_info = pyqtSignal(object)
+
+    def __init__(self,songWidget,startMin,startSec,stopMin,stopSec):
         super().__init__()
         self.main = window
+        self.songWidget =songWidget
+        self.startMin = startMin
+        self.startSec = startSec
+        self.stopMin = stopMin
+        self.stopSec =stopSec
     @pyqtSlot()
     def run(self):
-        # call the realtime function
+        self.songWidget.record.canceled.connect(self.stop_analysis)
+        start = analysis_thread(self,self.startMin,self.startSec,self.stopMin,self.stopSec)
+        start.start()
+        texts= None
         while True:
-            pass
+            try:
+                texts = to_display.get()
+            except:
+                pass
+            if texts == 'STOP':
+                break
+            print(texts)
+            self.display_new_info.emit(texts)
 
+        self.finished.emit()
+    def stop_analysis(self):
+        test.Stop = True # flag
+        to_display.put("STOP")
+        print("stopped")
+class analysis_thread(QThread):
+    def __init__(self,checking_thread,startMin,startSec,stopMin,stopSec):
+        super().__init__()
+        checking_thread.finished.connect(self.stop_thread)
 
-# Load the UI file
+    def run(self):
+        test.asdf(to_display) # analysis function ,startMin,startSec,stopMin,stopSec)
+        test.STOP = False
+        print("stopped")
+    def stop_thread(self):
+        print("called")
+        self.finished.emit()
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -106,8 +141,6 @@ class MainWindow(QMainWindow):
         self.sideTabStackedWidget.setCurrentWidget(self.NullSongInfo)
         self.load()
 
-
-
         self.show()
 
     def load(self):
@@ -122,9 +155,14 @@ class MainWindow(QMainWindow):
                 new_data.append(song_info)
             file.close()
 
-        with open(f'{file_list}/Addedlist.dat', 'wb') as f:
-            pickle.dump(new_data, f)
-        f.close()
+        try:
+            with open('./Datas/Addedlist.dat', 'rb') as f:
+                song_info = pickle.load(f)
+        except FileNotFoundError:
+            song_info = []
+        song_info += new_data
+        with open('./Datas/Addedlist.dat', 'wb') as f:
+            pickle.dump(song_info, f)
 
         for file_path in file_list:
             with open(file_path, 'rb') as file:
@@ -327,18 +365,27 @@ class SongInfo(QWidget):
         if stopMin * 60 + stopSec - startMin * 60 + startSec < 15 or stopMin * 60 + stopSec > self.secDuration + self.minuteDuration * 60:
             return
 
-        self.main.show_sidetab(RecordDisplay(self.main))
+        self.thread=RealTime(self,startMin,startSec,stopMin,stopSec)
+        self.record = RecordDisplay(self.main, self)
+        self.thread.start()
+        self.main.show_sidetab(self.record)
         self.main.disable_mainWidget()
+
 
         # call scoring function
 
 
 class RecordDisplay(QWidget):
-    def __init__(self, mainui):
+    canceled = pyqtSignal(object)
+    def __init__(self, mainui,songfile):
         super().__init__()
         self.main = mainui
+        self.songfile = songfile
+        self.thread = self.songfile.thread
         self.ui = loadUi(".\\UI\\uiFiles\\Recording.ui")
         self.ui.CancelButton.clicked.connect(self._handle_record_cancel_button_click)
+        self.ui.CancelButton.clicked.connect(self.canceled.emit)
+        self.thread.display_new_info.connect(self.updateui)
         public_functions.centering(self.ui)
         display = QHBoxLayout()
         display.setContentsMargins(0, 0, 0, 0)
@@ -348,7 +395,11 @@ class RecordDisplay(QWidget):
     def _handle_record_cancel_button_click(self):
         self.main.show_sidetab(self.main.previous)
         self.main.enable_mainWidget()
-
+    def updateui(self,txts):
+        self.ui.txt1.setText(txts[0])
+        self.ui.txt2.setText(txts[1])
+    def display_feedback(self,L):
+        pass
 
 class RecommendListView(QWidget):
     def __init__(self, mainui):

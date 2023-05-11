@@ -30,7 +30,7 @@ if __name__=="__main__":
 
     folder_path = 'Defaults'
     datas = [os.path.join(folder_path, f) for f in os.listdir(folder_path) if f.endswith('.mp3')]
-
+    datas= ['./Defaults/소찬휘-Tears.mp3']
     data = process(datas,GLOBAL_SPLITTER)
 
     data.sort(key=lambda x: x.name)

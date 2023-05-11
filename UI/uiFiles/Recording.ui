@@ -74,7 +74,7 @@ align: center;</string>
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QLabel" name="label_6">
+        <widget class="QLabel" name="txt2">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -94,7 +94,7 @@ text-align: center;</string>
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QLabel" name="label_4">
+        <widget class="QLabel" name="txt1">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -152,8 +152,11 @@ text-align: center;</string>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>2</horstretch>
-         <verstretch>2</verstretch>
+         <verstretch>1</verstretch>
         </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border: none;</string>
        </property>
        <property name="title">
         <string/>
