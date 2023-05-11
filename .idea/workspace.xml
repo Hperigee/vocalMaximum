@@ -5,24 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4bb3950c-9614-4d0b-bfaf-5de0812fd3c8" name="Changes" comment="songs">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vocalMaximum.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vocalMaximum.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/additionalData/박효신-야생화/adv.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/additionalData/박효신-야생화/mel.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/additionalData/박효신-야생화/str.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/additionalData/박효신-야생화/박효신-야생화.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/additionalData/소찬휘-Tears/adv.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/additionalData/소찬휘-Tears/mel.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/additionalData/소찬휘-Tears/str.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/additionalData/소찬휘-Tears/소찬휘-Tears.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/additionalData/쏜애플-시퍼런봄/adv.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/additionalData/쏜애플-시퍼런봄/mel.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/additionalData/쏜애플-시퍼런봄/str.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/additionalData/쏜애플-시퍼런봄/쏜애플-시퍼런봄.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023-05-11__8_07__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023-05-11__8_07__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023-05-11__8_59__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023-05-11__8_59__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023-05-11__9_20__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023-05-11__9_20__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Interface.py" beforeDir="false" afterPath="$PROJECT_DIR$/Interface.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,6 +50,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
     "last_opened_file_path": "C:/Users/829ho/Documents/GitHub/vocalMaximum/Defaults",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }

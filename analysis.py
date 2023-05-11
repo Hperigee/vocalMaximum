@@ -7,7 +7,7 @@ import time
 from collections import Counter
 import os
 import SoundFormInfo
-import pyaudio
+#import pyaudio
 
 
 def _plt_show(spectrogram_db):

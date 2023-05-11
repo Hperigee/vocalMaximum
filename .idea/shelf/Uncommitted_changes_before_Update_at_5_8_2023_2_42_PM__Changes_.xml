@@ -1,0 +1,9 @@
+<changelist name="Uncommitted_changes_before_Update_at_5_8_2023_2_42_PM_[Changes]" date="1683524541078" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_5_8_2023_2_42_PM_[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 5/8/2023 2:42 PM [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="testData/exampleSoundList.dat" />
+    <option name="AFTER_PATH" value="testData/exampleSoundList.dat" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_5_8_2023_2_42_PM_[Changes]/exampleSoundList.dat" />
+  </binary>
+</changelist>

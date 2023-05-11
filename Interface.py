@@ -34,6 +34,7 @@ class Thread(QThread):
         except:
             pass
         QTimer.singleShot(1000,self.enqueue_files)
+
     @pyqtSlot()
     def run(self):
         self.enqueue_files()
@@ -49,6 +50,18 @@ class Thread(QThread):
 
 
         self.finished.emit()
+
+class RealTime(QThread):
+    analysis_finished = pyqtSignal(object)
+    def __init__(self):
+        super().__init__()
+        self.main = window
+    @pyqtSlot()
+    def run(self):
+        # call the realtime function
+        while True:
+            pass
+
 
 # Load the UI file
 class MainWindow(QMainWindow):
@@ -91,17 +104,22 @@ class MainWindow(QMainWindow):
         self.ui.settingButton.clicked.connect(self._setting_selected)
 
         self.sideTabStackedWidget.setCurrentWidget(self.NullSongInfo)
+        self.load()
 
 
+
+        self.show()
+
+    def load(self):
         folder_path = 'Datas'
         file_list = [os.path.join(folder_path, f) for f in os.listdir(folder_path) if f.endswith('.dat')]
         new_file_list = [os.path.join(folder_path, f) for f in os.listdir(folder_path) if f.endswith('.tmpdat')]
         data = []
-        new_data =[]
+        new_data = []
         for file_path in new_file_list:
             with open(file_path, 'rb') as file:
-                songInfo = pickle.load(file)
-                new_data.append(songInfo)
+                song_info = pickle.load(file)
+                new_data.append(song_info)
             file.close()
 
         with open(f'{file_list}/Addedlist.dat', 'wb') as f:
@@ -110,8 +128,8 @@ class MainWindow(QMainWindow):
 
         for file_path in file_list:
             with open(file_path, 'rb') as file:
-                songInfo = pickle.load(file)
-                data+= songInfo
+                song_info = pickle.load(file)
+                data += song_info
             file.close()
 
         self.songlist = data
@@ -122,9 +140,6 @@ class MainWindow(QMainWindow):
             self.SongListView.add_widget_in_song_list(song_widget)
 
         del self.songlist
-
-        self.show()
-
     def _get_qss(self):
         selected = QFile("UI/styleSheets/Selected.qss")
         not_selected = QFile("UI/styleSheets/NotSelected.qss")
@@ -200,7 +215,7 @@ class SongListView(QWidget):
         self.thread.analysis_result_ready.connect(self.handle_analysis_result)
 
     def start_input(self):
-        notification_window = assets.NotiFication("File format\n Artist-SongName.mp3\n 시간이 조금 소요됩니다.", 3000,
+        notification_window = assets.NotiFication("File format\n Artist-SongName.mp3\n 처음 시간이 조금 소요됩니다.", 3000,
                                                   self.main)  # Display the notification for 3000 milliseconds (3 seconds)
         notification_window.show()
 

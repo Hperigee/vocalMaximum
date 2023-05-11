@@ -1,0 +1,37 @@
+Index: test.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from  SoundFormInfo import SoundFormInfo\r\nimport pickle\r\n\r\ntestlist=[]\r\nfor i in range(10000):\r\n    example=SoundFormInfo(f\"exampleSound{i}\", \"artist\")\r\n    testlist.append(example)\r\n\r\nwith open(f'.\\\\testData\\\\exampleSoundList.dat', 'wb') as file:\r\n    pickle.dump(testlist, file)\r\n    del testlist\r\n\r\nfile.close()
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/test.py b/test.py
+--- a/test.py	(revision 388d9e82bf2d641aabc34f57dea39f68d69644d1)
++++ b/test.py	(date 1683405099366)
+@@ -1,11 +1,24 @@
+ from  SoundFormInfo import SoundFormInfo
+ import pickle
++import random
++import string
++
++def generate_random_string(length):
++    # Define the characters to choose from
++    characters = string.ascii_letters + string.digits  # includes uppercase letters, lowercase letters, and digits
++
++    # Generate the random string
++    random_string = ''.join(random.choice(characters) for _ in range(length))
++
++    return random_string
+ 
+ testlist=[]
+-for i in range(10000):
+-    example=SoundFormInfo(f"exampleSound{i}", "artist")
++for i in range(500):
++    example=SoundFormInfo(generate_random_string(10), generate_random_string(5))
+     testlist.append(example)
+ 
++testlist.sort(key=lambda x: x.name)
++
+ with open(f'.\\testData\\exampleSoundList.dat', 'wb') as file:
+     pickle.dump(testlist, file)
+     del testlist
