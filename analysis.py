@@ -165,6 +165,7 @@ def health():
 def file_analysis(vocal_waveform,filename):
 
     delta = time.time()
+
     if vocal_waveform.ndim > 1:
         vocal_waveform = np.mean(vocal_waveform, axis=1)
     raw_wave = vocal_waveform
@@ -212,7 +213,7 @@ def file_analysis(vocal_waveform,filename):
 
     print("exported", time.time() - delta)
 
-    _show_output(melody,strength)
+    #_show_output(melody,strength)
 
     folder_path = f"./additionalData/{filename}"
 

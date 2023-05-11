@@ -49,8 +49,11 @@ def _separate(directory,filename,spl):
 
     new_file = f'./additionalData/{filename}/{filename}.mp3'
     new_file = os.path.abspath(new_file)
-
     sf.write(new_file, accompaniment, samplerate=44100, format="MP3")
+
+    #temp = f'./additionalData/{filename}/{filename}_temp.mp3'
+    #sf.write(temp, vocal, samplerate=44100, format="MP3")
+
     del accompaniment
     return vocal
 

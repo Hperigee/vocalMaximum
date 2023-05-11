@@ -308,6 +308,7 @@ class RecordDisplay(QWidget):
         self.main = mainui
         self.ui = loadUi(".\\UI\\uiFiles\\Recording.ui")
         self.ui.CancelButton.clicked.connect(self._handle_record_cancel_button_click)
+        public_functions.centering(self.ui)
         display = QHBoxLayout()
         display.setContentsMargins(0, 0, 0, 0)
         display.addWidget(self.ui)
