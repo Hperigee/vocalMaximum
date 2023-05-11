@@ -7,7 +7,8 @@ import time
 from collections import Counter
 import os
 import SoundFormInfo
-#import pyaudio
+import pyaudio
+from scipy.io.wavfile import write
 
 
 def _plt_show(spectrogram_db):
@@ -284,7 +285,7 @@ def file_analysis(vocal_waveform,filename):
 def live_analysis():
 
     CHUNK = 2048
-    FORMAT = pyaudio.paInt16
+    FORMAT = pyaudio.paFloat32
     CHANNELS = 1
     RATE = 22050
 
@@ -295,7 +296,7 @@ def live_analysis():
                     rate=RATE,
                     input=True,
                     frames_per_buffer=CHUNK,
-                    input_device_index=1)
+                    input_device_index=4)
 
     print('start recording')
 
@@ -303,22 +304,38 @@ def live_analysis():
     seconds = 2
     for i in range(0, int(RATE / CHUNK * seconds)):
         data = stream.read(CHUNK)
-        frames.append(data)
+        data = list(np.frombuffer(data, dtype=np.float32))
+        frames += data
 
     print('record stopped')
+
+    frames = np.array(frames)
+
+    stftd = np.abs(librosa.stft(y=frames))
+
+    print(np.max(stftd))
+    print(np.min(stftd))
+
+    stftd = librosa.amplitude_to_db(stftd, ref=256)
+    too_low = stftd[range(len(stftd))] < -80
+
+    print(too_low)
+
+    stftd[too_low] = -80
+
+    print(np.max(stftd))
+    print(np.min(stftd))
+
+    stftd[0][0] = 0
+    _plt_show(stftd)
+
+    plt.plot(frames)
+    plt.ylim(-1, 1)
+    plt.show()
 
     stream.stop_stream()
     stream.close()
     p.terminate()
-
-    import wave
-
-    wf = wave.open("output.wav", 'wb')
-    wf.setnchannels(CHANNELS)
-    wf.setsampwidth(p.get_sample_size(FORMAT))
-    wf.setframerate(RATE)
-    wf.writeframes(b''.join(frames))
-    wf.close()
 
 
 #print('start run')
