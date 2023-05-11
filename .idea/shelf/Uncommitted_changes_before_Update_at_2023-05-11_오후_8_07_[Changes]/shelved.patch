@@ -1,0 +1,185 @@
+Index: analysis.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import librosa\r\nimport librosa.display\r\nimport matplotlib.pyplot as plt\r\nimport numpy as np\r\nimport pickle\r\nimport time\r\nfrom collections import Counter\r\nimport os\r\n\r\nimport SoundFormInfo\r\n\r\n\r\ndef _plt_show(spectrogram_db):\r\n    if __name__ == '__main__':\r\n        import matplotlib.pyplot as plt\r\n\r\n        fig, ax = plt.subplots()\r\n        img = librosa.display.specshow(spectrogram_db, x_axis='time', y_axis='hz', ax=ax)\r\n        plt.colorbar(img, ax=ax, format='%+2.0f dB')\r\n        plt.xlabel('time')\r\n        plt.ylabel('freq')\r\n\r\n        plt.show()\r\n\r\n'''\r\ndef _score_func(L):\r\n    n=len(L)\r\n    sum=0\r\n    k=1\r\n    for db in L:\r\n       sum+=(10**(int(db/10+8)))/(k**2)\r\n       k+=1\r\n    return sum*(n**2)\r\n\r\n\r\ndef _find_peek(S, frame):  # return list of peek frequency and dB weight\r\n\r\n    threshold = 0  # constant\r\n\r\n    freq_list = librosa.fft_frequencies()\r\n    scores = [0] * 200\r\n    para_list = []\r\n\r\n    for i in range(6, 206):\r\n\r\n        for j in range(i, 24 * i + 1, i):\r\n            if j < 1024: para_list += [S[j][frame]]\r\n            else: para_list += [-80.0]\r\n        \r\n        scores[i-6] = _score_func(para_list)\r\n        para_list = []\r\n\r\n    mx = max(scores)\r\n    bass_ind = scores.index(mx) + 6\r\n\r\n    if mx > threshold and bass_ind: return [[freq_list[bass_ind], S[bass_ind][frame]],\r\n                               [freq_list[2 * bass_ind], S[2 * bass_ind][frame]],\r\n                               [freq_list[3 * bass_ind], S[3 * bass_ind][frame]]]\r\n    return []\r\n    # [] or [[hz, dB], [hz, dB], [hz, dB]]\r\n'''\r\n\r\n'''\r\ndef _find_peek(S, freq):  # S[ind] = dB, freq = librosa.fft_frequencies()\r\n    result = np.zeros(206)\r\n    n = len(S)\r\n    mx = 0\r\n    ind = 0\r\n\r\n    for i in range(6, 206):\r\n        result[i] = np.dot(S, np.cos(np.linspace(0, 2 * np.pi * (n - 1) / i, n)))\r\n\r\n        if 750 < result[i - 1] and mx < result[i - 1] and result[i - 2] <= result[i - 1] > result[i]\\\r\n                and max(result[i-1] - result[i], result[i-1] - result[i-2]) > 100:\r\n            mx, ind = result[i - 1], i - 1\r\n\r\n    import matplotlib.pyplot as plt\r\n\r\n    plt.plot(freq[:206], result)\r\n    plt.show()\r\n    \r\n    if ind == 0: return []\r\n    else:\r\n        return [[freq[i], S[i - 1] + S[i] + S[i + 1]] for i in range(ind, 3 * ind + 1, ind)]\r\n'''\r\n\r\n\r\ndef _gpt_peek(S, freq, cos_mat, S_mat):\r\n    result = np.zeros(630)\r\n    #n = len(S)\r\n\r\n\r\n    #result[6:206] = np.array([np.dot(S, np.cos(np.linspace(0, 6.283184 * (n - 1) / i, n))) for i in range(6, 206)])\r\n    #result[6:206] = np.array([np.dot(S, np.cos(np.linspace(0, 3952.1235 / i, 630))) for i in range(6, 206)])\r\n    #result[6:206] = np.array([np.dot(S, np.cos(np.linspace(0, i, 630))) for i in iz])\r\n    result[18:630] = np.sum(S_mat * cos_mat, axis=1)\r\n\r\n    # Vectorize the conditions to identify the peak frequencies\r\n    cond = (600 < result[17:629]) & (result[16:628] <= result[17:629]) & (result[17:629] > result[18:630]) & \\\r\n           (np.maximum(result[17:629] - result[18:630], result[17:629] - result[16:628]) > 100)\r\n    idx = np.flatnonzero(cond) + 17\r\n\r\n    if len(idx) == 0: return []\r\n\r\n    ind3 = idx[np.argmax(result[idx])]  # 3배음의 freq index\r\n    ind1i = ind3 // 3\r\n    ind2i = ind3 * 2 // 3\r\n    ind1p3 = ind3 % 3\r\n    ind2p3 = ind3 * 2 % 3\r\n\r\n    return [[freq[ind1i] + ind1p3 * 3.5888673,\r\n             S[ind1i - 1] * (3 - ind1p3) / 3 + S[ind1i] + S[ind1i + 1] + ind1p3 * S[ind1i + 2] / 3],\r\n            [freq[ind2i] + ind2p3 * 3.5888673,\r\n             S[ind2i - 1] * (2 - ind2p3) * 0.5 + S[ind2i] + S[ind2i + 1] + ind2p3 * S[ind2i + 2] * 0.5],\r\n            [freq[ind3], S[ind3 - 1] + S[ind3] + S[ind3 + 1]]]\r\n\r\n\r\ndef _export_melody(vocal_feature):\r\n    L = []  # L[frame] -> hz  or  -1\r\n    for i in vocal_feature:\r\n        if len(i) != 0: L.append(np.log2(i[1][0]/130.8128))\r\n        else: L.append(-1)\r\n    return L\r\n\r\n\r\ndef _export_strength(vocal_feature):\r\n    L = []  # L[frame] -> strength: 0 ~ 2  or  -1\r\n    for i in vocal_feature:\r\n        if len(i) != 0 and i[0][1] + i[1][1] + i[2][1] != 0:\r\n            L.append((i[1][1] + 2 * i[2][1]) / (i[0][1] + i[1][1] + i[2][1]))\r\n        else: L.append(-1)\r\n    return L\r\n\r\n\r\ndef _denoise(S, threshold):\r\n    S = np.array(S)  # melody\r\ndef express(L):\r\n    filtered_list = list(filter(lambda x: x != -1, L))\r\n    return np.std(filtered_list)\r\n\r\ndef highest_note(lst):\r\n    counter = Counter(lst)\r\n    max_repeated_value = max([value for value, count in counter.items() if count >= 4])\r\n    return convert_to_octave(max_repeated_value)\r\n\r\ndef convert_to_octave(a):\r\n    scale = int(a*12)\r\n    octave = scale//12\r\n    note = scale%12\r\n    A = ['도','도#','레','레#','미','파','파#','솔','솔#','라','라#','시']\r\n    return str(f'{octave}옥 '+ A[note])\r\ndef note_range(L):\r\n    filtered_list = list(filter(lambda x: x != -1, L))\r\n    mean=np.mean(filtered_list)\r\n    return mean\r\n\r\ndef breath():\r\n    return \"develop\"\r\n\r\ndef health():\r\n    return \"develop\"\r\ndef file_analysis(filename):\r\n    delta = time.time()\r\n\r\n    song_directory = '.\\\\temp\\\\' + filename + '\\\\' + 'vocals.wav'\r\n    raw_wave, sr = librosa.load(song_directory)\r\n\r\n    spectrogram_db = librosa.stft(y=raw_wave)\r\n    spectrogram_db = librosa.amplitude_to_db(np.abs(spectrogram_db), ref=np.max)\r\n    # spectrogram_db[level][frame]\r\n    # 1 frame == 512 / sr=22050 sec\r\n    # use librosa.fft_frequencies() to learn\r\n    print(\"loaded\", time.time() - delta)\r\n    freq = librosa.fft_frequencies()\r\n    '''\r\n    freq_list = librosa.fft_frequencies()\r\n    max_ind = 222\r\n    for i in range(len(freq_list)):\r\n        if freq_list[i] > max_hz:\r\n            max_ind = i\r\n            break\r\n    '''\r\n    delta = time.time()\r\n\r\n    end = 6 * np.pi * 629\r\n\r\n    cos_mat = np.cos(np.array([np.linspace(0, end / i, 630) for i in range(18, 630)]))\r\n\r\n    vocal_feature = []\r\n    for frame in range(len(spectrogram_db[0])):\r\n        S = np.ravel(spectrogram_db[0:len(spectrogram_db), frame:frame + 1])[:630] + 80\r\n        S_mat = np.tile(S, (612, 1))\r\n        vocal_feature.append(_gpt_peek(S, freq, cos_mat, S_mat))\r\n    # now vocal_feature has 3 harmonics hz and dB of vocal with format:\r\n    # vocal_feature[frame][1~3rd harmonics] -> [hz, dB sum of near hz]\r\n\r\n    print(\"processed\", time.time() - delta)\r\n    delta = time.time()\r\n\r\n    melody = _export_melody(vocal_feature)\r\n    strength = _export_strength(vocal_feature)\r\n    expression = round(express(strength),2)\r\n    highest = highest_note(melody)\r\n    range_of_note = round(note_range(melody),2)\r\n    breath_hd = breath()\r\n    health_hd = health()\r\n    adv_data = SoundFormInfo.AdvancedInfo(expression,highest,range_of_note,breath_hd,health_hd)\r\n    #timeline = np.arange(len(melody)) * 512 / 22050\r\n\r\n    print(\"exported\", time.time() - delta)\r\n\r\n    #plt.plot(timeline, melody, 'ro', ms=2)\r\n    #plt.plot(timeline, strength, 'bo', ms=2)\r\n\r\n    #plt.show()\r\n\r\n    folder_path = f\"./additionalData/{filename}\"\r\n\r\n    # Create the folder if it does not exist\r\n    if not os.path.exists(folder_path):\r\n        os.makedirs(folder_path)\r\n    else:\r\n        pass\r\n\r\n\r\n    with open(\".\\\\additionalData\\\\\" + filename + \"\\\\mel.dat\", 'wb') as f:\r\n        pickle.dump(melody, f)\r\n    f.close()\r\n    del melody\r\n\r\n    with open(\".\\\\additionalData\\\\\" + filename + \"\\\\str.dat\", 'wb') as f:\r\n        pickle.dump(strength, f)\r\n    del strength\r\n    f.close()\r\n    with open(\".\\\\additionalData\\\\\" + filename + \"\\\\adv.dat\", 'wb') as f:\r\n        pickle.dump(adv_data, f)\r\n    del adv_data\r\n    f.close()\r\n\r\n    del raw_wave\r\n    del cos_mat\r\n    del spectrogram_db\r\n    del freq\r\n\r\n\r\n    #iz = [3952.1235 / i for i in range(6, 206)]\r\n    #cos_mat = np.array([np.cos(np.linspace(0, 3952.1235 / i, 630)) for i in range(6, 206)])\r\n\r\n    '''\r\n    delta = time.time()\r\n    for i in range(len(spectrogram_db[0])//12):\r\n        S = np.ravel(spectrogram_db[0:len(spectrogram_db), i:i+1])[:630] + 80\r\n        a = _find_peek(S, freq)\r\n\r\n        S_mat = np.tile(S, (200, 1))\r\n        b = _gpt_peek(S, freq, cos_mat, S_mat)\r\n\r\n        if a != b:\r\n            print('shit', i)\r\n            break\r\n    print(time.time() - delta)\r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    delta = time.time()\r\n    for i in range(len(spectrogram_db[0])):\r\n        S = np.ravel(spectrogram_db[0:len(spectrogram_db), i:i+1])[:630] + 80\r\n        S_mat = np.tile(S, (200, 1))\r\n        a = _gpt_peek(S, freq, cos_mat, S_mat)\r\n    print(time.time() - delta)\r\n    '''\r\n\r\n\r\n    # print(vocal_feature)\r\n    # _plt_show(spectrogram_db)\r\n    return\r\n\r\n#print('start run')\r\nif __name__==\"__main__\":\r\n# print(len(librosa.fft_frequencies()))\r\n    file_analysis(\"닐로 - 지나오다\")\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/analysis.py b/analysis.py
+--- a/analysis.py	(revision dad0a1b634ea13bd5e4329a7cab6e6bf9baa137c)
++++ b/analysis.py	(date 1683777588440)
+@@ -6,6 +6,7 @@
+ import time
+ from collections import Counter
+ import os
++import pyaudio as pa
+ 
+ import SoundFormInfo
+ 
+@@ -134,31 +135,41 @@
+ 
+ def _denoise(S, threshold):
+     S = np.array(S)  # melody
++
++
+ def express(L):
+     filtered_list = list(filter(lambda x: x != -1, L))
+     return np.std(filtered_list)
+ 
++
+ def highest_note(lst):
+     counter = Counter(lst)
+     max_repeated_value = max([value for value, count in counter.items() if count >= 4])
+     return convert_to_octave(max_repeated_value)
+ 
++
+ def convert_to_octave(a):
+     scale = int(a*12)
+     octave = scale//12
+     note = scale%12
+     A = ['도','도#','레','레#','미','파','파#','솔','솔#','라','라#','시']
+     return str(f'{octave}옥 '+ A[note])
++
++
+ def note_range(L):
+     filtered_list = list(filter(lambda x: x != -1, L))
+-    mean=np.mean(filtered_list)
++    mean = np.mean(filtered_list)
+     return mean
+ 
++
+ def breath():
+     return "develop"
+ 
++
+ def health():
+     return "develop"
++
++
+ def file_analysis(filename):
+     delta = time.time()
+ 
+@@ -199,12 +210,12 @@
+ 
+     melody = _export_melody(vocal_feature)
+     strength = _export_strength(vocal_feature)
+-    expression = round(express(strength),2)
++    expression = round(float(express(strength)),2)
+     highest = highest_note(melody)
+-    range_of_note = round(note_range(melody),2)
++    range_of_note = round(float(note_range(melody)),2)
+     breath_hd = breath()
+     health_hd = health()
+-    adv_data = SoundFormInfo.AdvancedInfo(expression,highest,range_of_note,breath_hd,health_hd)
++    adv_data = SoundFormInfo.AdvancedInfo(expression, highest, range_of_note, breath_hd, health_hd)
+     #timeline = np.arange(len(melody)) * 512 / 22050
+ 
+     print("exported", time.time() - delta)
+@@ -232,6 +243,7 @@
+         pickle.dump(strength, f)
+     del strength
+     f.close()
++
+     with open(".\\additionalData\\" + filename + "\\adv.dat", 'wb') as f:
+         pickle.dump(adv_data, f)
+     del adv_data
+@@ -247,24 +259,6 @@
+     #cos_mat = np.array([np.cos(np.linspace(0, 3952.1235 / i, 630)) for i in range(6, 206)])
+ 
+     '''
+-    delta = time.time()
+-    for i in range(len(spectrogram_db[0])//12):
+-        S = np.ravel(spectrogram_db[0:len(spectrogram_db), i:i+1])[:630] + 80
+-        a = _find_peek(S, freq)
+-
+-        S_mat = np.tile(S, (200, 1))
+-        b = _gpt_peek(S, freq, cos_mat, S_mat)
+-
+-        if a != b:
+-            print('shit', i)
+-            break
+-    print(time.time() - delta)
+-    
+-    
+-    
+-    
+-    
+-    
+     delta = time.time()
+     for i in range(len(spectrogram_db[0])):
+         S = np.ravel(spectrogram_db[0:len(spectrogram_db), i:i+1])[:630] + 80
+@@ -280,5 +274,8 @@
+ 
+ #print('start run')
+ if __name__=="__main__":
+-# print(len(librosa.fft_frequencies()))
+-    file_analysis("닐로 - 지나오다")
++    # print(len(librosa.fft_frequencies()))
++    #file_analysis("닐로 - 지나오다")
++    a = np.array([23, 60000, 14], dtype=np.int32)
++    print(a)
++    print(a.astype(np.float32) / 65535, 'okok')
+Index: .idea/modules.xml
+===================================================================
+diff --git a/.idea/modules.xml b/.idea/modules.xml
+deleted file mode 100644
+--- a/.idea/modules.xml	(revision dad0a1b634ea13bd5e4329a7cab6e6bf9baa137c)
++++ /dev/null	(revision dad0a1b634ea13bd5e4329a7cab6e6bf9baa137c)
+@@ -1,8 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="ProjectModuleManager">
+-    <modules>
+-      <module fileurl="file://$PROJECT_DIR$/.idea/vocalMaximum.iml" filepath="$PROJECT_DIR$/.idea/vocalMaximum.iml" />
+-    </modules>
+-  </component>
+-</project>
+\ No newline at end of file
+Index: .idea/.gitignore
+===================================================================
+diff --git a/.idea/.gitignore b/.idea/.gitignore
+deleted file mode 100644
+--- a/.idea/.gitignore	(revision dad0a1b634ea13bd5e4329a7cab6e6bf9baa137c)
++++ /dev/null	(revision dad0a1b634ea13bd5e4329a7cab6e6bf9baa137c)
+@@ -1,3 +0,0 @@
+-# Default ignored files
+-/shelf/
+-/workspace.xml
+Index: .idea/vocalMaximum.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<module type=\"PYTHON_MODULE\" version=\"4\">\r\n  <component name=\"NewModuleRootManager\">\r\n    <content url=\"file://$MODULE_DIR$\">\r\n      <excludeFolder url=\"file://$MODULE_DIR$/venv\" />\r\n    </content>\r\n    <orderEntry type=\"jdk\" jdkName=\"Python 3.6\" jdkType=\"Python SDK\" />\r\n    <orderEntry type=\"sourceFolder\" forTests=\"false\" />\r\n  </component>\r\n</module>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/vocalMaximum.iml b/.idea/vocalMaximum.iml
+--- a/.idea/vocalMaximum.iml	(revision dad0a1b634ea13bd5e4329a7cab6e6bf9baa137c)
++++ b/.idea/vocalMaximum.iml	(date 1683740599759)
+@@ -7,4 +7,8 @@
+     <orderEntry type="jdk" jdkName="Python 3.6" jdkType="Python SDK" />
+     <orderEntry type="sourceFolder" forTests="false" />
+   </component>
++  <component name="PyDocumentationSettings">
++    <option name="format" value="PLAIN" />
++    <option name="myDocStringFormat" value="Plain" />
++  </component>
+ </module>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ProjectRootManager\" version=\"2\" project-jdk-name=\"Python 3.6\" project-jdk-type=\"Python SDK\" />\r\n  <component name=\"PythonCompatibilityInspectionAdvertiser\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision dad0a1b634ea13bd5e4329a7cab6e6bf9baa137c)
++++ b/.idea/misc.xml	(date 1683740599776)
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.6" project-jdk-type="Python SDK" />
++  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.10 (vocalMaximum)" project-jdk-type="Python SDK" />
+   <component name="PythonCompatibilityInspectionAdvertiser">
+     <option name="version" value="3" />
+   </component>
