@@ -140,7 +140,7 @@ def _denoise(S, threshold):
     S = np.array(S)  # melody
 def express(L):
     filtered_list = list(filter(lambda x: x != -1, L))
-    return np.std(filtered_list)
+    return 40*np.std(filtered_list)
 
 def highest_note(lst):
     counter = Counter(lst)
