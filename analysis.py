@@ -163,7 +163,7 @@ def file_analysis(vocal_waveform,filename):
     delta = time.time()
     if vocal_waveform.ndim > 1:
         vocal_waveform = np.mean(vocal_waveform, axis=1)
-    raw_wave = vocal_waveform
+    raw_wave = librosa.resample(vocal_waveform, 44100, 22050)
     spectrogram_db = librosa.stft(y=raw_wave)
     spectrogram_db = librosa.amplitude_to_db(np.abs(spectrogram_db), ref=np.max)
     # spectrogram_db[level][frame]
@@ -279,4 +279,7 @@ def file_analysis(vocal_waveform,filename):
 #print('start run')
 if __name__=="__main__":
 # print(len(librosa.fft_frequencies()))
-    file_analysis("닐로 - 지나오다")
+    #file_analysis("닐로 - 지나오다")
+
+    asdf = np.array([[2, 4, 2, 4, 2, 4], [8, 10]])
+    print(np.mean(asdf, axis=1))
