@@ -82,7 +82,11 @@ def _find_peek(S, freq):  # S[ind] = dB, freq = librosa.fft_frequencies()
     else:
         return [[freq[i], S[i - 1] + S[i] + S[i + 1]] for i in range(ind, 3 * ind + 1, ind)]
 '''
-
+def _show_output(melody,strength):
+    timeline = np.arange(len(melody)) * 512 / 22050
+    plt.plot(timeline, melody, 'ro', ms=2)
+    plt.plot(timeline, strength, 'bo', ms=2)
+    plt.show()
 
 def _gpt_peek(S, freq, cos_mat, S_mat):
     result = np.zeros(630)
@@ -204,14 +208,11 @@ def file_analysis(vocal_waveform,filename):
     breath_hd = breath()
     health_hd = health()
     adv_data = SoundFormInfo.AdvancedInfo(expression,highest,range_of_note,breath_hd,health_hd)
-    timeline = np.arange(len(melody)) * 512 / 22050
+
 
     print("exported", time.time() - delta)
 
-    plt.plot(timeline, melody, 'ro', ms=2)
-    plt.plot(timeline, strength, 'bo', ms=2)
-
-    plt.show()
+    _show_output(melody,strength)
 
     folder_path = f"./additionalData/{filename}"
 
