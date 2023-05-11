@@ -8,7 +8,7 @@ from collections import Counter
 import os
 import SoundFormInfo
 import pyaudio
-from scipy.io.wavfile import write
+from playsound import playsound
 
 
 def _plt_show(spectrogram_db):
@@ -149,7 +149,7 @@ def highest_note(lst):
     return convert_to_octave(max_repeated_value)
 
 def convert_to_octave(a):
-    scale = int(a*12)
+    scale = int(a*12 + 0.5)
     octave = scale//12
     note = scale%12
     A = ['도','도#','레','레#','미','파','파#','솔','솔#','라','라#','시']
@@ -282,12 +282,37 @@ def file_analysis(vocal_waveform,filename):
     return
 
 
-def live_analysis():
+def _mel_similarity(new: float, original: list, frame):  # 비슷하면 0, new가 낮으면 -1, 반대면 1
+    # 비슷하다 = 150cent(=1.5키) 차이 이내
+    e = np.float(1)/8
+
+    search = np.array(original[np.max(frame - 4, 0):np.min(frame + 5, len(original))])
+    search = np.tile(np.array([new]), len(search)) - search
+    if np.min(np.abs(search)) < e: return 0
+
+    cnt = 0
+    for i in search:
+        if i < 0: cnt += 1
+
+    res = -1 if cnt > len(search) / 2 else 1
+    return res
+
+
+def live_analysis(filename):
+
+    with open(f'.\\additionalData\\{filename}\\mel.dat', 'rb') as f:
+        origin_mel = pickle.load(f)
+    with open(f'.\\additionalData\\{filename}\\str.dat', 'rb') as f:
+        origin_str = pickle.load(f)
 
     CHUNK = 2048
     FORMAT = pyaudio.paFloat32
     CHANNELS = 1
     RATE = 22050
+
+    end = 6 * np.pi * 629
+    cos_mat = np.cos(np.array([np.linspace(0, end / i, 630) for i in range(18, 630)]))
+    freq = librosa.fft_frequencies()
 
     p = pyaudio.PyAudio()
 
@@ -300,15 +325,32 @@ def live_analysis():
 
     print('start recording')
 
-    frames = []
-    seconds = 2
+    bee = ['도 ', '도#', '레 ', '레#', '미 ', '파 ', '파#', '솔 ', '솔#', '라 ', '라#', '시 ']
+    seconds = 5
     for i in range(0, int(RATE / CHUNK * seconds)):
         data = stream.read(CHUNK)
-        data = list(np.frombuffer(data, dtype=np.float32))
-        frames += data
+        stt = time.time()
+
+        data = np.frombuffer(data, dtype=np.float32)
+        data = librosa.amplitude_to_db(np.abs(librosa.stft(y=data, hop_length=4096)), ref=256)
+        data = np.ravel(data)[:630] + 80
+        data[data[np.arange(630)] < 0] = 0
+
+        data_mat = np.tile(data, (612, 1))
+        vocal_feature = [_gpt_peek(data, freq, cos_mat, data_mat)]
+        note = _export_melody(vocal_feature)[0]
+        strength = _export_strength(vocal_feature)[0]
+
+        # note = _mel_similarity(note, origin_mel, _get_frame())
+
+        if note != -1: note = '{0}옥 {1}'.format(int(note + 1/24), bee[int((note + 1/24) % 1 * 12)])
+        else: note = ':D     '
+        to_display = [note, 'dev-ing']
+        print(to_display, (time.time() - stt) * 1000)
+
 
     print('record stopped')
-
+    '''
     frames = np.array(frames)
 
     stftd = np.abs(librosa.stft(y=frames))
@@ -332,7 +374,7 @@ def live_analysis():
     plt.plot(frames)
     plt.ylim(-1, 1)
     plt.show()
-
+    '''
     stream.stop_stream()
     stream.close()
     p.terminate()
@@ -340,6 +382,7 @@ def live_analysis():
 
 #print('start run')
 if __name__=="__main__":
-    # print(len(librosa.fft_frequencies()))
+    #print(len(librosa.fft_frequencies()))
     #file_analysis("닐로 - 지나오다")
-    live_analysis()
+    #live_analysis('소찬휘-Tears')
+    pass
