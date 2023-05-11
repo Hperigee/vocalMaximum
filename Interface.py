@@ -8,6 +8,10 @@ import assets
 from queue import Queue
 from fileinput import input_file
 from spleeter.separator import Separator
+import os
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+import tensorflow as tf
+
 
 
 global input_file_directory
@@ -15,7 +19,7 @@ input_file_directory=None
 global to_process
 to_process = Queue()
 global GLOBAL_SPLITTER
-GLOBAL_SPLITTER = Separator('spleeter:2stems')
+GLOBAL_SPLITTER = Separator('spleeter:2stems', stft_backend='tensorflow', multiprocess=False)
 
 class Thread(QThread):
     analysis_result_ready = pyqtSignal(object)

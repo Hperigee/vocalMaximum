@@ -23,8 +23,9 @@ def _wav_to_mp3(filename):
 
 
 def _filename_fetch(directory):
+    directory = os.path.abspath(directory)  # Convert to absolute path
     filename = os.path.basename(directory)[:-4]
-    return filename
+    return filename, directory
 
 def rename_directory(old_name, new_name):
     try:
@@ -34,7 +35,7 @@ def rename_directory(old_name, new_name):
     return
 
 def _separate(directory,spl):
-    spl.separate_to_file(directory, './temp',)
+    spl.separate_to_file(directory, './temp')
     return
 
 
@@ -60,25 +61,19 @@ def _export_basic_info(directory, filename):
 
 def input_file(directory,spl):
 
-    filename = _filename_fetch(directory)
-    res = _export_basic_info(directory, filename)
-
+    filename, abs_directory= _filename_fetch(directory)
+    res = _export_basic_info(abs_directory, filename)
     _separate(directory,spl)  # 음원 분리
     _wav_to_mp3(filename)   # MR은 따로 저장 / wav 삭제
 
     analysis.file_analysis(filename)  # 보컬 정보 추출
-
     _remove_tmp(filename)  # tmp 삭제
     return res
 
 
 if __name__ == '__main__':
-    import time
-
-    GLOBAL_SPLITTER = Separator('spleeter:2stems')
-    stt = time.time()
-    input_file('.\\닐로-지나오다.mp3',GLOBAL_SPLITTER)
-    stt = time.time() - stt
-    print(stt, 'seconds')
-
+    GLOBAL_SPLITTER = Separator('spleeter:2stems', stft_backend='tensorflow', multiprocess=False)
+    ti=time.time()
+    input_file('./박효신-야생화.mp3',GLOBAL_SPLITTER)
+    print(time.time()-ti)
 
