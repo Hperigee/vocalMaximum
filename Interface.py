@@ -417,7 +417,7 @@ class RecommendListView(QWidget):
         public_functions.centering(self.make_profile_widget)
         self.ui.Search.textChanged.connect(self.search_in_recommended_list)
         self.StackedWidget.setCurrentWidget(self.make_profile_widget)
-
+        self.to_display = self.main.song_widget_list
         self._set_custom_scroll_bar()
 
         display = QHBoxLayout()
@@ -425,22 +425,21 @@ class RecommendListView(QWidget):
         display.addWidget(self.ui)
         self.setLayout(display)
 
-    def search_in_recommended_list(self):
+    def search_in_whole_list(self):
         name = self.ui.Search.text()
-        L = []  # it will be recommended list
-        to_display = public_functions.search(L, name)
-        self.remove_whole_list()
-        for i in range(len(to_display)):
-            self.add_widget_in_recommend_list(to_display[i])
+        self.searched = public_functions.search(self.to_display, name)
 
-    def remove_whole_list(self):
-        for x in range(self.get_widget_number_from_recommend_list()):
-            widget = self.layout.itemAt(0).widget()
+        # Hide all widgets
+        for widget in self.to_display:
+            widget.hide()
             self.layout.removeWidget(widget)
 
-    def change_widget(self):
-        if public_functions.profile_exist():
-            self.StackedWidget.setCurrentWidget(self.RecommendListScrollArea_widget)
+            # Show widgets in search results
+        for widget in self.searched:
+            widget.show()
+            self.layout.addWidget(widget)
+
+        self.update_index()
 
     def get_widget_number_from_recommend_list(self):
         return self.layout.count()
@@ -448,15 +447,19 @@ class RecommendListView(QWidget):
     def remove_widget_from_recommend_list(self, i):
         widget = self.layout.itemAt(i).widget()
         self.layout.removeWidget(widget)
-        widget.deleteLater()
-        for j in range(i, self.get_widget_number_from_recommend_list()):
-            change = self.layout.itemAt(j).widget()
-            change.label0.setText(str(j + 1))
-            change.update()
+        self.update_index()
 
-    def add_widget_in_recommend_list(self, song_widget):
-        self.layout.addWidget(song_widget)
-        self.layout.update()
+    def update_index(self):
+        visible_widget_count = 0
+        for index, widget in enumerate(self.to_display):
+            visible_widget_count += 1
+            widget.label0.setText(str(visible_widget_count))
+            widget.update()
+
+    def change_widget(self):
+        if public_functions.profile_exist():
+            self.StackedWidget.setCurrentWidget(self.RecommendListScrollArea_widget)
+
 
     def _set_custom_scroll_bar(self):
         scroll_area = self.RecommendListScrollArea

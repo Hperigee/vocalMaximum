@@ -146,7 +146,7 @@ def express(L):
 def highest_note(lst):
     counter = Counter(lst)
     max_repeated_value = max([value for value, count in counter.items() if count >= 8])
-    return convert_to_octave(max_repeated_value)
+    return convert_to_octave(max_repeated_value) , max_repeated_value
 
 def convert_to_octave(a):
     scale = int(a*12 + 0.5)
@@ -207,11 +207,11 @@ def file_analysis(vocal_waveform,filename):
     melody = _export_melody(vocal_feature)
     strength = _export_strength(vocal_feature)
     expression = round(express(strength),2)
-    highest = highest_note(melody)
+    highest ,original= highest_note(melody)
     range_of_note = round(note_range(melody),2)
     breath_hd = breath()
     health_hd = health()
-    adv_data = SoundFormInfo.AdvancedInfo(expression,highest,range_of_note,breath_hd,health_hd)
+    adv_data = SoundFormInfo.AdvancedInfo(expression,highest,original,range_of_note,breath_hd,health_hd)
 
 
     print("exported", time.time() - delta)
