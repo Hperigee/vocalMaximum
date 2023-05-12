@@ -8,7 +8,8 @@ from collections import Counter
 import os
 import SoundFormInfo
 import pyaudio
-from playsound import playsound
+import Profile
+
 
 
 def _plt_show(spectrogram_db):
@@ -92,12 +93,6 @@ def _show_output(melody,strength):
 
 def _gpt_peek(S, freq, cos_mat, S_mat):
     result = np.zeros(630)
-    #n = len(S)
-
-
-    #result[6:206] = np.array([np.dot(S, np.cos(np.linspace(0, 6.283184 * (n - 1) / i, n))) for i in range(6, 206)])
-    #result[6:206] = np.array([np.dot(S, np.cos(np.linspace(0, 3952.1235 / i, 630))) for i in range(6, 206)])
-    #result[6:206] = np.array([np.dot(S, np.cos(np.linspace(0, i, 630))) for i in iz])
     result[18:630] = np.sum(S_mat * cos_mat, axis=1)
 
     # Vectorize the conditions to identify the peak frequencies
@@ -146,7 +141,7 @@ def express(L):
 def highest_note(lst):
     counter = Counter(lst)
     max_repeated_value = max([value for value, count in counter.items() if count >= 8])
-    return convert_to_octave(max_repeated_value)
+    return max_repeated_value
 
 def convert_to_octave(a):
     scale = int(a*12 + 0.5)
@@ -158,7 +153,7 @@ def convert_to_octave(a):
 def note_range(L):
     filtered_list = list(filter(lambda x: x != -1, L))
     mean=np.mean(filtered_list)
-    return mean
+    return float(mean)
 
 def breath():
     return "develop"
@@ -249,44 +244,16 @@ def file_analysis(vocal_waveform,filename):
     #iz = [3952.1235 / i for i in range(6, 206)]
     #cos_mat = np.array([np.cos(np.linspace(0, 3952.1235 / i, 630)) for i in range(6, 206)])
 
-    '''
-    delta = time.time()
-    for i in range(len(spectrogram_db[0])//12):
-        S = np.ravel(spectrogram_db[0:len(spectrogram_db), i:i+1])[:630] + 80
-        a = _find_peek(S, freq)
-
-        S_mat = np.tile(S, (200, 1))
-        b = _gpt_peek(S, freq, cos_mat, S_mat)
-
-        if a != b:
-            print('shit', i)
-            break
-    print(time.time() - delta)
-    
-    
-    
-    
-    
-    
-    delta = time.time()
-    for i in range(len(spectrogram_db[0])):
-        S = np.ravel(spectrogram_db[0:len(spectrogram_db), i:i+1])[:630] + 80
-        S_mat = np.tile(S, (200, 1))
-        a = _gpt_peek(S, freq, cos_mat, S_mat)
-    print(time.time() - delta)
-    '''
-
-
     # print(vocal_feature)
     # _plt_show(spectrogram_db)
     return
 
 
-def _mel_similarity(new: float, original: list, frame):  # 비슷하면 0, new가 낮으면 -1, 반대면 1
+def _mel_similarity(new: float, original: list, frame, offset_fr):  # 비슷하면 0, new가 낮으면 -1, 반대면 1
     # 비슷하다 = 150cent(=1.5키) 차이 이내
     e = np.float(1)/8
 
-    search = np.array(original[np.max(frame - 4, 0):np.min(frame + 5, len(original))])
+    search = np.array(original[np.max(offset_fr + frame - 4, 0):np.min(offset_fr + frame + 5, len(original))])
     search = np.tile(np.array([new]), len(search)) - search
     if np.min(np.abs(search)) < e: return 0
 
@@ -298,7 +265,19 @@ def _mel_similarity(new: float, original: list, frame):  # 비슷하면 0, new�
     return res
 
 
-def live_analysis(filename):
+def _find_can_max(logs):
+    e = np.float(1)/8
+
+    logs = [i[0] for i in logs]
+    logs.sort(key=lambda x: -x)
+
+    for i in range(1, len(logs)):
+        if logs[i-1] - logs[i] < e: return logs[i]
+
+    return -1
+
+
+def live_analysis(filename, ):
 
     with open(f'.\\additionalData\\{filename}\\mel.dat', 'rb') as f:
         origin_mel = pickle.load(f)
@@ -325,6 +304,8 @@ def live_analysis(filename):
 
     print('start recording')
 
+    to_display = []
+    logs = []
     bee = ['도 ', '도#', '레 ', '레#', '미 ', '파 ', '파#', '솔 ', '솔#', '라 ', '라#', '시 ']
     seconds = 5
     for i in range(0, int(RATE / CHUNK * seconds)):
@@ -341,40 +322,28 @@ def live_analysis(filename):
         note = _export_melody(vocal_feature)[0]
         strength = _export_strength(vocal_feature)[0]
 
-        # note = _mel_similarity(note, origin_mel, _get_frame())
+        logs.append([note])
+
+        # note = _mel_similarity(note, origin_mel, _get_frame(), offset_fr)
 
         if note != -1: note = '{0}옥 {1}'.format(int(note + 1/24), bee[int((note + 1/24) % 1 * 12)])
         else: note = ':D     '
         to_display = [note, 'dev-ing']
-        print(to_display, (time.time() - stt) * 1000)
+        #print(to_display, (time.time() - stt) * 1000)
+
+        if FLAG == True: break
 
 
     print('record stopped')
-    '''
-    frames = np.array(frames)
 
-    stftd = np.abs(librosa.stft(y=frames))
+    with open('.\\profile.dat', 'rb') as f:
+        old_profile = pickle.load(f)
 
-    print(np.max(stftd))
-    print(np.min(stftd))
+    old_profile.can_max = max(old_profile.can_max, _find_can_max(logs))
 
-    stftd = librosa.amplitude_to_db(stftd, ref=256)
-    too_low = stftd[range(len(stftd))] < -80
+    with open('.\\profile.dat', 'wb') as f:
+        pickle.dump(old_profile, f)
 
-    print(too_low)
-
-    stftd[too_low] = -80
-
-    print(np.max(stftd))
-    print(np.min(stftd))
-
-    stftd[0][0] = 0
-    _plt_show(stftd)
-
-    plt.plot(frames)
-    plt.ylim(-1, 1)
-    plt.show()
-    '''
     stream.stop_stream()
     stream.close()
     p.terminate()
@@ -385,4 +354,14 @@ if __name__=="__main__":
     #print(len(librosa.fft_frequencies()))
     #file_analysis("닐로 - 지나오다")
     #live_analysis('소찬휘-Tears')
-    pass
+    '''
+    audio = pyaudio.PyAudio()
+
+    for index in range(audio.get_device_count()):
+        desc = audio.get_device_info_by_index(index)
+        print("DEVICE: {device}, INDEX: {index}, RATE: {rate} ".format(
+            device=desc["name"], index=index, rate=int(desc["defaultSampleRate"])))
+    '''
+    with open('.\\profile.dat', 'wb') as f:
+        sdf = Profile.Profile()
+        pickle.dump(sdf, f)
