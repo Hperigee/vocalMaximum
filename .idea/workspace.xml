@@ -6,12 +6,23 @@
   <component name="ChangeListManager">
     <list default="true" id="4bb3950c-9614-4d0b-bfaf-5de0812fd3c8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Datas/Addedlist.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Datas/Defaultlist.dat" beforeDir="false" afterPath="$PROJECT_DIR$/Datas/Defaultlist.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DefaultDataGeneration.py" beforeDir="false" afterPath="$PROJECT_DIR$/DefaultDataGeneration.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Defaults/닐로_지나오다.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/Defaults/닐로-지나오다.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Datas/Addedlist.dat" beforeDir="false" afterPath="$PROJECT_DIR$/Datas/Addedlist.dat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Interface.py" beforeDir="false" afterPath="$PROJECT_DIR$/Interface.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UI/uiFiles/RecommendListView.ui" beforeDir="false" afterPath="$PROJECT_DIR$/UI/uiFiles/RecommendListView.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/경서-나의_X에게/adv.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/경서-나의_X에게/adv.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/닐로-지나오다/adv.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/닐로-지나오다/adv.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/박효신-야생화/adv.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/박효신-야생화/adv.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/버즈-나에게로떠나는여행/adv.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/버즈-나에게로떠나는여행/adv.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/산들-취기를_빌려/adv.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/산들-취기를_빌려/adv.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/성시경-너의_모든_순간/adv.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/성시경-너의_모든_순간/mel.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/성시경-너의_모든_순간/str.dat" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/additionalData/소찬휘-Tears/adv.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/소찬휘-Tears/adv.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/쏜애플-시퍼런봄/adv.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/쏜애플-시퍼런봄/adv.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/아이유-내_손을_잡아/adv.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/아이유-내_손을_잡아/adv.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/에일리-첫눈처럼_너에게_가겠다/adv.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/에일리-첫눈처럼_너에게_가겠다/adv.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/윤종신-좋니/adv.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/윤종신-좋니/adv.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/이승기-삭제/adv.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/이승기-삭제/adv.dat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/analysis.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -282,6 +293,7 @@
       <configuration name="PythonConfigurationType">
         <watch expression="self" />
         <watch expression="thread" />
+        <watch expression="self" />
       </configuration>
     </watches-manager>
   </component>

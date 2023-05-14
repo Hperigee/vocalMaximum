@@ -13,10 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
-   <property name="spacing">
-    <number>0</number>
-   </property>
+  <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -29,7 +26,7 @@
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <item>
+   <item row="0" column="0">
     <layout class="QVBoxLayout" name="verticalLayout">
      <property name="spacing">
       <number>0</number>
@@ -174,7 +171,7 @@ font: 12pt &quot;Noto Sans KR&quot;;</string>
         <item>
          <widget class="QStackedWidget" name="stackedWidget">
           <property name="currentIndex">
-           <number>1</number>
+           <number>2</number>
           </property>
           <widget class="QWidget" name="makeProfile">
            <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -232,6 +229,22 @@ record to make a profile.</string>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_2"/>
               </widget>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="refresh">
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <item>
+             <widget class="QLabel" name="label_2">
+              <property name="styleSheet">
+               <string notr="true">font: 16pt &quot;Noto Sans KR medium&quot;;
+                                    color: #000;
+                                    border:none;</string>
+              </property>
+              <property name="text">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;새로운 노래가 추가되었습니다.&lt;/p&gt;&lt;p&gt;아래의 버튼 중 하나를 클릭하여 &lt;/p&gt;&lt;p&gt;새로고침 해주세요.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
              </widget>
             </item>
            </layout>

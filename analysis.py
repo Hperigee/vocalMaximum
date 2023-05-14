@@ -142,7 +142,7 @@ def highest_note(lst):
     counter = Counter(lst)
     max_repeated_value = max([value for value, count in counter.items() if count >= 8])
 
-    return max_repeated_value
+    return convert_to_octave(max_repeated_value), max_repeated_value
 
 def convert_to_octave(a):
     scale = int(a*12 + 0.5)

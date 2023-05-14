@@ -24,6 +24,8 @@ global GLOBAL_SPLITTER
 GLOBAL_SPLITTER = Separator('spleeter:2stems', stft_backend='tensorflow', multiprocess=False)
 global to_display
 to_display = Queue()
+global song_added
+song_added = False
 
 class Thread(QThread):
     analysis_result_ready = pyqtSignal(object)
@@ -106,6 +108,7 @@ class MainWindow(QMainWindow):
 
     def init_ui(self):
         self.song_widget_list = []
+        self.song_widget_recommend_list=[]
         self.ui = loadUi('.\\UI\\uiFiles\\Main.ui', self)
         self.setMinimumSize(1600, 900)
         self.mainStackedWidget = QStackedWidget(self)
@@ -147,6 +150,9 @@ class MainWindow(QMainWindow):
         folder_path = 'Datas'
         file_list = [os.path.join(folder_path, f) for f in os.listdir(folder_path) if f.endswith('.dat')]
         new_file_list = [os.path.join(folder_path, f) for f in os.listdir(folder_path) if f.endswith('.tmpdat')]
+
+
+
         data = []
         new_data = []
         for file_path in new_file_list:
@@ -155,6 +161,10 @@ class MainWindow(QMainWindow):
                 new_data.append(song_info)
             file.close()
 
+        for filename in os.listdir(folder_path):
+            if filename.endswith(".tmpdat"):
+                file_path = os.path.join(folder_path, filename)
+                os.remove(file_path)
         try:
             with open('./Datas/Addedlist.dat', 'rb') as f:
                 song_info = pickle.load(f)
@@ -173,9 +183,10 @@ class MainWindow(QMainWindow):
         self.songlist = data
 
         for i in range(len(self.songlist)):
-            song_widget = assets.SongFile(len(self.song_widget_list) + 1, self.songlist[i])
-            song_widget.clicked.connect(self._handle_song_file_click)
-            self.SongListView.add_widget_in_song_list(song_widget)
+            song_widget_song = assets.SongFile(len(self.song_widget_list) + 1, self.songlist[i])
+            song_widget_recommend = assets.SongFile(len(self.song_widget_list) + 1, self.songlist[i])
+            self.SongListView.add_widget_in_song_list(song_widget_song)
+            self.RecommendListView.add_widget_in_recommended_list(song_widget_recommend)
 
         del self.songlist
     def _get_qss(self):
@@ -249,6 +260,8 @@ class SongListView(QWidget):
         display.setContentsMargins(0, 0, 0, 0)
         display.addWidget(self.ui)
         self.setLayout(display)
+        self.name=''
+
         self.thread = Thread()
         self.thread.analysis_result_ready.connect(self.handle_analysis_result)
 
@@ -272,8 +285,8 @@ class SongListView(QWidget):
         notification_window.show()
 
     def search_in_whole_list(self):
-        name = self.ui.Search.text()
-        self.to_display = public_functions.search(self.main.song_widget_list, name)
+        self.name = self.ui.Search.text()
+        self.to_display = public_functions.search(self.main.song_widget_list, self.name)
 
         # Hide all widgets
         for widget in self.main.song_widget_list:
@@ -290,10 +303,6 @@ class SongListView(QWidget):
     def get_widget_number_from_song_list(self):
         return self.layout.count()
 
-    def remove_widget_from_song_list(self, i):
-        widget = self.layout.itemAt(i).widget()
-        self.layout.removeWidget(widget)
-        self.update_index()
 
     def update_index(self):
         visible_widget_count = 0
@@ -302,19 +311,39 @@ class SongListView(QWidget):
             widget.label0.setText(str(visible_widget_count))
             widget.update()
 
+    def _reload_widgets(self):
+        for widget in self.to_display:
+            self.layout.removeWidget(widget)
+            # Show widgets in search results
+        for widget in self.to_display:
+            self.layout.addWidget(widget)
+
+    def _sort_widgets(self):
+        self.main.song_widget_list.sort(key=lambda x: x.label1.text())
+        self.to_display.sort(key=lambda x: x.label1.text())
+        self._reload_widgets()
+        self.update_index()
+
     def add_widget_in_song_list(self, song_widget):
         self.layout.addWidget(song_widget)
         song_widget.clicked.connect(self.main._handle_song_file_click)
         self.main.song_widget_list.append(song_widget)
+        self._sort_widgets()
         self.layout.update()
 
     def add_new_widget(self, song_widget):
-        self.layout.insertWidget(0, song_widget)
+        global song_added
         self.main.song_widget_list = [song_widget] + self.main.song_widget_list
-        self.to_display = [song_widget] + self.to_display
+        self.main.song_widget_recommend_list = [song_widget] + self.main.song_widget_recommend_list
+        if self.name in song_widget.label1.text():
+            print(self.name, song_widget.label1.text())
+            self.layout.insertWidget(0, song_widget)
+            self.to_display = [song_widget] + self.to_display
         song_widget.clicked.connect(self.main._handle_song_file_click)
+        song_added = True
+        print(song_added)
+        self._sort_widgets()
         self.layout.update()
-        self.update_index()
 
     def _set_custom_scroll_bar(self):
         scroll_area = self.ui.songListScrollArea
@@ -322,6 +351,97 @@ class SongListView(QWidget):
         custom_scrollbar = assets.CustomScrollBar()
         scroll_area.setVerticalScrollBar(custom_scrollbar)
 
+
+
+class RecommendListView(QWidget):
+    def __init__(self, mainui):
+        super().__init__()
+        self.main = mainui
+        self.ui = loadUi(".\\UI\\uiFiles\\RecommendListView.ui")
+
+        self.StackedWidget = self.ui.stackedWidget
+
+        self.layout = self.ui.scrollAreaWidgetContents.layout()
+        self.RecommendListScrollArea = self.ui.RecommendListScrollArea
+        self.RecommendListScrollArea_widget = self.ui.RecommendListWidget
+
+        self.make_profile_widget = self.ui.makeProfile
+        self.Refresh_widget = self.ui.refresh
+        public_functions.centering(self.make_profile_widget)
+        self.ui.Search.textChanged.connect(self.search_in_recommended_list)
+        self.StackedWidget.setCurrentWidget(self.make_profile_widget)
+        self.displayed = self.main.song_widget_recommend_list
+        self.searched = self.main.song_widget_recommend_list
+        self._set_custom_scroll_bar()
+
+
+        display = QHBoxLayout()
+        display.setContentsMargins(0, 0, 0, 0)
+        display.addWidget(self.ui)
+        self.setLayout(display)
+
+    def search_in_recommended_list(self):
+        name = self.ui.Search.text()
+        self.searched= public_functions.search(self.displayed, name)
+
+        # Hide all widgets
+        for widget in self.displayed:
+            widget.hide()
+            self.layout.removeWidget(widget)
+
+            # Show widgets in search results
+        for widget in self.searched:
+            widget.show()
+            self.layout.addWidget(widget)
+
+        self.update_index()
+
+    def get_widget_number_from_recommended_list(self):
+        return self.layout.count()
+
+    def update_index(self):
+        visible_widget_count = 0
+        for index, widget in enumerate(self.searched):
+            visible_widget_count += 1
+            widget.label0.setText(str(visible_widget_count))
+            widget.update()
+
+    def add_widget_in_recommended_list(self, song_widget):
+        self.layout.addWidget(song_widget)
+        song_widget.clicked.connect(self.main._handle_song_file_click)
+        self.main.song_widget_recommend_list.append(song_widget)
+        self._sort_widgets()
+        self.layout.update()
+
+    def _reload_widgets(self):
+        for widget in self.main.song_widget_recommend_list:
+            self.layout.removeWidget(widget)
+            # Show widgets in search results
+        for widget in self.main.song_widget_recommend_list:
+            self.layout.addWidget(widget)
+
+    def _sort_widgets(self):
+        self.main.song_widget_recommend_list.sort(key=lambda x: x.label1.text())
+        self._reload_widgets()
+        self.update_index()
+
+    def change_widget(self):
+        global song_added
+        if not public_functions.profile_exist():
+            self.StackedWidget.setCurrentWidget(self.make_profile_widget)
+        elif song_added:
+            self.StackedWidget.setCurrentWidget(self.Refresh_widget)
+            self.displayed = self.main.song_widget_recommend_list
+            self.searched = self.main.song_widget_recommend_list
+            #song_added = False
+        elif public_functions.profile_exist():
+            self.StackedWidget.setCurrentWidget(self.RecommendListScrollArea_widget)
+
+    def _set_custom_scroll_bar(self):
+        scroll_area = self.ui.RecommendListScrollArea
+        scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        custom_scrollbar = assets.CustomScrollBar()
+        scroll_area.setVerticalScrollBar(custom_scrollbar)
 
 class SongInfo(QWidget):
     def __init__(self, song, mainui):
@@ -400,73 +520,6 @@ class RecordDisplay(QWidget):
         self.ui.txt2.setText(txts[1])
     def display_feedback(self,L):
         pass
-
-class RecommendListView(QWidget):
-    def __init__(self, mainui):
-        super().__init__()
-        self.main = mainui
-        self.ui = loadUi(".\\UI\\uiFiles\\RecommendListView.ui")
-
-        self.StackedWidget = self.ui.stackedWidget
-
-        self.layout = self.ui.scrollAreaWidgetContents.layout()
-        self.RecommendListScrollArea = self.ui.RecommendListScrollArea
-        self.RecommendListScrollArea_widget = self.ui.RecommendListWidget
-
-        self.make_profile_widget = self.ui.makeProfile
-        public_functions.centering(self.make_profile_widget)
-        self.ui.Search.textChanged.connect(self.search_in_recommended_list)
-        self.StackedWidget.setCurrentWidget(self.make_profile_widget)
-        self.to_display = self.main.song_widget_list
-        self._set_custom_scroll_bar()
-
-        display = QHBoxLayout()
-        display.setContentsMargins(0, 0, 0, 0)
-        display.addWidget(self.ui)
-        self.setLayout(display)
-
-    def search_in_recommended_list(self):
-        name = self.ui.Search.text()
-        self.searched = public_functions.search(self.to_display, name)
-
-        # Hide all widgets
-        for widget in self.to_display:
-            widget.hide()
-            self.layout.removeWidget(widget)
-
-            # Show widgets in search results
-        for widget in self.searched:
-            widget.show()
-            self.layout.addWidget(widget)
-
-        self.update_index()
-
-    def get_widget_number_from_recommend_list(self):
-        return self.layout.count()
-
-    def remove_widget_from_recommend_list(self, i):
-        widget = self.layout.itemAt(i).widget()
-        self.layout.removeWidget(widget)
-        self.update_index()
-
-    def update_index(self):
-        visible_widget_count = 0
-        for index, widget in enumerate(self.to_display):
-            visible_widget_count += 1
-            widget.label0.setText(str(visible_widget_count))
-            widget.update()
-
-    def change_widget(self):
-        if public_functions.profile_exist():
-            self.StackedWidget.setCurrentWidget(self.RecommendListScrollArea_widget)
-
-
-    def _set_custom_scroll_bar(self):
-        scroll_area = self.RecommendListScrollArea
-        scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
-        custom_scrollbar = assets.CustomScrollBar()
-        scroll_area.setVerticalScrollBar(custom_scrollbar)
-
 
 class Settings(QWidget):
     def __init__(self, mainui):
