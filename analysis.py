@@ -141,6 +141,7 @@ def express(L):
 def highest_note(lst):
     counter = Counter(lst)
     max_repeated_value = max([value for value, count in counter.items() if count >= 8])
+
     return max_repeated_value
 
 def convert_to_octave(a):
@@ -202,11 +203,11 @@ def file_analysis(vocal_waveform,filename):
     melody = _export_melody(vocal_feature)
     strength = _export_strength(vocal_feature)
     expression = round(express(strength),2)
-    highest = highest_note(melody)
+    highest ,original= highest_note(melody)
     range_of_note = round(note_range(melody),2)
     breath_hd = breath()
     health_hd = health()
-    adv_data = SoundFormInfo.AdvancedInfo(expression,highest,range_of_note,breath_hd,health_hd)
+    adv_data = SoundFormInfo.AdvancedInfo(expression,highest,original,range_of_note,breath_hd,health_hd)
 
 
     print("exported", time.time() - delta)
@@ -300,14 +301,14 @@ def live_analysis(filename, ):
                     rate=RATE,
                     input=True,
                     frames_per_buffer=CHUNK,
-                    input_device_index=4)
+                    input_device_index=1)
 
     print('start recording')
 
     to_display = []
     logs = []
     bee = ['도 ', '도#', '레 ', '레#', '미 ', '파 ', '파#', '솔 ', '솔#', '라 ', '라#', '시 ']
-    seconds = 5
+    seconds = 12345
     for i in range(0, int(RATE / CHUNK * seconds)):
         data = stream.read(CHUNK)
         stt = time.time()
@@ -329,9 +330,9 @@ def live_analysis(filename, ):
         if note != -1: note = '{0}옥 {1}'.format(int(note + 1/24), bee[int((note + 1/24) % 1 * 12)])
         else: note = ':D     '
         to_display = [note, 'dev-ing']
+        print(to_display)
         #print(to_display, (time.time() - stt) * 1000)
 
-        if FLAG == True: break
 
 
     print('record stopped')
@@ -353,15 +354,4 @@ def live_analysis(filename, ):
 if __name__=="__main__":
     #print(len(librosa.fft_frequencies()))
     #file_analysis("닐로 - 지나오다")
-    #live_analysis('소찬휘-Tears')
-    '''
-    audio = pyaudio.PyAudio()
-
-    for index in range(audio.get_device_count()):
-        desc = audio.get_device_info_by_index(index)
-        print("DEVICE: {device}, INDEX: {index}, RATE: {rate} ".format(
-            device=desc["name"], index=index, rate=int(desc["defaultSampleRate"])))
-    '''
-    with open('.\\profile.dat', 'wb') as f:
-        sdf = Profile.Profile()
-        pickle.dump(sdf, f)
+    live_analysis('소찬휘-Tears')

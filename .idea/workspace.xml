@@ -7,7 +7,66 @@
     <list default="true" id="4bb3950c-9614-4d0b-bfaf-5de0812fd3c8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Interface.py" beforeDir="false" afterPath="$PROJECT_DIR$/Interface.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public_functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/public_functions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/README_CN.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/UVR.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/__version__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/demucs/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/demucs/__main__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/demucs/apply.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/demucs/demucs.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/demucs/filtering.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/demucs/hdemucs.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/demucs/htdemucs.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/demucs/model.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/demucs/model_v2.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/demucs/pretrained.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/demucs/repo.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/demucs/spec.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/demucs/states.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/demucs/tasnet.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/demucs/tasnet_v2.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/demucs/transformer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/demucs/utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/lib_v5/spec_utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/lib_v5/vr_network/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/lib_v5/vr_network/layers.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/lib_v5/vr_network/layers_new.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/lib_v5/vr_network/model_param_init.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/lib_v5/vr_network/modelparams/1band_sr16000_hl512.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/lib_v5/vr_network/modelparams/1band_sr32000_hl512.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/lib_v5/vr_network/modelparams/1band_sr33075_hl384.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/lib_v5/vr_network/modelparams/1band_sr44100_hl1024.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/lib_v5/vr_network/modelparams/1band_sr44100_hl256.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/lib_v5/vr_network/modelparams/1band_sr44100_hl512.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/lib_v5/vr_network/modelparams/1band_sr44100_hl512_cut.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/lib_v5/vr_network/modelparams/1band_sr44100_hl512_nf1024.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/lib_v5/vr_network/modelparams/2band_32000.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/lib_v5/vr_network/modelparams/2band_44100_lofi.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/lib_v5/vr_network/modelparams/2band_48000.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/lib_v5/vr_network/modelparams/3band_44100.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/lib_v5/vr_network/modelparams/3band_44100_mid.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/lib_v5/vr_network/modelparams/3band_44100_msb2.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/lib_v5/vr_network/modelparams/4band_44100.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/lib_v5/vr_network/modelparams/4band_44100_mid.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/lib_v5/vr_network/modelparams/4band_44100_msb.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/lib_v5/vr_network/modelparams/4band_44100_msb2.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/lib_v5/vr_network/modelparams/4band_44100_reverse.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/lib_v5/vr_network/modelparams/4band_44100_sw.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/lib_v5/vr_network/modelparams/4band_v2.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/lib_v5/vr_network/modelparams/4band_v2_sn.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/lib_v5/vr_network/modelparams/4band_v3.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/lib_v5/vr_network/modelparams/ensemble.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/lib_v5/vr_network/nets.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/lib_v5/vr_network/nets_new.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/models/Demucs_Models/v3_v4_repo/demucs_models.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/models/MDX_Net_Models/model_data/model_data.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/models/VR_Models/model_data/model_data.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ultimatevocalremovergui-5.5.0/separate.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -210,7 +269,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683833990729</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="ui real time display fixed">
+      <created>1683834570672</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1683834570672</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -247,7 +313,8 @@
     <MESSAGE value="resampling" />
     <MESSAGE value="songs" />
     <MESSAGE value="ui real time display" />
-    <option name="LAST_COMMIT_MESSAGE" value="ui real time display" />
+    <MESSAGE value="ui real time display fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="ui real time display fixed" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

@@ -30,7 +30,7 @@ def open_file_dialog():
 
 
 def profile_exist():
-    return False
+    return True
 
 def centering(widgets):
     for widget in widgets.findChildren(QLabel):
