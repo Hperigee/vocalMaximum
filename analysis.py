@@ -7,7 +7,7 @@ import time
 from collections import Counter
 import os
 import SoundFormInfo
-import pyaudio
+#import pyaudio
 from playsound import playsound
 
 

@@ -46,7 +46,7 @@ class Thread(QThread):
             file = to_process.get()
             print(file, "start process")
             res = input_file(file,GLOBAL_SPLITTER)
-            filename=filename_fetch(file)
+            filename, _ =filename_fetch(file)
             with open(f'./Datas/{filename}.tmpdat', 'wb') as file:
                 pickle.dump(res, file)
 
@@ -425,7 +425,7 @@ class RecommendListView(QWidget):
         display.addWidget(self.ui)
         self.setLayout(display)
 
-    def search_in_whole_list(self):
+    def search_in_recommended_list(self):
         name = self.ui.Search.text()
         self.searched = public_functions.search(self.to_display, name)
 
