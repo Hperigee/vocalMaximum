@@ -110,12 +110,15 @@ class MainWindow(QMainWindow):
         self.song_widget_list = []
         self.song_widget_recommend_list=[]
         self.ui = loadUi('.\\UI\\uiFiles\\Main.ui', self)
-        self.setMinimumSize(1600, 900)
+        self.setFixedSize(1600, 900)
         self.mainStackedWidget = QStackedWidget(self)
         self.ui.widgetChange.layout().addWidget(self.mainStackedWidget)
 
         self.sideTabStackedWidget = QStackedWidget(self)
         self.sideTab.layout().addWidget(self.sideTabStackedWidget)
+        flags = self.windowFlags()
+        flags &= ~Qt.WindowMaximizeButtonHint
+        self.setWindowFlags(flags)
 
         self.SongListView = SongListView(self)
         self.RecommendListView = RecommendListView(self)
@@ -130,8 +133,6 @@ class MainWindow(QMainWindow):
         self.sideTabStackedWidget.addWidget(self.NullSongInfo)
 
         self._get_qss()
-
-        self.previous = None
 
         self.ui.homeButton.clicked.connect(lambda: self.mainStackedWidget.setCurrentWidget(self.SongListView))
         self.ui.recommendButton.clicked.connect(self.RecommendListView.change_widget)
@@ -179,7 +180,7 @@ class MainWindow(QMainWindow):
                 song_info = pickle.load(file)
                 data += song_info
             file.close()
-
+        self.previous =None
         self.songlist = data
 
         for i in range(len(self.songlist)):
@@ -447,16 +448,16 @@ class SongInfo(QWidget):
     def __init__(self, song, mainui):
         super().__init__()
 
-        song_name, artist, duration = song.name, song.artist, song.duration
+        self.song_name, self.artist, duration = song.name, song.artist, song.duration
         self.main = mainui
         self.ui = loadUi(".\\UI\\uiFiles\\SongInfo.ui")
-        with open(f".\\additionalData\\{artist}-{song_name}\\adv.dat", 'rb') as file:
+        with open(f".\\additionalData\\{self.artist}-{self.song_name}\\adv.dat", 'rb') as file:
             AdvancedSongInfo = pickle.load(file)
 
         public_functions.centering(self.ui)
 
-        self.ui.SongName.setText(song_name)
-        self.ui.Artist.setText(artist)
+        self.ui.SongName.setText(self.song_name)
+        self.ui.Artist.setText(self.artist)
         self.ui.Duration.setText(duration)
         self.ui.HighestNote.setText(str(AdvancedSongInfo.highest_note))
         self.ui.Expression.setText(str(AdvancedSongInfo.express))
@@ -469,7 +470,6 @@ class SongInfo(QWidget):
         self.ui.StopMinuteValue.setMaximum(self.minuteDuration)
 
         self.ui.RecordButton.clicked.connect(self._handle_record_button_click)
-        self.ui.UploadButton.clicked.connect(public_functions.open_file_dialog)
 
         display = QHBoxLayout()
         display.setContentsMargins(0, 0, 0, 0)
@@ -482,11 +482,11 @@ class SongInfo(QWidget):
         stopMin = self.ui.StopMinuteValue.value()
         stopSec = self.ui.StopSecondValue.value()
 
-        if stopMin * 60 + stopSec - startMin * 60 + startSec < 15 or stopMin * 60 + stopSec > self.secDuration + self.minuteDuration * 60:
+        if (stopMin * 60 + stopSec - startMin * 60 - startSec) < 15 or stopMin * 60 + stopSec > self.secDuration + self.minuteDuration * 60:
             return
 
         self.thread=RealTime(self,startMin,startSec,stopMin,stopSec)
-        self.record = RecordDisplay(self.main, self)
+        self.record = RecordDisplay(self.main, self,self.song_name,self.artist)
         self.thread.start()
         self.main.show_sidetab(self.record)
         self.main.disable_mainWidget()
@@ -497,11 +497,13 @@ class SongInfo(QWidget):
 
 class RecordDisplay(QWidget):
     canceled = pyqtSignal(object)
-    def __init__(self, mainui,songfile):
+    def __init__(self, mainui, songInfo,artist,songname):
         super().__init__()
         self.main = mainui
-        self.songfile = songfile
-        self.thread = self.songfile.thread
+        self.songInfo = songInfo
+        self.thread = self.songInfo.thread
+        self.artist = artist
+        self.songname  = songname
         self.ui = loadUi(".\\UI\\uiFiles\\Recording.ui")
         self.ui.CancelButton.clicked.connect(self._handle_record_cancel_button_click)
         self.ui.CancelButton.clicked.connect(self.canceled.emit)
@@ -513,8 +515,9 @@ class RecordDisplay(QWidget):
         self.setLayout(display)
 
     def _handle_record_cancel_button_click(self):
-        self.main.show_sidetab(self.main.previous)
-        self.main.enable_mainWidget()
+        self.result = Result(self.main,self.songInfo,self.songname,self.artist)
+        self.main.show_sidetab(self.result)
+
     def updateui(self,txts):
         self.ui.txt1.setText(txts[0])
         self.ui.txt2.setText(txts[1])
@@ -533,6 +536,25 @@ class Settings(QWidget):
         display.addWidget(self.ui)
         self.setLayout(display)
 
+class Result(QWidget):
+    def __init__(self, mainui,songInfo,songname,artist):
+        super().__init__()
+        self.main = mainui
+        self.songInfo = songInfo
+        self.artist = artist
+        self.songname = songname
+        self.ui = loadUi(".\\UI\\uiFiles\\Result.ui")
+        public_functions.centering(self.ui)
+        self.ui.BackButton.clicked.connect(self._handle_back_button_click)
+        self.ui.SongName.setText(songname)
+        self.ui.Artist.setText(artist)
+        display = QHBoxLayout()
+        display.setContentsMargins(0, 0, 0, 0)
+        display.addWidget(self.ui)
+        self.setLayout(display)
+    def _handle_back_button_click(self):
+        self.main.show_sidetab(self.songInfo)
+        self.main.enable_mainWidget()
 
 
 
@@ -540,7 +562,6 @@ class Settings(QWidget):
 
 
 if __name__ == "__main__":
-    import time
 
     app = QApplication([])
     window = MainWindow()

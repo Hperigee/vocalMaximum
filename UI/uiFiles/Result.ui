@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color:white;</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <property name="leftMargin">
+    <number>25</number>
+   </property>
+   <property name="topMargin">
+    <number>25</number>
+   </property>
+   <property name="rightMargin">
+    <number>25</number>
+   </property>
+   <property name="bottomMargin">
+    <number>25</number>
+   </property>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QLabel" name="SongName">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>1</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font:11pt &quot;Noto Sans KR black&quot;;
+color:white;
+background-color:rgb(7, 3, 122);
+border-radius: 15px;
+align: center;</string>
+       </property>
+       <property name="text">
+        <string>SongName</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="Artist">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>1</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 9pt &quot;Noto Sans KR medium&quot;;
+color:black;
+background-color: transparent;
+border-radius: 15px;
+text-align: center;</string>
+       </property>
+       <property name="text">
+        <string>artist</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="ResultDisplay">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>10</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 16pt &quot;Noto Sans KR medium&quot;;
+                                    color: #000;
+                                    border:none;
+background-color:white;</string>
+       </property>
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;결과&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;점수: 89&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;표현: 14&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="BackButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>2</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+                        background-color: white;
+                        border-radius: 20px;
+						background-color:transparent;
+						font: 20pt &quot;Noto Sans KR black&quot;;
+						color: black;
+border:none;
+                        }
+
+                    QPushButton:hover {
+                        background-color: rgb(236, 236, 236);
+                        }
+
+                    QPushButton:pressed {
+                        background-color: rgb(63, 63, 63);
+                        }
+	</string>
+       </property>
+       <property name="text">
+        <string>Back</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
