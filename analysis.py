@@ -175,12 +175,12 @@ def file_analysis(vocal_waveform, filename):
     strength = _export_strength(vocal_feature)
 
     ###############
-
+    '''
     xs = [i * 512 / 22050 for i in range(len(melody))]
     plt.plot(xs, melody, 'ro', ms=2.0)
     plt.plot(xs, strength, 'bo', ms=2.0)
     plt.show()
-
+    '''
     ###############
 
     expression = round(express(strength),2)
