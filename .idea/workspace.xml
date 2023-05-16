@@ -4,16 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4bb3950c-9614-4d0b-bfaf-5de0812fd3c8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_5_8_2023_2_42_PM_[Changes]/exampleSoundList.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_5_8_2023_2_42_PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_5_8_2023_2_42_PM__Changes_.xml" beforeDir="false" />
+    <list default="true" id="4bb3950c-9614-4d0b-bfaf-5de0812fd3c8" name="Changes" comment="Result Display updated">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Interface.py" beforeDir="false" afterPath="$PROJECT_DIR$/Interface.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI/uiFiles/Recording.ui" beforeDir="false" afterPath="$PROJECT_DIR$/UI/uiFiles/Recording.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI/uiFiles/SongInfo.ui" beforeDir="false" afterPath="$PROJECT_DIR$/UI/uiFiles/SongInfo.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/additionalData/성시경-너의_모든_순간/성시경-너의_모든_순간.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/폴킴-안녕/adv.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/폴킴-안녕/adv.dat" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -244,7 +237,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684085132499</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Result Display updated">
+      <created>1684143349241</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1684143349241</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -285,7 +285,8 @@
     <MESSAGE value="ui real time display fixed" />
     <MESSAGE value="highest_note" />
     <MESSAGE value="minor bug fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="minor bug fix" />
+    <MESSAGE value="Result Display updated" />
+    <option name="LAST_COMMIT_MESSAGE" value="Result Display updated" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
