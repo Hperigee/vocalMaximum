@@ -102,6 +102,7 @@ class analysis_thread(QThread):
         super().__init__()
         checking_thread.finished.connect(self.stop_thread)
 
+
     def run(self):
         test.asdf(to_display) # analysis function ,startMin,startSec,stopMin,stopSec)
         test.STOP = False # flag reset
