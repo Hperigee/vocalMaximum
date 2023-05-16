@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import *
 from PyQt5.uic import loadUi
-from PyQt5.QtCore import Qt, QFile, QTextStream, QTimer, QThread, pyqtSlot, pyqtSignal
+from PyQt5.QtCore import Qt, QFile, QTextStream, QTimer, QThread, pyqtSlot, pyqtSignal,QUrl
+from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
 from Resources_rc import *
 import pickle
 import public_functions
@@ -8,6 +9,7 @@ import assets
 from queue import Queue
 from fileinput import input_file, filename_fetch
 from spleeter.separator import Separator
+from pydub import AudioSegment
 import os
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 import tensorflow as tf
@@ -59,7 +61,7 @@ class Thread(QThread):
 class RealTime(QThread):
     display_new_info = pyqtSignal(object)
 
-    def __init__(self,songWidget,startMin,startSec,stopMin,stopSec):
+    def __init__(self,songWidget,songname,artist,startMin,startSec,stopMin,stopSec):
         super().__init__()
         self.main = window
         self.songWidget =songWidget
@@ -67,11 +69,16 @@ class RealTime(QThread):
         self.startSec = startSec
         self.stopMin = stopMin
         self.stopSec =stopSec
+        self.song_name=songname
+        self.artist = artist
     @pyqtSlot()
     def run(self):
         self.songWidget.record.canceled.connect(self.stop_analysis)
-        start = analysis_thread(self,self.startMin,self.startSec,self.stopMin,self.stopSec)
-        start.start()
+        song_directory = f'./Defaults/{self.artist}-{self.song_name}.mp3'
+        self.start = analysis_thread(self,self.startMin,self.startSec,self.stopMin,self.stopSec)
+        player = AudioPlayerThread(song_directory,(self.startMin*60+self.startSec)*1000, (self.stopMin*60+self.stopSec)*1000)
+        player.start()
+        player.song_ready.connect(self.start_analysis)
         texts= None
         while True:
             try:
@@ -84,6 +91,8 @@ class RealTime(QThread):
             self.display_new_info.emit(texts)
 
         self.finished.emit()
+    def start_analysis(self):
+        self.start.start()
     def stop_analysis(self):
         test.STOP = True # flag
         to_display.put("STOP")
@@ -100,6 +109,38 @@ class analysis_thread(QThread):
     def stop_thread(self):
         print("called")
         self.finished.emit()
+
+class AudioPlayerThread(QThread):
+    song_ready = pyqtSignal()
+    def __init__(self, file_path, start_time,finish_time):
+        super(AudioPlayerThread, self).__init__()
+        self.file_path = file_path
+        self.start_time = start_time
+        self.finish_time = finish_time
+
+    def run(self):
+
+        audio = AudioSegment.from_file(self.file_path, format="mp3")
+
+        audio_segment = audio[self.start_time:self.finish_time]
+
+        temp_file = "./temp/temp_audio.mp3"
+        audio_segment.export(temp_file, format="mp3")
+
+        player = QMediaPlayer()
+
+        media = QMediaContent(QUrl.fromLocalFile(temp_file))
+        player.setMedia(media)
+        self.song_ready.emit()
+        # Play the audio file
+        player.play()
+
+        while player.state() == QMediaPlayer.PlayingState:
+            self.msleep(100)  # Sleep for 100 milliseconds
+
+        player.stop()
+        os.remove(temp_file)
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -485,7 +526,7 @@ class SongInfo(QWidget):
         if (stopMin * 60 + stopSec - startMin * 60 - startSec) < 15 or stopMin * 60 + stopSec > self.secDuration + self.minuteDuration * 60:
             return
 
-        self.thread=RealTime(self,startMin,startSec,stopMin,stopSec)
+        self.thread=RealTime(self,self.song_name,self.artist,startMin,startSec,stopMin,stopSec)
         self.record = RecordDisplay(self.main, self,self.song_name,self.artist)
         self.thread.start()
         self.main.show_sidetab(self.record)
