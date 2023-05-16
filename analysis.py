@@ -186,8 +186,8 @@ def file_analysis(vocal_waveform, filename):
     expression = round(express(strength),2)
     highest ,original= highest_note(melody)
     range_of_note = round(note_range(melody),2)
-    breath_hd = breath()
-    health_hd = health()
+    breath_hd = breath(melody)
+    health_hd = health(melody)
     adv_data = SoundFormInfo.AdvancedInfo(expression,highest,original,range_of_note,breath_hd,health_hd)
 
 
