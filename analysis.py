@@ -54,9 +54,6 @@ def _find_peek(S, freq, cos_mat, S_mat):
              S[ind2i - 1] * (2 - ind2p3) * 0.5 + S[ind2i] + S[ind2i + 1] + ind2p3 * S[ind2i + 2] * 0.5],
             [freq[ind3], S[ind3 - 1] + S[ind3] + S[ind3 + 1]]]
 
-def _find_frame():
-    import random
-    return random.random()
 
 def _export_melody(vocal_feature):
     L = []  # L[frame] -> hz  or  -1
@@ -68,15 +65,17 @@ def _export_melody(vocal_feature):
 
 def _export_strength(vocal_feature):
     L = []  # L[frame] -> strength: 0 ~ 2  or  -1
+    e = 120
     for i in vocal_feature:
         if len(i) != 0 and i[0][1] + i[1][1] + i[2][1] != 0:
-            L.append((i[1][1] + 2 * i[2][1]) / (i[0][1] + i[1][1] + i[2][1]))
+            a = 0 if i[0][1] < e else i[0][1] - e
+            b = 0 if i[1][1] < e else i[1][1] - e
+            c = 0 if i[2][1] < e else i[2][1] - e
+            if a + b + c != 0:
+                L.append((b + 2 * c) / (a + b + c))
+            else: L.append(-1)
         else: L.append(-1)
     return L
-
-
-def _denoise(S, threshold):
-    S = np.array(S)  # melody
     
     
 def express(L):
@@ -105,15 +104,35 @@ def note_range(L):
     return float(mean)
 
 
-def breath():
-    return "develop"
+def breath(L):  # L: melody, fx -> 한호흡 최대 길이
+    mx = 0
+    last = 0
+    cmp = [-1, -1, -1]
+    for i in range(len(L)):
+        if L[i:i+3] == cmp:
+            mx = max(mx, i - last)
+    return round(mx * 512 / 22050, 3)
 
 
-def health():
-    return "develop"
+def health(melody):
+
+    mx = 0
+    now = 0
+    e = 0.5
+
+    for i in range(len(melody)):
+        if melody[i] != -1: now += melody[i]
+
+        now -= e
+
+        if now < 0: now = 0
+
+        mx = max(mx, now)
+
+    return mx
 
 
-def file_analysis(vocal_waveform,filename):
+def file_analysis(vocal_waveform, filename):
 
     delta = time.time()
 
@@ -154,6 +173,16 @@ def file_analysis(vocal_waveform,filename):
 
     melody = _export_melody(vocal_feature)
     strength = _export_strength(vocal_feature)
+
+    ###############
+
+    xs = [i * 512 / 22050 for i in range(len(melody))]
+    plt.plot(xs, melody, 'ro', ms=2.0)
+    plt.plot(xs, strength, 'bo', ms=2.0)
+    plt.show()
+
+    ###############
+
     expression = round(express(strength),2)
     highest ,original= highest_note(melody)
     range_of_note = round(note_range(melody),2)
@@ -321,6 +350,6 @@ def live_analysis(filename, display_Queue, offset, startSec, endSec):
 #print('start run')
 if __name__=="__main__":
     #print(len(librosa.fft_frequencies()))
-    #file_analysis("닐로 - 지나오다")
-    #live_analysis('소찬휘-Tears')
-    print(librosa.fft_frequencies()[210])
+    #file_analysis('')
+    #live_analysis('에일리-첫눈처럼_너에게_가겠다')
+    pass
