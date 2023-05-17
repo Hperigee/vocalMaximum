@@ -419,8 +419,8 @@ def live_analysis(filename, display_Queue, offset, startSec, endSec, res_que):
     sim_str *= 1.2
     if sim_str > 1: sim_str = 1
 
-    res_que.put(f'참 잘했어요~\n\n점수 : {score}\n\n표현 : {round(sim_str * 100, 3)}')
-    print("desired", f'참 잘했어요~\n\n점수 : {score}\n\n표현 : {round(sim_str * 100, 3)}')
+    with open('./temp/result','wb') as f:
+        pickle.dump(f'참 잘했어요~\n\n점수 : {score}\n\n표현 : {round(sim_str * 100, 3)}', f)
 
     stream.stop_stream()
     stream.close()

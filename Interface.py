@@ -674,7 +674,8 @@ class RecordDisplay(QWidget):
         texts = None
         while True:
             try:
-                texts = live_analysis_result.get()
+                with open('./temp/result', 'rb') as f:
+                    texts = pickle.load(f)
             except:
                 pass
             if texts is not None:
@@ -683,7 +684,6 @@ class RecordDisplay(QWidget):
 
     def _finished(self):
         self.result = self._get_result()
-        print(self.result)
         self._display_result()
     def _display_result(self):
         self.result_display = Result(self.main, self.songInfo, self.songname, self.artist,self.result)
