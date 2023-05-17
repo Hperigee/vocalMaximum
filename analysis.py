@@ -9,6 +9,7 @@ import os
 import SoundFormInfo
 import pyaudio
 import Profile
+from test import STOP
 
 
 def _plt_show(spectrogram_db):
@@ -129,7 +130,7 @@ def health(melody):
 
         mx = max(mx, now)
 
-    return mx
+    return round(mx / 1000, 3)
 
 
 def file_analysis(vocal_waveform, filename):
@@ -184,11 +185,11 @@ def file_analysis(vocal_waveform, filename):
     ###############
 
     expression = round(express(strength),2)
-    highest ,original= highest_note(melody)
+    highest, original = highest_note(melody)
     range_of_note = round(note_range(melody),2)
-    breath_hd = breath()
-    health_hd = health()
-    adv_data = SoundFormInfo.AdvancedInfo(expression,highest,original,range_of_note,breath_hd,health_hd)
+    breath_hd = breath(melody)
+    health_hd = health(melody)
+    adv_data = SoundFormInfo.AdvancedInfo(expression, highest, original, range_of_note, breath_hd, health_hd)
 
 
     print("exported", time.time() - delta)
@@ -229,13 +230,17 @@ def file_analysis(vocal_waveform, filename):
 ######################################################################################################################
 
 
-def _mel_similarity(new: float, original: list, frame):  # 비슷하면 0, new가 낮으면 -1, 반대면 1
-    # 비슷하다 == 150cent(=1.5키) 차이 이내
-    e = np.float(1)/8
+def _mel_similarity(new, original, frame):  # 비슷하면 0, new가 낮으면 -1, 반대면 1
+    if new == -1: return ':D'
 
-    search = np.array(original[np.max(frame - 4, 0):np.min(frame + 5, len(original))])
+    # 비슷하다 == 100cent(=1키) 차이 이내
+    e = np.float(1)/12
+
+    search = np.array(original[np.max(frame - 4, 0) : np.min(frame + 5, len(original))])
     search = np.tile(np.array([new]), len(search)) - search
-    if np.min(np.abs(search)) < e: return 0
+    cond = list(np.abs(search) <= e)
+    fit = cond.count(True)
+    if fit > len(search) / 3: return 0
 
     cnt = 0
     for i in search:
@@ -245,12 +250,24 @@ def _mel_similarity(new: float, original: list, frame):  # 비슷하면 0, new�
     return res
 
 
-def _str_similarity(new: float, original: list, frame):  # 비슷하면 0, new가 여리면 -1, 진하면 1
+def _str_similarity(new, original, frame):  # 비슷하면 0, new가 여리면 -1, 진하면 1
+    if new == -1: return ':D'
+
     # 비슷하다 == ??
-    e = np.float(1)/8
+    e = np.float(1)/4
 
-    search = np.array(original[np.max(frame - 4, 0):np.min(frame + 5, len(original))])
+    search = np.array(original[np.max(frame - 4, 0): np.min(frame + 5, len(original))])
+    search = np.tile(np.array([new]), len(search)) - search
+    cond = list(np.abs(search) <= e)
+    fit = cond.count(True)
+    if fit > len(search) / 3: return 0
 
+    cnt = 0
+    for i in search:
+        if i < 0: cnt += 1
+
+    res = -1 if cnt > len(search) / 2 else 1
+    return res
 
 
 def _find_can_max(logs):
@@ -266,7 +283,8 @@ def _find_can_max(logs):
 
 
 def _sec_to_frame(sec):
-    return sec * 22050 / 512
+    DEFAULT_OFFSET = 0
+    return int(sec * 22050 / 512) + DEFAULT_OFFSET
 
 
 def live_analysis(filename, display_Queue, offset, startSec, endSec):
@@ -301,11 +319,9 @@ def live_analysis(filename, display_Queue, offset, startSec, endSec):
 
     music_start_time = time.time()
 
-    to_display = []
     logs = []
     bee = ['도 ', '도#', '레 ', '레#', '미 ', '파 ', '파#', '솔 ', '솔#', '라 ', '라#', '시 ']
-    seconds = 12345
-    for i in range(0, int(RATE / CHUNK * seconds)):
+    for i in range(0, int(RATE / CHUNK * LENGTH)):
         data = stream.read(CHUNK)
         played_time = time.time() - music_start_time
         data = np.frombuffer(data, dtype=np.float32)
@@ -324,10 +340,30 @@ def live_analysis(filename, display_Queue, offset, startSec, endSec):
 
         logs.append([[note, note_feedback], [strength, str_feedback]])
 
-        if note != -1: note = '{0}옥 {1}'.format(int(note + 1/24), bee[int((note + 1/24) % 1 * 12)])
-        else: note = ':D     '
-        to_display = [note, 'dev-ing']
+        if note != -1:
+            note = '{0}옥 {1}'.format(int(note + 1/24), bee[int((note + 1/24) % 1 * 12)])
+            if strength > 0.9: strength = '진성'
+            elif strength > 0.5: strength = '여린 진성'
+            else: strength = '가성'
+
+            if note_feedback == 0: note_feedback = '정확해요'
+            elif note_feedback == -1: note_feedback = '더 높게'
+            elif note_feedback == 1: note_feedback = '더 낮게'
+
+            if str_feedback == 0: str_feedback = '정확해요'
+            elif str_feedback == -1: str_feedback = '더 세게'
+            elif str_feedback == 1: str_feedback = '더 여리게'
+        else:
+            note = ':D'
+            note_feedback = ':D'
+            strength = ':D'
+            str_feedback = ':D'
+
+        to_display = [f'{note}\n{note_feedback}', f'{strength}\n{str_feedback}']
         display_Queue.append(to_display)
+
+        if STOP:
+            break
 
 
 

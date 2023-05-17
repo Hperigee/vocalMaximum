@@ -1,12 +1,12 @@
 class SoundFormInfo:
-    def __init__(self,filename, artist, duration):
+    def __init__(self, filename, artist, duration):
         self.name = filename
         self.artist = artist
         self.duration = duration
 
 
 class AdvancedInfo:
-    def __init__(self,express,highest_note,original, note_range,breath_hd, health):
+    def __init__(self, express, highest_note, original, note_range, breath_hd, health):
         self.express = express  # 시간에 따른 표현도 : str 분산
         self.highest_note = highest_note  # 최고음 : max height (3점 이상)
         self.highest_note_num = original

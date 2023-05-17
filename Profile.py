@@ -10,5 +10,5 @@ if __name__ == '__main__':
 
     new = Profile()
 
-    with open('.\\profile.dat', 'wb') as f:
+    with open('.\\profile0.dat', 'wb') as f:
         pickle.dump(new, f)
