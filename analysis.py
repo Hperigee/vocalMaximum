@@ -423,6 +423,11 @@ def live_analysis(filename, display_Queue, offset, startSec, endSec):
     stream.close()
     p.terminate()
 
+    plt.plot(list(range(len(logs) * 4, 4)), [i[0][0] for i in logs], 'go', ms=6.0)
+    plt.plot(list(range(len(origin_mel[_sec_to_frame(startSec):_sec_to_frame(endSec)]))),
+             origin_mel[_sec_to_frame(startSec):_sec_to_frame(endSec)], 'ro', ms=2.0)
+    plt.show()
+
 
 #print('start run')
 if __name__=="__main__":
