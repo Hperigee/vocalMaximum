@@ -117,22 +117,27 @@ class RealTime(QThread):
             self.display_new_info.emit(texts)
 
         self.finished.emit()
-    def export(self,file_path,start_time, finish_time,label):
+
+    def export(self, file_path, start_time, finish_time, label):
         audio = AudioSegment.from_file(file_path, format="mp3")
-        if start_time < 3000:
-            extension = 3000 - start_time
+
+        if start_time < 4000:
+            extension = 4000 - start_time
             audio_segment_temp = AudioSegment.silent(duration=extension) + audio
             audio_segment = audio_segment_temp[start_time:finish_time]
-            print(len(audio_segment))
         else:
-            audio_segment = audio[start_time - 3000:finish_time]
-        audio_segment_final = AudioSegment()
-        for i in range(1000):
-            audio_segment_final = audio_segment[i:i+1] - (audio_segment[i:i+1].dBFS * (0.0003*i)) + audio_segment_final
-        audio_segment = audio_segment[1000:3000] - (audio_segment[1000:3000].dBFS * (0.3)) + audio_segment[3000:]
+            audio_segment = audio[start_time - 4000:finish_time]
+
+        fade_duration = 500  # Duration of the fade-in effect in milliseconds
+
+        audio_segment_fade_in = audio_segment[:fade_duration].fade_in(fade_duration)
+
+        audio_segment_final = audio_segment_fade_in + audio_segment[fade_duration:]
+
+        print(len(audio_segment_final))
 
         self.temp_file = f"./temp/temp_audio_{label}.mp3"
-        audio_segment.export(self.temp_file, format="mp3")
+        audio_segment_final.export(self.temp_file, format="mp3")
         return self.temp_file
 
     def start_analysis(self):
@@ -674,12 +679,13 @@ class RecordDisplay(QWidget):
         self.ui.txt2.setText(txts[1])
 
     def start_timer(self):
-        self.ui.Timer.setText("3")
-        QTimer.singleShot(1000, lambda: self.ui.Timer.setText("2"))
-        QTimer.singleShot(2000, lambda: self.ui.Timer.setText("1"))
-        QTimer.singleShot(3000, lambda: self.ui.Timer.setText("Start!"))
-        QTimer.singleShot(3000, self.emit_record_start)
-        QTimer.singleShot(4000, lambda: self.ui.Timer.setText("Recording"))
+        self.ui.Timer.setText("4")
+        QTimer.singleShot(1000, lambda: self.ui.Timer.setText("3"))
+        QTimer.singleShot(2000, lambda: self.ui.Timer.setText("2"))
+        QTimer.singleShot(3000, lambda: self.ui.Timer.setText("1"))
+        QTimer.singleShot(4000, lambda: self.ui.Timer.setText("Start!"))
+        QTimer.singleShot(4000, self.emit_record_start)
+        QTimer.singleShot(5000, lambda: self.ui.Timer.setText("Recording"))
 
     def emit_record_start(self):
         self.record_start.emit()
