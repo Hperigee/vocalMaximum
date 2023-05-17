@@ -4,12 +4,40 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4bb3950c-9614-4d0b-bfaf-5de0812fd3c8" name="Changes" comment="mr Threading">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_5_10_2023_1_36_AM__Changes_.xml" beforeDir="false" />
+    <list default="true" id="4bb3950c-9614-4d0b-bfaf-5de0812fd3c8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Interface.py" beforeDir="false" afterPath="$PROJECT_DIR$/Interface.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UI/uiFiles/RecommendListView.ui" beforeDir="false" afterPath="$PROJECT_DIR$/UI/uiFiles/RecommendListView.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UI/uiFiles/Recording.ui" beforeDir="false" afterPath="$PROJECT_DIR$/UI/uiFiles/Recording.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/temp_audio.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UI/uiFiles/Settings.ui" beforeDir="false" afterPath="$PROJECT_DIR$/UI/uiFiles/Settings.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/닐로-지나오다/adv.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/닐로-지나오다/adv.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/닐로-지나오다/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/닐로-지나오다/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/박효신-야생화/adv.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/박효신-야생화/adv.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/박효신-야생화/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/박효신-야생화/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/버즈-나에게로떠나는여행/adv.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/버즈-나에게로떠나는여행/adv.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/버즈-나에게로떠나는여행/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/버즈-나에게로떠나는여행/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/산들-취기를_빌려/adv.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/산들-취기를_빌려/adv.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/산들-취기를_빌려/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/산들-취기를_빌려/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/성시경-너의_모든_순간/adv.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/성시경-너의_모든_순간/adv.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/성시경-너의_모든_순간/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/성시경-너의_모든_순간/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/소찬휘-Tears/adv.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/소찬휘-Tears/adv.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/소찬휘-Tears/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/소찬휘-Tears/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/쏜애플-시퍼런봄/adv.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/쏜애플-시퍼런봄/adv.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/쏜애플-시퍼런봄/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/쏜애플-시퍼런봄/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/아이유-내_손을_잡아/adv.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/아이유-내_손을_잡아/adv.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/아이유-내_손을_잡아/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/아이유-내_손을_잡아/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/에일리-첫눈처럼_너에게_가겠다/adv.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/에일리-첫눈처럼_너에게_가겠다/adv.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/에일리-첫눈처럼_너에게_가겠다/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/에일리-첫눈처럼_너에게_가겠다/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/윤종신-좋니/adv.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/윤종신-좋니/adv.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/윤종신-좋니/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/윤종신-좋니/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/이승기-삭제/adv.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/이승기-삭제/adv.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/이승기-삭제/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/이승기-삭제/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/폴킴-안녕/adv.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/폴킴-안녕/adv.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/폴킴-안녕/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/폴킴-안녕/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/analysis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profile.dat" beforeDir="false" afterPath="$PROJECT_DIR$/profile.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public_functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/public_functions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testers.py" beforeDir="false" afterPath="$PROJECT_DIR$/testers.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -264,7 +292,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684255435633</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="mr Threading_final">
+      <created>1684268405613</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1684268405613</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -309,7 +344,8 @@
     <MESSAGE value="Result Display updated" />
     <MESSAGE value="~~fdkslvnsaklv" />
     <MESSAGE value="mr Threading" />
-    <option name="LAST_COMMIT_MESSAGE" value="mr Threading" />
+    <MESSAGE value="mr Threading_final" />
+    <option name="LAST_COMMIT_MESSAGE" value="mr Threading_final" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

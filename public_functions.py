@@ -32,6 +32,7 @@ def open_file_dialog():
 def profile_exist():
     return True
 
+
 def centering(widgets):
     for widget in widgets.findChildren(QLabel):
         widget.setAlignment(Qt.AlignCenter)

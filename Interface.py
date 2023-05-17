@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import Qt, QFile, QTextStream, QTimer, QThread, pyqtSlot, pyqtSignal,QUrl
 from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
-from Resources_rc import *
+from Resources_rc import *  # used
 import pickle
 import public_functions
 import assets
@@ -10,9 +10,10 @@ from queue import Queue
 from fileinput import input_file, filename_fetch
 from spleeter.separator import Separator
 from pydub import AudioSegment
-import time
 import os
+from Recommender import *
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+from Profile import Profile  # used
 import tensorflow as tf
 
 
@@ -48,11 +49,12 @@ class Thread(QThread):
     def run(self):
         self.enqueue_files()
         while not to_process.empty():
+            file = to_process.get()
             filename, _ = filename_fetch(file)
             directory_path = f'./additionalData/{filename}'
             if os.path.exists(directory_path) and os.path.isdir(directory_path):
+                print("existing")
                 continue
-            file = to_process.get()
             print(file, "start process")
             res = input_file(file,GLOBAL_SPLITTER)
 
@@ -138,7 +140,6 @@ class RealTime(QThread):
     def timer(self):
         self.start_timer.emit()
 
-
 class AudioPlayerThread(QThread):
     song_ready = pyqtSignal()
     def __init__(self,checking_thread,temp_file):
@@ -170,8 +171,6 @@ class AudioPlayerThread(QThread):
             os.remove(self.temp_file)
         self.finished.emit()
 
-
-
 class analysis_thread(QThread):
     def __init__(self,checking_thread,startMin,startSec,stopMin,stopSec):
         super().__init__()
@@ -184,6 +183,7 @@ class analysis_thread(QThread):
     def stop_thread(self):
         #print("analysis_stopped")
         self.finished.emit()
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -398,6 +398,7 @@ class SongListView(QWidget):
     def _reload_widgets(self):
         for widget in self.to_display:
             self.layout.removeWidget(widget)
+
             # Show widgets in search results
         for widget in self.to_display:
             self.layout.addWidget(widget)
@@ -453,6 +454,9 @@ class RecommendListView(QWidget):
         self.Refresh_widget = self.ui.refresh
         public_functions.centering(self.make_profile_widget)
         self.ui.Search.textChanged.connect(self.search_in_recommended_list)
+        self.ui.CanSing.clicked.connect(self.can_sing)
+        self.ui.WellSing.clicked.connect(self.well_sing)
+        self.ui.BarelySing.clicked.connect(self.barely_sing)
         self.StackedWidget.setCurrentWidget(self.make_profile_widget)
         self.displayed = self.main.song_widget_recommend_list
         self.searched = self.main.song_widget_recommend_list
@@ -463,6 +467,33 @@ class RecommendListView(QWidget):
         display.setContentsMargins(0, 0, 0, 0)
         display.addWidget(self.ui)
         self.setLayout(display)
+
+    def can_sing(self):
+        can = can_sing()
+        widgets = self.corresponding_widgets(can)
+        self.displayed = widgets
+        self.searched = widgets
+        self._reload_widgets()
+
+    def well_sing(self):
+        well = well_sing()
+        widgets = self.corresponding_widgets(well)
+        self.displayed = widgets
+        self.searched = widgets
+        self._reload_widgets()
+    def barely_sing(self):
+        barely = can_sing()
+        widgets = self.corresponding_widgets(barely)
+        self.displayed = widgets
+        self.searched = widgets
+        self._reload_widgets()
+    def corresponding_widgets(self,L=list):
+        widgets = []
+        for widget in self.main.song_widget_recommend_list:
+            if widget.label1.text() in L:
+                widgets.append(widget)
+                L.remove(widget.label1.text())
+        return widgets
 
     def search_in_recommended_list(self):
         name = self.ui.Search.text()
@@ -500,9 +531,11 @@ class RecommendListView(QWidget):
     def _reload_widgets(self):
         for widget in self.main.song_widget_recommend_list:
             self.layout.removeWidget(widget)
+            widget.hide()
             # Show widgets in search results
-        for widget in self.main.song_widget_recommend_list:
+        for widget in self.displayed:
             self.layout.addWidget(widget)
+            widget.show()
 
     def _sort_widgets(self):
         self.main.song_widget_recommend_list.sort(key=lambda x: x.label1.text())
@@ -628,10 +661,22 @@ class Settings(QWidget):
         self.ui = loadUi(".\\UI\\uiFiles\\Settings.ui")
         self.ui.resetButton.clicked.connect(self.main.disable_window)
         self.ui.resetButton.clicked.connect(lambda: public_functions.open_ok_or_cancel_dialog(self.main))
+        self.ui.apply.clicked.connect(self.set_offset)
+        self.offset = 0
         display = QHBoxLayout()
         display.setContentsMargins(0, 0, 0, 0)
         display.addWidget(self.ui)
         self.setLayout(display)
+    def set_offset(self):
+        self.offset = self.ui.offset.value()
+        with open('.\\profile.dat', 'rb') as f:
+            prf = pickle.load(f)
+
+        prf.offset = self.offset
+
+        with open('.\\profile.dat', 'wb') as f:
+            pickle.dump(prf, f)
+
 
 class Result(QWidget):
     def __init__(self, mainui,songInfo,songname,artist):
