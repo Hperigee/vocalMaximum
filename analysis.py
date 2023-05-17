@@ -10,6 +10,7 @@ import SoundFormInfo
 import pyaudio
 import Profile
 from test import STOP
+from Interface import live_analysis_result
 
 
 def _plt_show(spectrogram_db):
@@ -231,7 +232,7 @@ def file_analysis(vocal_waveform, filename):
 
 
 def _mel_similarity(new, original, frame):  # 비슷하면 0, new가 낮으면 -1, 반대면 1
-    if new == -1: return ':D'
+    if new == -1: return 0
 
     # 비슷하다 == 100cent(=1키) 차이 이내
     e = np.float(1)/12
@@ -251,7 +252,7 @@ def _mel_similarity(new, original, frame):  # 비슷하면 0, new가 낮으면 -
 
 
 def _str_similarity(new, original, frame):  # 비슷하면 0, new가 여리면 -1, 진하면 1
-    if new == -1: return ':D'
+    if new == -1: return 0
 
     # 비슷하다 == ??
     e = np.float(1)/4
@@ -273,13 +274,44 @@ def _str_similarity(new, original, frame):  # 비슷하면 0, new가 여리면 -
 def _find_can_max(logs):
     e = np.float(1)/8
 
-    logs = [i[0] for i in logs]
+    logs = [i[0][0] if i[1][0] > 0.5 else -1 for i in logs]
     logs.sort(key=lambda x: -x)
 
-    for i in range(1, len(logs)):
-        if logs[i-1] - logs[i] < e: return logs[i]
+    for i in range(2, len(logs)):
+        if logs[i-2] - logs[i] < e and logs[i-1] - logs[i] < e: return logs[i]
 
     return -1
+
+
+def _find_well_max(logs):
+    e = np.float(1)/8
+
+    logs = [i[0][0] if i[1][1] == 0 else -1 for i in logs]
+    logs.sort(key=lambda x: -x)
+
+    for i in range(2, len(logs)):
+        if logs[i - 2] - logs[i] < e and logs[i - 1] - logs[i] < e: return logs[i]
+
+    return -1
+
+
+def _find_health_max(logs):
+    melody = [i[0][0] for i in logs]
+
+    mx = 0
+    now = 0
+    e = 0.5
+
+    for i in range(len(melody)):
+        if melody[i] != -1: now += melody[i]
+
+        now -= e
+
+        if now < 0: now = 0
+
+        mx = max(mx, now)
+
+    return round(mx / 1000, 3)
 
 
 def _sec_to_frame(sec):
@@ -362,8 +394,7 @@ def live_analysis(filename, display_Queue, offset, startSec, endSec):
         to_display = [f'{note}\n{note_feedback}', f'{strength}\n{str_feedback}']
         display_Queue.append(to_display)
 
-        if STOP:
-            break
+        if STOP: break
 
 
 
@@ -373,10 +404,20 @@ def live_analysis(filename, display_Queue, offset, startSec, endSec):
         old_profile = pickle.load(f)
 
     old_profile.can_max = max(old_profile.can_max, _find_can_max(logs))
-
+    old_profile.well_max = max(old_profile.well_max, _find_well_max(logs))
+    old_profile.verified_health = max(old_profile.verified_health, _find_health_max(logs))
 
     with open('.\\profile.dat', 'wb') as f:
         pickle.dump(old_profile, f)
+
+    sim_mel = [i[0][1] == 0 for i in logs].count(True) / len(logs)
+    sim_str = [i[1][1] == 0 for i in logs].count(True) / len(logs)
+    score = 60 + 42 * sim_mel + 6 * sim_str
+    if score > 100: score = 100
+    sim_str *= 1.2
+    if sim_str > 1: sim_str = 1
+
+    live_analysis_result = f'참 잘했어요~\n\n점수 : {score}\n\n표현 : {sim_str * 100}'
 
     stream.stop_stream()
     stream.close()
