@@ -33,6 +33,8 @@ global to_display
 to_display = Queue()
 global song_added
 song_added = False
+global live_analysis_result
+live_analyis_result = ""
 
 class Thread(QThread):
     analysis_result_ready = pyqtSignal(object)
@@ -71,8 +73,7 @@ class Thread(QThread):
 class RealTime(QThread):
     display_new_info = pyqtSignal(object)
     start_timer =pyqtSignal()
-
-
+    display_result = pyqtSignal()
     def __init__(self,songWidget,songname,artist,startMin,startSec,stopMin,stopSec):
         super().__init__()
         self.main = window
@@ -114,6 +115,7 @@ class RealTime(QThread):
                 break
             #print(texts)
             self.display_new_info.emit(texts)
+
         self.finished.emit()
     def export(self,file_path,start_time, finish_time,label):
         audio = AudioSegment.from_file(file_path, format="mp3")
@@ -124,10 +126,10 @@ class RealTime(QThread):
             print(len(audio_segment))
         else:
             audio_segment = audio[start_time - 3000:finish_time]
-            print(len(audio_segment))
-
-        audio_segment = audio_segment[:3000] - (
-                    audio_segment[:3000].dBFS * (0.3)) + audio_segment[3000:]
+        audio_segment_final = AudioSegment()
+        for i in range(1000):
+            audio_segment_final = audio_segment[i:i+1] - (audio_segment[i:i+1].dBFS * (0.0003*i)) + audio_segment_final
+        audio_segment = audio_segment[1000:3000] - (audio_segment[1000:3000].dBFS * (0.3)) + audio_segment[3000:]
 
         self.temp_file = f"./temp/temp_audio_{label}.mp3"
         audio_segment.export(self.temp_file, format="mp3")
@@ -169,7 +171,10 @@ class AudioPlayerThread(QThread):
 
     def stop_thread(self):
         #print("stop_audio_called",self.temp_file)
-        self.player.stop()
+        try:
+            self.player.stop()
+        except:
+            pass
         if os.path.exists(self.temp_file):
             os.remove(self.temp_file)
         self.finished.emit()
@@ -177,15 +182,13 @@ class AudioPlayerThread(QThread):
 class analysis_thread(QThread):
     def __init__(self,checking_thread,startMin,startSec,stopMin,stopSec):
         super().__init__()
-        checking_thread.finished.connect(self.stop_thread)
 
     def run(self):
         test.asdf(to_display) # analysis function ,startMin,startSec,stopMin,stopSec)
         test.STOP = False # flag reset
-
-    def stop_thread(self):
-        #print("analysis_stopped")
         self.finished.emit()
+
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -640,10 +643,11 @@ class RecordDisplay(QWidget):
         self.artist = artist
         self.songname  = songname
         self.ui = loadUi(".\\UI\\uiFiles\\Recording.ui")
-        self.ui.CancelButton.clicked.connect(self._handle_record_cancel_button_click)
+        self.ui.CancelButton.clicked.connect(self._finished)
         self.ui.CancelButton.clicked.connect(self.canceled.emit)
         self.thread.display_new_info.connect(self.updateui)
         self.thread.start_timer.connect(self.start_timer)
+        self.thread.finished.connect(self._finished)
         self.ui.Artist.setText(self.artist)
         self.ui.SongName.setText(self.songname)
         self.ui.Timer.setText("Loading...")
@@ -653,8 +657,16 @@ class RecordDisplay(QWidget):
         display.addWidget(self.ui)
         self.setLayout(display)
 
-    def _handle_record_cancel_button_click(self):
-        self.result = Result(self.main,self.songInfo,self.songname,self.artist)
+    def _get_result(self):
+        if live_analyis_result =="":
+            QTimer.singleShot(100, self._get_result)
+        else:
+            return live_analyis_result
+    def _finished(self):
+        self.result = self._get_result()
+        self._display_result()
+    def _display_result(self):
+        self.result = Result(self.main, self.songInfo, self.songname, self.artist)
         self.main.show_sidetab(self.result)
 
     def updateui(self,txts):

@@ -1,5 +1,4 @@
 import os
-
 from PyQt5.QtWidgets import QFileDialog, QLabel, QDialog, QWidget,QSpinBox
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont
@@ -24,12 +23,18 @@ def reset():
         os.remove('./Datas/Addedlist.dat')
     except FileNotFoundError:
         pass
-    pass
+
+    with open('.\\profile.dat', 'rb') as f:
+        prf = pickle.load(f)
+    prf.can_max =0
+    prf.well_max=0
+    prf.verified_health=0
+    prf.offset =0
+    with open('.\\profile.dat', 'wb') as f:
+        pickle.dump(prf, f)
+    return
 
 
-
-
-from PyQt5.QtWidgets import QFileDialog
 
 def open_file_dialog():
     file_dialog = QFileDialog()
@@ -47,8 +52,11 @@ def open_file_dialog():
 
 
 def profile_exist():
-    return True
-
+    with open('.\\profile.dat', 'rb') as f:
+        prf = pickle.load(f)
+    if prf.well_max == 0 and prf.can_max == 0 and prf.verified_health == 0:
+        return False
+    else: return True
 
 def centering(widgets):
     for widget in widgets.findChildren(QLabel):
