@@ -9,8 +9,10 @@ import os
 import SoundFormInfo
 import pyaudio
 import Profile
-from test import STOP
 from Interface import live_analysis_result
+
+global STOP
+STOP = False
 
 
 def _plt_show(spectrogram_db):
