@@ -1,18 +1,40 @@
-from PyQt5.QtWidgets import QFileDialog, QLabel, QDialog, QMainWindow
+import os
+from PyQt5.QtWidgets import QFileDialog, QLabel, QDialog, QWidget,QSpinBox
 from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QFont
 from PyQt5.uic import loadUi
 from spleeter.separator import Separator
+import pickle
 
 class OkOrCancelDialog(QDialog):
     def __init__(self):
         super().__init__()
         self.ui = loadUi(".\\UI\\uiFiles\\ResetConfirm.ui", self)
-        self.ui.buttonBox.accepted.connect(self.accept)
+        self.ui.buttonBox.accepted.connect(self.on_accepted)
         self.ui.buttonBox.rejected.connect(self.reject)
         self.show()
 
+    def on_accepted(self):
+        # Code to be executed after the "accepted" button is clicked
+        reset()
+        self.accept()
+def reset():
+    try:
+        os.remove('./Datas/Addedlist.dat')
+    except FileNotFoundError:
+        pass
 
-from PyQt5.QtWidgets import QFileDialog
+    with open('.\\profile.dat', 'rb') as f:
+        prf = pickle.load(f)
+    prf.can_max =0
+    prf.well_max=0
+    prf.verified_health=0
+    prf.offset =0
+    with open('.\\profile.dat', 'wb') as f:
+        pickle.dump(prf, f)
+    return
+
+
 
 def open_file_dialog():
     file_dialog = QFileDialog()
@@ -30,13 +52,27 @@ def open_file_dialog():
 
 
 def profile_exist():
-    return True
-
+    with open('.\\profile.dat', 'rb') as f:
+        prf = pickle.load(f)
+    if prf.well_max == 0 and prf.can_max == 0 and prf.verified_health == 0:
+        return False
+    else: return True
 
 def centering(widgets):
     for widget in widgets.findChildren(QLabel):
         widget.setAlignment(Qt.AlignCenter)
 
+def ratio(widgets,font_str, ratio):
+    for widget in widgets.findChildren(QWidget):
+        widget_geometry = widget.geometry()
+        font_size = widget_geometry.height() * ratio
+        font = QFont(font_str, font_size)
+        widget.setFont(font)
+    for widget in widgets.findChildren(QSpinBox):
+        widget_geometry = widget.geometry()
+        font_size = widget_geometry.height() * ratio
+        font = QFont(font_str, font_size)
+        widget.setFont(font)
 
 def open_ok_or_cancel_dialog(mainui):
     # Show the new window and wait for user response
