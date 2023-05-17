@@ -1,3 +1,6 @@
+import time
+
+from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import *
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import Qt, QFile, QTextStream, QTimer, QThread, pyqtSlot, pyqtSignal,QUrl
@@ -193,15 +196,15 @@ class MainWindow(QMainWindow):
         self.song_widget_list = []
         self.song_widget_recommend_list=[]
         self.ui = loadUi('.\\UI\\uiFiles\\Main.ui', self)
-        self.setFixedSize(1600, 900)
+        self.setMinimumSize(1600, 900)
         self.mainStackedWidget = QStackedWidget(self)
         self.ui.widgetChange.layout().addWidget(self.mainStackedWidget)
 
         self.sideTabStackedWidget = QStackedWidget(self)
         self.sideTab.layout().addWidget(self.sideTabStackedWidget)
-        flags = self.windowFlags()
-        flags &= ~Qt.WindowMaximizeButtonHint
-        self.setWindowFlags(flags)
+        #flags = self.windowFlags()
+        #flags &= ~Qt.WindowMaximizeButtonHint
+        #self.setWindowFlags(flags)
 
         self.SongListView = SongListView(self)
         self.RecommendListView = RecommendListView(self)
@@ -323,7 +326,12 @@ class MainWindow(QMainWindow):
         song = self.sender()
         name = song.objectName()
         # below is tested code
-        self.show_sidetab(SongInfo(song.root_file, self))
+        song_info_tab =SongInfo(song.root_file, self)
+        self.show_sidetab(song_info_tab)
+
+        public_functions.ratio(song_info_tab.ui.songInfoContainer, "Noto Sans KR medium", 0.15)
+        public_functions.ratio(song_info_tab.ui.widget, "Noto Sans KR Black", 0.25)
+        public_functions.ratio(song_info_tab.ui.DurationSet, "Noto Sans KR medium", 0.35)
 
 
 class SongListView(QWidget):
@@ -435,7 +443,6 @@ class SongListView(QWidget):
         scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
         custom_scrollbar = assets.CustomScrollBar()
         scroll_area.setVerticalScrollBar(custom_scrollbar)
-
 
 
 class RecommendListView(QWidget):
@@ -591,6 +598,17 @@ class SongInfo(QWidget):
         display.setContentsMargins(0, 0, 0, 0)
         display.addWidget(self.ui)
         self.setLayout(display)
+
+
+
+
+    def resizeEvent(self, event):
+        public_functions.ratio(self.ui.songInfoContainer,"Noto Sans KR medium", 0.15)
+        public_functions.ratio(self.ui.widget, "Noto Sans KR Black", 0.25)
+        public_functions.ratio(self.ui.DurationSet, "Noto Sans KR medium", 0.35)
+
+
+
 
     def _handle_record_button_click(self):
         startMin = self.ui.StartMinuteValue.value()
