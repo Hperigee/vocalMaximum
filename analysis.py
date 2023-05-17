@@ -9,7 +9,7 @@ import os
 import SoundFormInfo
 import pyaudio
 import Profile
-from Interface import live_analysis_result
+
 
 global STOP
 STOP = False
@@ -239,7 +239,7 @@ def _mel_similarity(new, original, frame):  # 비슷하면 0, new가 낮으면 -
     # 비슷하다 == 100cent(=1키) 차이 이내
     e = np.float(1)/12
 
-    search = np.array(original[np.max(frame - 4, 0) : np.min(frame + 5, len(original))])
+    search = np.array(original[max(frame - 4, 0) : min(frame + 5, len(original))])
     search = np.tile(np.array([new]), len(search)) - search
     cond = list(np.abs(search) <= e)
     fit = cond.count(True)
@@ -259,7 +259,7 @@ def _str_similarity(new, original, frame):  # 비슷하면 0, new가 여리면 -
     # 비슷하다 == ??
     e = np.float(1)/4
 
-    search = np.array(original[np.max(frame - 4, 0): np.min(frame + 5, len(original))])
+    search = np.array(original[max(frame - 4, 0): min(frame + 5, len(original))])
     search = np.tile(np.array([new]), len(search)) - search
     cond = list(np.abs(search) <= e)
     fit = cond.count(True)
@@ -321,7 +321,7 @@ def _sec_to_frame(sec):
     return int(sec * 22050 / 512) + DEFAULT_OFFSET
 
 
-def live_analysis(filename, display_Queue, offset, startSec, endSec):
+def live_analysis(filename, display_Queue, offset, startSec, endSec, res_que):
 
     with open(f'.\\additionalData\\{filename}\\mel.dat', 'rb') as f:
         origin_mel = pickle.load(f)
@@ -394,7 +394,7 @@ def live_analysis(filename, display_Queue, offset, startSec, endSec):
             str_feedback = ':D'
 
         to_display = [f'{note}\n{note_feedback}', f'{strength}\n{str_feedback}']
-        display_Queue.append(to_display)
+        display_Queue.put(to_display)
 
         if STOP: break
 
@@ -414,21 +414,22 @@ def live_analysis(filename, display_Queue, offset, startSec, endSec):
 
     sim_mel = [i[0][1] == 0 for i in logs].count(True) / len(logs)
     sim_str = [i[1][1] == 0 for i in logs].count(True) / len(logs)
-    score = 60 + 42 * sim_mel + 6 * sim_str
+    score = round(60 + 42 * sim_mel + 6 * sim_str, 3)
     if score > 100: score = 100
     sim_str *= 1.2
     if sim_str > 1: sim_str = 1
 
-    live_analysis_result = f'참 잘했어요~\n\n점수 : {score}\n\n표현 : {sim_str * 100}'
+    res_que.put(f'참 잘했어요~\n\n점수 : {score}\n\n표현 : {round(sim_str * 100, 3)}')
+    print("desired", f'참 잘했어요~\n\n점수 : {score}\n\n표현 : {round(sim_str * 100, 3)}')
 
     stream.stop_stream()
     stream.close()
     p.terminate()
 
-    plt.plot(list(range(len(logs) * 4, 4)), [i[0][0] for i in logs], 'go', ms=6.0)
-    plt.plot(list(range(len(origin_mel[_sec_to_frame(startSec):_sec_to_frame(endSec)]))),
-             origin_mel[_sec_to_frame(startSec):_sec_to_frame(endSec)], 'ro', ms=2.0)
-    plt.show()
+    #plt.plot(list(range(len(logs) * 4, 4)), [i[0][0] for i in logs], 'go', ms=6.0)
+    #plt.plot(list(range(len(origin_mel[_sec_to_frame(startSec):_sec_to_frame(endSec)]))),
+    #         origin_mel[_sec_to_frame(startSec):_sec_to_frame(endSec)], 'ro', ms=2.0)
+   # plt.show()
 
 
 #print('start run')

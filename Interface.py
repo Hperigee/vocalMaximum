@@ -10,9 +10,10 @@ import pickle
 import public_functions
 import assets
 from queue import Queue
-from fileinput import input_file, filename_fetch
 from spleeter.separator import Separator
 from pydub import AudioSegment
+import analysis
+from fileinput import input_file, filename_fetch
 import os
 from Recommender import *
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
@@ -34,7 +35,7 @@ to_display = Queue()
 global song_added
 song_added = False
 global live_analysis_result
-live_analyis_result = ""
+live_analysis_result = Queue()
 
 class Thread(QThread):
     analysis_result_ready = pyqtSignal(object)
@@ -91,12 +92,11 @@ class RealTime(QThread):
         guide_directory = f'./Defaults/{self.artist}-{self.song_name}.mp3'
         mr_directory = f'./additionalData/{self.artist}-{self.song_name}/{self.artist}-{self.song_name}.mp3'
 
-        self.start = analysis_thread(self,self.startMin,self.startSec,self.stopMin,self.stopSec)
-
         start_time = (self.startMin * 60 + self.startSec) * 1000
         stop_time =(self.stopMin*60+self.stopSec)*1000
         temp_mr =self.export(mr_directory,start_time,stop_time,'mr')
         temp_guide = self.export(guide_directory, start_time, start_time,'guide')
+        self.start_thread = analysis_thread(f'{self.artist}-{self.song_name}', start_time//1000, stop_time//1000,live_analysis_result)
 
         self.player = AudioPlayerThread(self, temp_mr)
         self.player2 = AudioPlayerThread(self, temp_guide)
@@ -141,10 +141,10 @@ class RealTime(QThread):
         return self.temp_file
 
     def start_analysis(self):
-        self.start.start()
+        self.start_thread.start()
 
     def stop_analysis(self):
-        test.STOP = True # flag
+        analysis.STOP = True # flag
         to_display.put("STOP")
         #print("stopped")
     def timer(self):
@@ -185,12 +185,20 @@ class AudioPlayerThread(QThread):
         self.finished.emit()
 
 class analysis_thread(QThread):
-    def __init__(self,checking_thread,startMin,startSec,stopMin,stopSec):
+    def __init__(self,filename,start,stop,que):
         super().__init__()
+        self.filename=filename
+        with open('.\\profile.dat', 'rb') as f:
+            prf = pickle.load(f)
+        self.offset = prf.offset
+        self.start_time =start
+        self.stop_time =stop
+        self.que =que
+
 
     def run(self):
-        test.asdf(to_display) # analysis function ,startMin,startSec,stopMin,stopSec)
-        test.STOP = False # flag reset
+        analysis.live_analysis(self.filename, to_display,self.offset,self.start_time, self.stop_time,self.que) # analysis function ,startMin,startSec,stopMin,stopSec)
+        analysis.STOP = False # flag reset
         self.finished.emit()
 
 
@@ -648,8 +656,8 @@ class RecordDisplay(QWidget):
         self.artist = artist
         self.songname  = songname
         self.ui = loadUi(".\\UI\\uiFiles\\Recording.ui")
-        self.ui.CancelButton.clicked.connect(self._finished)
         self.ui.CancelButton.clicked.connect(self.canceled.emit)
+        self.ui.CancelButton.clicked.connect(self._finished)
         self.thread.display_new_info.connect(self.updateui)
         self.thread.start_timer.connect(self.start_timer)
         self.thread.finished.connect(self._finished)
@@ -663,16 +671,23 @@ class RecordDisplay(QWidget):
         self.setLayout(display)
 
     def _get_result(self):
-        if live_analyis_result =="":
-            QTimer.singleShot(100, self._get_result)
-        else:
-            return live_analyis_result
+        texts = None
+        while True:
+            try:
+                texts = live_analysis_result.get()
+            except:
+                pass
+            if texts is not None:
+                break
+        return texts
+
     def _finished(self):
         self.result = self._get_result()
+        print(self.result)
         self._display_result()
     def _display_result(self):
-        self.result = Result(self.main, self.songInfo, self.songname, self.artist)
-        self.main.show_sidetab(self.result)
+        self.result_display = Result(self.main, self.songInfo, self.songname, self.artist,self.result)
+        self.main.show_sidetab(self.result_display)
 
     def updateui(self,txts):
         self.ui.txt1.setText(txts[0])
@@ -715,7 +730,7 @@ class Settings(QWidget):
 
 
 class Result(QWidget):
-    def __init__(self, mainui,songInfo,songname,artist):
+    def __init__(self, mainui,songInfo,songname,artist,result):
         super().__init__()
         self.main = mainui
         self.songInfo = songInfo
@@ -726,6 +741,7 @@ class Result(QWidget):
         self.ui.BackButton.clicked.connect(self._handle_back_button_click)
         self.ui.SongName.setText(songname)
         self.ui.Artist.setText(artist)
+        self.ui.ResultDisplay.setText(result)
         display = QHBoxLayout()
         display.setContentsMargins(0, 0, 0, 0)
         display.addWidget(self.ui)
