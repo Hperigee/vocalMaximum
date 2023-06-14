@@ -19,10 +19,6 @@ class OkOrCancelDialog(QDialog):
         reset()
         self.accept()
 def reset():
-    try:
-        os.remove('./Datas/Addedlist.dat')
-    except FileNotFoundError:
-        pass
 
     with open('.\\profile.dat', 'rb') as f:
         prf = pickle.load(f)

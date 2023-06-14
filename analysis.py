@@ -317,7 +317,7 @@ def _find_health_max(logs):
 
 
 def _sec_to_frame(sec):
-    DEFAULT_OFFSET = 0
+    DEFAULT_OFFSET = -8
     return int(sec * 22050 / 512) + DEFAULT_OFFSET
 
 
@@ -426,10 +426,12 @@ def live_analysis(filename, display_Queue, offset, startSec, endSec, res_que):
     stream.close()
     p.terminate()
 
-    #plt.plot(list(range(len(logs) * 4, 4)), [i[0][0] for i in logs], 'go', ms=6.0)
-    #plt.plot(list(range(len(origin_mel[_sec_to_frame(startSec):_sec_to_frame(endSec)]))),
-    #         origin_mel[_sec_to_frame(startSec):_sec_to_frame(endSec)], 'ro', ms=2.0)
-   # plt.show()
+    f1 = plt.plot
+    f2 = plt.show
+    p1 = (list(range(len(logs) * 4)), np.repeat([i[0][0] for i in logs], 4), 'go')
+    p2 = (list(range(len(logs) * 4)), origin_mel[_sec_to_frame(startSec):_sec_to_frame(startSec) + len(logs) * 4], 'ro')
+
+    return (f1, f2, p1, p2)
 
 
 #print('start run')

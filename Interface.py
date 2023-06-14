@@ -3,7 +3,7 @@ import time
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import *
 from PyQt5.uic import loadUi
-from PyQt5.QtCore import Qt, QFile, QTextStream, QTimer, QThread, pyqtSlot, pyqtSignal,QUrl
+from PyQt5.QtCore import Qt, QFile, QTextStream, QTimer, QThread, pyqtSlot, pyqtSignal, QUrl
 from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
 from Resources_rc import *  # used
 import pickle
@@ -16,16 +16,15 @@ import analysis
 from fileinput import input_file, filename_fetch
 import os
 from Recommender import *
+
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 from Profile import Profile  # used
 import tensorflow as tf
 
-
 import test
 
-
 global input_file_directory
-input_file_directory=None
+input_file_directory = None
 global to_process
 to_process = Queue()
 global GLOBAL_SPLITTER
@@ -37,19 +36,22 @@ song_added = False
 global live_analysis_result
 live_analysis_result = Queue()
 
+
 class Thread(QThread):
     analysis_result_ready = pyqtSignal(object)
+
     def __init__(self):
         super().__init__()
+
     def enqueue_files(self):
         global input_file_directory
         try:
             for file in input_file_directory:
-                print(file,"input success")
+                print(file, "input success")
                 to_process.put(file)
         except:
             pass
-        QTimer.singleShot(1000,self.enqueue_files)
+        QTimer.singleShot(1000, self.enqueue_files)
 
     @pyqtSlot()
     def run(self):
@@ -62,7 +64,7 @@ class Thread(QThread):
                 print("existing")
                 continue
             print(file, "start process")
-            res = input_file(file,GLOBAL_SPLITTER)
+            res = input_file(file, GLOBAL_SPLITTER)
 
             with open(f'./Datas/{filename}.tmpdat', 'wb') as file:
                 pickle.dump(res, file)
@@ -71,20 +73,23 @@ class Thread(QThread):
 
         self.finished.emit()
 
+
 class RealTime(QThread):
     display_new_info = pyqtSignal(object)
-    start_timer =pyqtSignal()
+    start_timer = pyqtSignal()
     display_result = pyqtSignal()
-    def __init__(self,songWidget,songname,artist,startMin,startSec,stopMin,stopSec):
+
+    def __init__(self, songWidget, songname, artist, startMin, startSec, stopMin, stopSec):
         super().__init__()
         self.main = window
-        self.songWidget =songWidget
+        self.songWidget = songWidget
         self.startMin = startMin
         self.startSec = startSec
         self.stopMin = stopMin
-        self.stopSec =stopSec
-        self.song_name=songname
+        self.stopSec = stopSec
+        self.song_name = songname
         self.artist = artist
+
     @pyqtSlot()
     def run(self):
         self.songWidget.record.canceled.connect(self.stop_analysis)
@@ -93,10 +98,11 @@ class RealTime(QThread):
         mr_directory = f'./additionalData/{self.artist}-{self.song_name}/{self.artist}-{self.song_name}.mp3'
 
         start_time = (self.startMin * 60 + self.startSec) * 1000
-        stop_time =(self.stopMin*60+self.stopSec)*1000
-        temp_mr =self.export(mr_directory,start_time,stop_time,'mr')
-        temp_guide = self.export(guide_directory, start_time, start_time,'guide')
-        self.start_thread = analysis_thread(f'{self.artist}-{self.song_name}', start_time//1000, stop_time//1000,live_analysis_result)
+        stop_time = (self.stopMin * 60 + self.stopSec) * 1000
+        temp_mr = self.export(mr_directory, start_time, stop_time, 'mr')
+        temp_guide = self.export(guide_directory, start_time, start_time, 'guide')
+        self.start_thread = analysis_thread(f'{self.artist}-{self.song_name}', start_time // 1000, stop_time // 1000,
+                                            live_analysis_result)
 
         self.player = AudioPlayerThread(self, temp_mr)
         self.player2 = AudioPlayerThread(self, temp_guide)
@@ -105,7 +111,7 @@ class RealTime(QThread):
         self.player.start()
         self.player.song_ready.connect(self.start_timer)
         self.songWidget.record.record_start.connect(self.start_analysis)
-        texts= None
+        texts = None
         while True:
             try:
                 texts = to_display.get()
@@ -113,7 +119,7 @@ class RealTime(QThread):
                 pass
             if texts == 'STOP':
                 break
-            #print(texts)
+            # print(texts)
             self.display_new_info.emit(texts)
 
         self.finished.emit()
@@ -144,18 +150,22 @@ class RealTime(QThread):
         self.start_thread.start()
 
     def stop_analysis(self):
-        analysis.STOP = True # flag
+        analysis.STOP = True  # flag
         to_display.put("STOP")
-        #print("stopped")
+        # print("stopped")
+
     def timer(self):
         self.start_timer.emit()
 
+
 class AudioPlayerThread(QThread):
     song_ready = pyqtSignal()
-    def __init__(self,checking_thread,temp_file):
+
+    def __init__(self, checking_thread, temp_file):
         super(AudioPlayerThread, self).__init__()
         checking_thread.finished.connect(self.stop_thread)
-        self.temp_file =temp_file
+        self.temp_file = temp_file
+
     @pyqtSlot()
     def run(self):
         self.player = QMediaPlayer()
@@ -175,7 +185,7 @@ class AudioPlayerThread(QThread):
         self.stop_thread()
 
     def stop_thread(self):
-        #print("stop_audio_called",self.temp_file)
+        # print("stop_audio_called",self.temp_file)
         try:
             self.player.stop()
         except:
@@ -184,23 +194,24 @@ class AudioPlayerThread(QThread):
             os.remove(self.temp_file)
         self.finished.emit()
 
+
 class analysis_thread(QThread):
-    def __init__(self,filename,start,stop,que):
+    def __init__(self, filename, start, stop, que):
         super().__init__()
-        self.filename=filename
+        self.filename = filename
         with open('.\\profile.dat', 'rb') as f:
             prf = pickle.load(f)
         self.offset = prf.offset
-        self.start_time =start
-        self.stop_time =stop
-        self.que =que
-
+        self.start_time = start
+        self.stop_time = stop
+        self.que = que
 
     def run(self):
-        analysis.live_analysis(self.filename, to_display,self.offset,self.start_time, self.stop_time,self.que) # analysis function ,startMin,startSec,stopMin,stopSec)
-        analysis.STOP = False # flag reset
+        global sadf
+        sadf = analysis.live_analysis(self.filename, to_display, self.offset, self.start_time, self.stop_time,
+                               self.que)  # analysis function ,startMin,startSec,stopMin,stopSec)
+        analysis.STOP = False  # flag reset
         self.finished.emit()
-
 
 
 class MainWindow(QMainWindow):
@@ -210,7 +221,7 @@ class MainWindow(QMainWindow):
 
     def init_ui(self):
         self.song_widget_list = []
-        self.song_widget_recommend_list=[]
+        self.song_widget_recommend_list = []
         self.ui = loadUi('.\\UI\\uiFiles\\Main.ui', self)
         self.setMinimumSize(1600, 900)
         self.mainStackedWidget = QStackedWidget(self)
@@ -218,9 +229,9 @@ class MainWindow(QMainWindow):
 
         self.sideTabStackedWidget = QStackedWidget(self)
         self.sideTab.layout().addWidget(self.sideTabStackedWidget)
-        #flags = self.windowFlags()
-        #flags &= ~Qt.WindowMaximizeButtonHint
-        #self.setWindowFlags(flags)
+        # flags = self.windowFlags()
+        # flags &= ~Qt.WindowMaximizeButtonHint
+        # self.setWindowFlags(flags)
 
         self.SongListView = SongListView(self)
         self.RecommendListView = RecommendListView(self)
@@ -249,12 +260,11 @@ class MainWindow(QMainWindow):
 
         self.show()
 
+
     def load(self):
         folder_path = 'Datas'
         file_list = [os.path.join(folder_path, f) for f in os.listdir(folder_path) if f.endswith('.dat')]
         new_file_list = [os.path.join(folder_path, f) for f in os.listdir(folder_path) if f.endswith('.tmpdat')]
-
-
 
         data = []
         new_data = []
@@ -282,7 +292,7 @@ class MainWindow(QMainWindow):
                 song_info = pickle.load(file)
                 data += song_info
             file.close()
-        self.previous =None
+        self.previous = None
         self.songlist = data
 
         for i in range(len(self.songlist)):
@@ -292,6 +302,7 @@ class MainWindow(QMainWindow):
             self.RecommendListView.add_widget_in_recommended_list(song_widget_recommend)
 
         del self.songlist
+
     def _get_qss(self):
         selected = QFile("UI/styleSheets/Selected.qss")
         not_selected = QFile("UI/styleSheets/NotSelected.qss")
@@ -342,7 +353,7 @@ class MainWindow(QMainWindow):
         song = self.sender()
         name = song.objectName()
         # below is tested code
-        song_info_tab =SongInfo(song.root_file, self)
+        song_info_tab = SongInfo(song.root_file, self)
         self.show_sidetab(song_info_tab)
 
         public_functions.ratio(song_info_tab.ui.songInfoContainer, "Noto Sans KR medium", 0.15)
@@ -368,7 +379,7 @@ class SongListView(QWidget):
         display.setContentsMargins(0, 0, 0, 0)
         display.addWidget(self.ui)
         self.setLayout(display)
-        self.name=''
+        self.name = ''
 
         self.thread = Thread()
         self.thread.analysis_result_ready.connect(self.handle_analysis_result)
@@ -383,13 +394,13 @@ class SongListView(QWidget):
 
         self.thread.start()
 
-
     def handle_analysis_result(self, result):
         # Process the analysis result
         new_song = assets.SongFile(1, result)
         self.add_new_widget(new_song)
         # Re-enable the button
-        notification_window = assets.NotiFication("New Song Uploaded", 3000,self.main)  # Display the notification for 3000 milliseconds (3 seconds)
+        notification_window = assets.NotiFication("New Song Uploaded", 3000,
+                                                  self.main)  # Display the notification for 3000 milliseconds (3 seconds)
         notification_window.show()
 
     def search_in_whole_list(self):
@@ -410,7 +421,6 @@ class SongListView(QWidget):
 
     def get_widget_number_from_song_list(self):
         return self.layout.count()
-
 
     def update_index(self):
         visible_widget_count = 0
@@ -485,7 +495,6 @@ class RecommendListView(QWidget):
         self.searched = self.main.song_widget_recommend_list
         self._set_custom_scroll_bar()
 
-
         display = QHBoxLayout()
         display.setContentsMargins(0, 0, 0, 0)
         display.addWidget(self.ui)
@@ -497,6 +506,8 @@ class RecommendListView(QWidget):
         self.displayed = widgets
         self.searched = widgets
         self._reload_widgets()
+        self.update_index()
+        self.change_widget()
 
     def well_sing(self):
         well = well_sing()
@@ -504,23 +515,29 @@ class RecommendListView(QWidget):
         self.displayed = widgets
         self.searched = widgets
         self._reload_widgets()
+        self.update_index()
+        self.change_widget()
+
     def barely_sing(self):
-        barely = can_sing()
+        barely = barely_sing()
         widgets = self.corresponding_widgets(barely)
         self.displayed = widgets
         self.searched = widgets
         self._reload_widgets()
-    def corresponding_widgets(self,L=list):
+        self.update_index()
+        self.change_widget()
+
+    def corresponding_widgets(self, L=list):
         widgets = []
         for widget in self.main.song_widget_recommend_list:
-            if widget.label1.text() in L:
+            if f'{widget.label2.text()}-{widget.label1.text()}' in L:
                 widgets.append(widget)
-                L.remove(widget.label1.text())
+                L.remove(f'{widget.label2.text()}-{widget.label1.text()}')
         return widgets
 
     def search_in_recommended_list(self):
         name = self.ui.Search.text()
-        self.searched= public_functions.search(self.displayed, name)
+        self.searched = public_functions.search(self.displayed, name)
 
         # Hide all widgets
         for widget in self.displayed:
@@ -573,7 +590,7 @@ class RecommendListView(QWidget):
             self.StackedWidget.setCurrentWidget(self.Refresh_widget)
             self.displayed = self.main.song_widget_recommend_list
             self.searched = self.main.song_widget_recommend_list
-            #song_added = False
+            song_added = False
         elif public_functions.profile_exist():
             self.StackedWidget.setCurrentWidget(self.RecommendListScrollArea_widget)
 
@@ -582,6 +599,7 @@ class RecommendListView(QWidget):
         scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
         custom_scrollbar = assets.CustomScrollBar()
         scroll_area.setVerticalScrollBar(custom_scrollbar)
+
 
 class SongInfo(QWidget):
     def __init__(self, song, mainui):
@@ -615,16 +633,10 @@ class SongInfo(QWidget):
         display.addWidget(self.ui)
         self.setLayout(display)
 
-
-
-
     def resizeEvent(self, event):
-        public_functions.ratio(self.ui.songInfoContainer,"Noto Sans KR medium", 0.15)
+        public_functions.ratio(self.ui.songInfoContainer, "Noto Sans KR medium", 0.15)
         public_functions.ratio(self.ui.widget, "Noto Sans KR Black", 0.25)
         public_functions.ratio(self.ui.DurationSet, "Noto Sans KR medium", 0.35)
-
-
-
 
     def _handle_record_button_click(self):
         startMin = self.ui.StartMinuteValue.value()
@@ -632,29 +644,30 @@ class SongInfo(QWidget):
         stopMin = self.ui.StopMinuteValue.value()
         stopSec = self.ui.StopSecondValue.value()
 
-        if (stopMin * 60 + stopSec - startMin * 60 - startSec) < 15 or stopMin * 60 + stopSec > self.secDuration + self.minuteDuration * 60:
+        if (
+                stopMin * 60 + stopSec - startMin * 60 - startSec) < 15 or stopMin * 60 + stopSec > self.secDuration + self.minuteDuration * 60:
             return
 
-        self.thread=RealTime(self,self.song_name,self.artist,startMin,startSec,stopMin,stopSec)
+        self.thread = RealTime(self, self.song_name, self.artist, startMin, startSec, stopMin, stopSec)
         self.record = RecordDisplay(self.main, self, self.song_name, self.artist)
         self.thread.start()
         self.main.show_sidetab(self.record)
         self.main.disable_mainWidget()
-
 
         # call scoring function
 
 
 class RecordDisplay(QWidget):
     canceled = pyqtSignal(object)
-    record_start =pyqtSignal()
-    def __init__(self, mainui, songInfo,artist,songname):
+    record_start = pyqtSignal()
+
+    def __init__(self, mainui, songInfo, artist, songname):
         super().__init__()
         self.main = mainui
         self.songInfo = songInfo
         self.thread = self.songInfo.thread
         self.artist = artist
-        self.songname  = songname
+        self.songname = songname
         self.ui = loadUi(".\\UI\\uiFiles\\Recording.ui")
         self.ui.CancelButton.clicked.connect(self.canceled.emit)
         self.ui.CancelButton.clicked.connect(self._finished)
@@ -664,6 +677,8 @@ class RecordDisplay(QWidget):
         self.ui.Artist.setText(self.artist)
         self.ui.SongName.setText(self.songname)
         self.ui.Timer.setText("Loading...")
+        self.ui.txt1.setText(":D\n:D")
+        self.ui.txt2.setText(":D\n:D")
         public_functions.centering(self.ui)
         display = QHBoxLayout()
         display.setContentsMargins(0, 0, 0, 0)
@@ -685,11 +700,12 @@ class RecordDisplay(QWidget):
     def _finished(self):
         self.result = self._get_result()
         self._display_result()
+
     def _display_result(self):
-        self.result_display = Result(self.main, self.songInfo, self.songname, self.artist,self.result)
+        self.result_display = Result(self.main, self.songInfo, self.songname, self.artist, self.result)
         self.main.show_sidetab(self.result_display)
 
-    def updateui(self,txts):
+    def updateui(self, txts):
         self.ui.txt1.setText(txts[0])
         self.ui.txt2.setText(txts[1])
 
@@ -705,6 +721,7 @@ class RecordDisplay(QWidget):
     def emit_record_start(self):
         self.record_start.emit()
 
+
 class Settings(QWidget):
     def __init__(self, mainui):
         super().__init__()
@@ -718,6 +735,7 @@ class Settings(QWidget):
         display.setContentsMargins(0, 0, 0, 0)
         display.addWidget(self.ui)
         self.setLayout(display)
+
     def set_offset(self):
         self.offset = self.ui.offset.value()
         with open('.\\profile.dat', 'rb') as f:
@@ -730,7 +748,7 @@ class Settings(QWidget):
 
 
 class Result(QWidget):
-    def __init__(self, mainui,songInfo,songname,artist,result):
+    def __init__(self, mainui, songInfo, songname, artist, result):
         super().__init__()
         self.main = mainui
         self.songInfo = songInfo
@@ -746,17 +764,13 @@ class Result(QWidget):
         display.setContentsMargins(0, 0, 0, 0)
         display.addWidget(self.ui)
         self.setLayout(display)
+
     def _handle_back_button_click(self):
         self.main.show_sidetab(self.songInfo)
         self.main.enable_mainWidget()
 
 
-
-
-
-
 if __name__ == "__main__":
-
     app = QApplication([])
     window = MainWindow()
     window.show()
