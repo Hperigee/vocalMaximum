@@ -4,6 +4,7 @@ from PyQt5.QtCore import Qt, QFile, QTextStream, QTimer, QThread, pyqtSlot, pyqt
 from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
 import public_functions
 import assets
+import Resources_rc
 from queue import Queue
 from spleeter.separator import Separator
 from pydub import AudioSegment
