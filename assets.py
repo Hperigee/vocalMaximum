@@ -107,7 +107,5 @@ class CustomScrollBar(QScrollBar):
         self.setStyleSheet(style)
 
 
-def profile_exist():
-    return False
 
 

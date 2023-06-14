@@ -1,12 +1,7 @@
-import time
-
-from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import *
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import Qt, QFile, QTextStream, QTimer, QThread, pyqtSlot, pyqtSignal, QUrl
 from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
-from Resources_rc import *  # used
-import pickle
 import public_functions
 import assets
 from queue import Queue
@@ -14,20 +9,14 @@ from spleeter.separator import Separator
 from pydub import AudioSegment
 import analysis
 from fileinput import input_file, filename_fetch
-import os
 from Recommender import *
 
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
-from Profile import Profile  # used
-import tensorflow as tf
-
-import test
 
 global input_file_directory
 input_file_directory = None
 global to_process
 to_process = Queue()
-global GLOBAL_SPLITTER
 GLOBAL_SPLITTER = Separator('spleeter:2stems', stft_backend='tensorflow', multiprocess=False)
 global to_display
 to_display = Queue()
@@ -768,6 +757,8 @@ class Result(QWidget):
     def _handle_back_button_click(self):
         self.main.show_sidetab(self.songInfo)
         self.main.enable_mainWidget()
+
+
 
 
 if __name__ == "__main__":

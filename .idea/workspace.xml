@@ -4,112 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4bb3950c-9614-4d0b-bfaf-5de0812fd3c8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Datas/Addedlist.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Datas/마크툽-오늘도 빛나는 너에게.tmpdat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Defaults/Ed_Sheeran-Shape_of_You.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Defaults/IU (아이유)-좋은날(Good Day).mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Defaults/The_Kid_LAROI,Justin Bieber-Stay.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Defaults/델리스파이스-고백.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Defaults/마크툽-오늘도 빛나는 너에게.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Defaults/숀(SHAUN)-Way_Back_Home.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Defaults/윤도현-사랑했나봐.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Defaults/윤하(YOUNHA)-오르트구름.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Defaults/이무진-신호등.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Defaults/자전거_탄_풍경-너에게 난,나에게 넌.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Defaults/장범준-노래방에서.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Defaults/장범준-흔들리는_꽃들_속에서_네_샴푸향이_느껴진거야.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Defaults/폴킴-모든_날,모든_순간.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/Ed_Sheeran-Shape_of_You/Ed_Sheeran-Shape_of_You.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/Ed_Sheeran-Shape_of_You/adv.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/Ed_Sheeran-Shape_of_You/mel.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/Ed_Sheeran-Shape_of_You/str.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/IU (아이유)-좋은날(Good Day)/IU (아이유)-좋은날(Good Day).mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/IU (아이유)-좋은날(Good Day)/adv.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/IU (아이유)-좋은날(Good Day)/mel.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/IU (아이유)-좋은날(Good Day)/str.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/The_Kid_LAROI,Justin Bieber-Stay/The_Kid_LAROI,Justin Bieber-Stay.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/The_Kid_LAROI,Justin Bieber-Stay/adv.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/The_Kid_LAROI,Justin Bieber-Stay/mel.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/The_Kid_LAROI,Justin Bieber-Stay/str.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/델리스파이스-고백/adv.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/델리스파이스-고백/mel.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/델리스파이스-고백/str.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/델리스파이스-고백/델리스파이스-고백.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/마크툽-오늘도 빛나는 너에게/adv.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/마크툽-오늘도 빛나는 너에게/mel.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/마크툽-오늘도 빛나는 너에게/str.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/마크툽-오늘도 빛나는 너에게/마크툽-오늘도 빛나는 너에게.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/숀(SHAUN)-Way_Back_Home/adv.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/숀(SHAUN)-Way_Back_Home/mel.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/숀(SHAUN)-Way_Back_Home/str.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/숀(SHAUN)-Way_Back_Home/숀(SHAUN)-Way_Back_Home.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/윤도현-사랑했나봐/adv.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/윤도현-사랑했나봐/mel.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/윤도현-사랑했나봐/str.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/윤도현-사랑했나봐/윤도현-사랑했나봐.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/윤하(YOUNHA)-오르트구름/adv.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/윤하(YOUNHA)-오르트구름/mel.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/윤하(YOUNHA)-오르트구름/str.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/윤하(YOUNHA)-오르트구름/윤하(YOUNHA)-오르트구름.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/이무진-신호등/adv.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/이무진-신호등/mel.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/이무진-신호등/str.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/이무진-신호등/이무진-신호등.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/자전거_탄_풍경-너에게 난,나에게 넌/adv.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/자전거_탄_풍경-너에게 난,나에게 넌/mel.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/자전거_탄_풍경-너에게 난,나에게 넌/str.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/자전거_탄_풍경-너에게 난,나에게 넌/자전거_탄_풍경-너에게 난,나에게 넌.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/장범준-노래방에서/adv.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/장범준-노래방에서/mel.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/장범준-노래방에서/str.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/장범준-노래방에서/장범준-노래방에서.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/장범준-흔들리는_꽃들_속에서_네_샴푸향이_느껴진거야/adv.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/장범준-흔들리는_꽃들_속에서_네_샴푸향이_느껴진거야/mel.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/장범준-흔들리는_꽃들_속에서_네_샴푸향이_느껴진거야/str.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/장범준-흔들리는_꽃들_속에서_네_샴푸향이_느껴진거야/장범준-흔들리는_꽃들_속에서_네_샴푸향이_느껴진거야.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/폴킴-모든_날,모든_순간/adv.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/폴킴-모든_날,모든_순간/mel.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/폴킴-모든_날,모든_순간/str.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/additionalData/폴킴-모든_날,모든_순간/폴킴-모든_날,모든_순간.mp3" afterDir="false" />
+    <list default="true" id="4bb3950c-9614-4d0b-bfaf-5de0812fd3c8" name="Changes" comment="bug fixed">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023-05-11__8_07__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023-05-11__8_59__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023-05-11__9_20__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023-05-11_오후_8_07_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023-05-11_오후_8_59_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023-05-11_오후_8_59_[Changes]/경서-나의_X에게.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023-05-11_오후_8_59_[Changes]/닐로_지나오다.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023-05-11_오후_8_59_[Changes]/버즈-나에게로떠나는여행.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023-05-11_오후_8_59_[Changes]/산들-취기를_빌려.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023-05-11_오후_8_59_[Changes]/성시경-너의_모든_순간.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023-05-11_오후_8_59_[Changes]/아이유-내_손을_잡아.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023-05-11_오후_8_59_[Changes]/에일리-첫눈처럼_너에게_가겠다.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023-05-11_오후_8_59_[Changes]/윤종신-좋니.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023-05-11_오후_8_59_[Changes]/이승기-삭제.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023-05-11_오후_8_59_[Changes]/폴킴-안녕.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023-05-11_오후_9_20_[Changes]/shelved.patch" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Datas/Defaultlist.dat" beforeDir="false" afterPath="$PROJECT_DIR$/Datas/Defaultlist.dat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Interface.py" beforeDir="false" afterPath="$PROJECT_DIR$/Interface.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/additionalData/경서-나의_X에게/adv.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/경서-나의_X에게/adv.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/additionalData/닐로-지나오다/adv.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/닐로-지나오다/adv.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/additionalData/박효신-야생화/adv.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/박효신-야생화/adv.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/additionalData/버즈-나에게로떠나는여행/adv.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/버즈-나에게로떠나는여행/adv.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/additionalData/산들-취기를_빌려/adv.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/산들-취기를_빌려/adv.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/additionalData/성시경-너의_모든_순간/adv.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/성시경-너의_모든_순간/adv.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/additionalData/소찬휘-Tears/adv.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/소찬휘-Tears/adv.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/additionalData/쏜애플-시퍼런봄/adv.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/쏜애플-시퍼런봄/adv.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/additionalData/아이유-내_손을_잡아/adv.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/아이유-내_손을_잡아/adv.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/additionalData/에일리-첫눈처럼_너에게_가겠다/adv.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/에일리-첫눈처럼_너에게_가겠다/adv.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/additionalData/윤종신-좋니/adv.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/윤종신-좋니/adv.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/additionalData/이승기-삭제/adv.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/이승기-삭제/adv.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/additionalData/폴킴-안녕/adv.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/폴킴-안녕/adv.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/analysis.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/output.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/profile.dat" beforeDir="false" afterPath="$PROJECT_DIR$/profile.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public_functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/public_functions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testers.py" beforeDir="false" afterPath="$PROJECT_DIR$/testers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources_rc.py" beforeDir="false" afterPath="$PROJECT_DIR$/UI/resources/Resources_rc.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets.py" beforeDir="false" afterPath="$PROJECT_DIR$/assets.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -145,23 +46,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Document/Korea Science Academy/KSA_3학기/DS&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/Perigee/PycharmProjects/vocalMaximum/UI/resources",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\829ho\Documents\GitHub\vocalMaximum\Defaults" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Perigee\PycharmProjects\vocalMaximum\UI\resources" />
       <recent name="C:\Users\Perigee\PycharmProjects\vocalMaximum" />
       <recent name="C:\Users\829ho\Documents\GitHub\vocalMaximum" />
     </key>
@@ -392,7 +294,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684298849997</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="bug fixed">
+      <created>1686746328730</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1686746328730</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
