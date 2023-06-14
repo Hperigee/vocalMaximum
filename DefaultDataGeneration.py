@@ -4,6 +4,8 @@ from queue import Queue
 from spleeter.separator import Separator
 import os
 
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
 global to_process
 to_process= Queue()
 
@@ -24,8 +26,6 @@ def process(filelist,spl):
     return A
 
 if __name__=="__main__":
-
-
     GLOBAL_SPLITTER = Separator('spleeter:2stems', stft_backend='tensorflow', multiprocess=False)
 
     folder_path = 'Defaults'

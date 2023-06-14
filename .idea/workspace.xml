@@ -4,12 +4,54 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4bb3950c-9614-4d0b-bfaf-5de0812fd3c8" name="Changes" comment="bug fixed">
+    <list default="true" id="4bb3950c-9614-4d0b-bfaf-5de0812fd3c8" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/build/Interface/Analysis-00.toc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/Interface/EXE-00.toc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/Interface/Interface.exe.manifest" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/Interface/Interface.pkg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/Interface/PKG-00.toc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/Interface/PYZ-00.pyz" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/Interface/PYZ-00.toc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/Interface/Tree-00.toc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/Interface/Tree-01.toc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/Interface/Tree-02.toc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/Interface/base_library.zip" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/Interface/warn-Interface.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/Interface/xref-Interface.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Datas/Addedlist.dat" beforeDir="false" afterPath="$PROJECT_DIR$/Datas/Addedlist.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Datas/마크툽-오늘도 빛나는 너에게.tmpdat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/profile.dat" beforeDir="false" afterPath="$PROJECT_DIR$/profile.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Datas/Defaultlist.dat" beforeDir="false" afterPath="$PROJECT_DIR$/Datas/Defaultlist.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DefaultDataGeneration.py" beforeDir="false" afterPath="$PROJECT_DIR$/DefaultDataGeneration.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Interface.py" beforeDir="false" afterPath="$PROJECT_DIR$/Interface.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UI/resources/Resources_rc.py" beforeDir="false" afterPath="$PROJECT_DIR$/Resources_rc.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/Ed_Sheeran-Shape_of_You/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/Ed_Sheeran-Shape_of_You/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/IU (아이유)-좋은날(Good Day)/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/IU (아이유)-좋은날(Good Day)/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/The_Kid_LAROI,Justin Bieber-Stay/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/The_Kid_LAROI,Justin Bieber-Stay/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/경서-나의_X에게/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/경서-나의_X에게/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/닐로-지나오다/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/닐로-지나오다/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/델리스파이스-고백/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/델리스파이스-고백/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/마크툽-오늘도 빛나는 너에게/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/마크툽-오늘도 빛나는 너에게/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/박효신-야생화/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/박효신-야생화/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/버즈-나에게로떠나는여행/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/버즈-나에게로떠나는여행/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/산들-취기를_빌려/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/산들-취기를_빌려/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/성시경-너의_모든_순간/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/성시경-너의_모든_순간/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/소찬휘-Tears/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/소찬휘-Tears/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/숀(SHAUN)-Way_Back_Home/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/숀(SHAUN)-Way_Back_Home/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/쏜애플-시퍼런봄/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/쏜애플-시퍼런봄/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/아이유-내_손을_잡아/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/아이유-내_손을_잡아/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/에일리-첫눈처럼_너에게_가겠다/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/에일리-첫눈처럼_너에게_가겠다/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/윤도현-사랑했나봐/mel.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/윤도현-사랑했나봐/mel.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/윤도현-사랑했나봐/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/윤도현-사랑했나봐/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/윤종신-좋니/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/윤종신-좋니/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/윤하(YOUNHA)-오르트구름/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/윤하(YOUNHA)-오르트구름/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/이무진-신호등/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/이무진-신호등/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/이승기-삭제/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/이승기-삭제/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/자전거_탄_풍경-너에게 난,나에게 넌/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/자전거_탄_풍경-너에게 난,나에게 넌/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/장범준-노래방에서/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/장범준-노래방에서/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/장범준-흔들리는_꽃들_속에서_네_샴푸향이_느껴진거야/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/장범준-흔들리는_꽃들_속에서_네_샴푸향이_느껴진거야/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/폴킴-모든_날,모든_순간/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/폴킴-모든_날,모든_순간/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalData/폴킴-안녕/str.dat" beforeDir="false" afterPath="$PROJECT_DIR$/additionalData/폴킴-안녕/str.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,8 +104,8 @@
       <recent name="C:\Users\829ho\Documents\GitHub\vocalMaximum\Defaults" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Perigee\PycharmProjects\vocalMaximum\UI\resources" />
       <recent name="C:\Users\Perigee\PycharmProjects\vocalMaximum" />
+      <recent name="C:\Users\Perigee\PycharmProjects\vocalMaximum\UI\resources" />
       <recent name="C:\Users\829ho\Documents\GitHub\vocalMaximum" />
     </key>
   </component>
@@ -300,7 +342,21 @@
       <option name="project" value="LOCAL" />
       <updated>1686746328730</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="해치웠나">
+      <created>1686754475021</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1686754475021</updated>
+    </task>
+    <task id="LOCAL-00034" summary="해치웠나">
+      <created>1686754531009</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1686754531009</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -323,7 +379,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="reformated" />
     <MESSAGE value="song" />
     <MESSAGE value="filename_fetch" />
     <MESSAGE value="minor name error" />
@@ -348,7 +403,8 @@
     <MESSAGE value="mr Threading_final" />
     <MESSAGE value="recommend binding little done" />
     <MESSAGE value="bug fixed" />
-    <option name="LAST_COMMIT_MESSAGE" value="bug fixed" />
+    <MESSAGE value="해치웠나" />
+    <option name="LAST_COMMIT_MESSAGE" value="해치웠나" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
@@ -356,6 +412,7 @@
         <watch expression="self" />
         <watch expression="thread" />
         <watch expression="self" />
+        <watch expression="y" />
       </configuration>
     </watches-manager>
   </component>
