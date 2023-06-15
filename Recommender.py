@@ -7,7 +7,6 @@ def can_sing():
         profile = pickle.load(f)
 
     song_list = os.listdir('.\\additionalData')
-    del song_list[song_list.index('test.txt')]
 
     return_list = []
 
@@ -24,7 +23,6 @@ def well_sing():  # well_max,
         profile = pickle.load(f)
 
     song_list = os.listdir('.\\additionalData')
-    del song_list[song_list.index('test.txt')]
 
     return_list = []
 
@@ -42,7 +40,6 @@ def barely_sing():
         profile = pickle.load(f)
 
     song_list = os.listdir('.\\additionalData')
-    del song_list[song_list.index('test.txt')]
 
     return_list = []
 

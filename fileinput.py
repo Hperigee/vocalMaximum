@@ -40,13 +40,14 @@ def _separate(directory,filename,spl):
     accompaniment = stems["accompaniment"]
     vocal = stems["vocals"]
 
-    directory = f'./additionalData/{filename}'
+    directory = f'./additionalData/{filename}/'
 
     if os.path.exists(directory):
         shutil.rmtree(directory)
-
-    os.mkdir(directory)
-
+    try:
+        os.makedirs(directory)
+    except:
+        pass
     new_file = f'./additionalData/{filename}/{filename}.mp3'
     new_file = os.path.abspath(new_file)
     sf.write(new_file, accompaniment, samplerate=44100, format="MP3")
@@ -82,6 +83,11 @@ def input_file(directory,spl):
 
     filename, abs_directory= filename_fetch(directory)
     res = _export_basic_info(abs_directory, filename)
+    try:
+        os.makedirs('./OriginalSong/')
+    except:
+        pass
+    shutil.copy(abs_directory, f'./OriginalSong/')
     vocal_waveform = _separate(directory,filename,spl)  # 음원 분리
 
     analysis.file_analysis(vocal_waveform,filename)  # 보컬 정보 추출

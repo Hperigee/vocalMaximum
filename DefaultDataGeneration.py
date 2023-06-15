@@ -28,7 +28,7 @@ def process(filelist,spl):
 if __name__=="__main__":
     GLOBAL_SPLITTER = Separator('spleeter:2stems', stft_backend='tensorflow', multiprocess=False)
 
-    folder_path = 'Defaults'
+    folder_path = 'OriginalSong'
     datas = [os.path.join(folder_path, f) for f in os.listdir(folder_path) if f.endswith('.mp3')]
     data = process(datas,GLOBAL_SPLITTER)
 

@@ -1,3 +1,5 @@
+import os
+
 from PyQt5.QtWidgets import *
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import Qt, QFile, QTextStream, QTimer, QThread, pyqtSlot, pyqtSignal, QUrl
@@ -25,6 +27,7 @@ global song_added
 song_added = False
 global live_analysis_result
 live_analysis_result = Queue()
+
 
 
 class Thread(QThread):
@@ -84,7 +87,7 @@ class RealTime(QThread):
     def run(self):
         self.songWidget.record.canceled.connect(self.stop_analysis)
 
-        guide_directory = f'./Defaults/{self.artist}-{self.song_name}.mp3'
+        guide_directory = f'./OriginalSong/{self.artist}-{self.song_name}.mp3'
         mr_directory = f'./additionalData/{self.artist}-{self.song_name}/{self.artist}-{self.song_name}.mp3'
 
         start_time = (self.startMin * 60 + self.startSec) * 1000
@@ -210,6 +213,10 @@ class MainWindow(QMainWindow):
         self.init_ui()
 
     def init_ui(self):
+        try:
+            os.makedirs('./temp')
+        except:
+            pass
         self.song_widget_list = []
         self.song_widget_recommend_list = []
         self.ui = loadUi('.\\UI\\uiFiles\\Main.ui', self)
@@ -253,8 +260,16 @@ class MainWindow(QMainWindow):
 
     def load(self):
         folder_path = 'Datas'
-        file_list = [os.path.join(folder_path, f) for f in os.listdir(folder_path) if f.endswith('.dat')]
-        new_file_list = [os.path.join(folder_path, f) for f in os.listdir(folder_path) if f.endswith('.tmpdat')]
+        try:
+            os.makedirs('./Datas')
+        except:
+            pass
+        try:
+            file_list = [os.path.join(folder_path, f) for f in os.listdir(folder_path) if f.endswith('.dat')]
+            new_file_list = [os.path.join(folder_path, f) for f in os.listdir(folder_path) if f.endswith('.tmpdat')]
+        except:
+            file_list=[]
+            new_file_list=[]
 
         data = []
         new_data = []

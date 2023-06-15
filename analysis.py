@@ -418,7 +418,10 @@ def live_analysis(filename, display_Queue, offset, startSec, endSec, res_que):
     if score > 100: score = 100
     sim_str *= 1.2
     if sim_str > 1: sim_str = 1
-
+    try:
+        os.makedirs('./temp')
+    except:
+        pass
     with open('./temp/result','wb') as f:
         pickle.dump(f'참 잘했어요~\n\n점수 : {score}\n\n표현 : {round(sim_str * 100, 3)}', f)
 
