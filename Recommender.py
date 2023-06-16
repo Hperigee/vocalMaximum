@@ -6,6 +6,11 @@ def can_sing():
     with open('.\\profile.dat', 'rb') as f:
         profile = pickle.load(f)
 
+    try:
+        os.makedirs('.//additionalData')
+    except:
+        pass
+
     song_list = os.listdir('.\\additionalData')
 
     return_list = []
@@ -21,6 +26,11 @@ def can_sing():
 def well_sing():  # well_max,
     with open('.\\profile.dat', 'rb') as f:
         profile = pickle.load(f)
+
+    try:
+        os.makedirs('.//additionalData')
+    except:
+        pass
 
     song_list = os.listdir('.\\additionalData')
 
@@ -38,6 +48,11 @@ def well_sing():  # well_max,
 def barely_sing():
     with open('.\\profile.dat', 'rb') as f:
         profile = pickle.load(f)
+
+    try:
+        os.makedirs('.//additionalData')
+    except:
+        pass
 
     song_list = os.listdir('.\\additionalData')
 
