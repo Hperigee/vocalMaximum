@@ -16,8 +16,6 @@ from Recommender import *
 
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 
-global input_file_directory
-input_file_directory = None
 global to_process
 to_process = Queue()
 GLOBAL_SPLITTER = Separator('spleeter:2stems', stft_backend='tensorflow', multiprocess=False)
@@ -33,23 +31,20 @@ live_analysis_result = Queue()
 class Thread(QThread):
     analysis_result_ready = pyqtSignal(object)
 
-    def __init__(self):
+    def __init__(self,upper):
         super().__init__()
+        self.upper = upper
+        self.upper.file_directories.connect(self.enqueue_files)
 
-    def enqueue_files(self):
-        global input_file_directory
-        try:
-            for file in input_file_directory:
+    def enqueue_files(self,input_file_directory):
+        for file in input_file_directory:
                 print(file, "input success")
                 to_process.put(file)
-        except:
-            pass
-        QTimer.singleShot(1000, self.enqueue_files)
+
 
     @pyqtSlot()
     def run(self):
-        self.enqueue_files()
-        while not to_process.empty():
+        while True:
             file = to_process.get()
             filename, _ = filename_fetch(file)
             directory_path = f'./additionalData/{filename}'
@@ -367,6 +362,7 @@ class MainWindow(QMainWindow):
 
 
 class SongListView(QWidget):
+    file_directories = pyqtSignal(object)
     def __init__(self, mainui):
         super().__init__()
         self.to_display = mainui.song_widget_list
@@ -386,7 +382,8 @@ class SongListView(QWidget):
         self.setLayout(display)
         self.name = ''
 
-        self.thread = Thread()
+        self.thread = Thread(self)
+        self.thread.start()
         self.thread.analysis_result_ready.connect(self.handle_analysis_result)
 
     def start_input(self):
@@ -394,10 +391,9 @@ class SongListView(QWidget):
                                                   self.main)  # Display the notification for 3000 milliseconds (3 seconds)
         notification_window.show()
 
-        global input_file_directory
         input_file_directory = public_functions.open_file_dialog()
 
-        self.thread.start()
+        self.file_directories.emit(input_file_directory)
 
     def handle_analysis_result(self, result):
         # Process the analysis result
