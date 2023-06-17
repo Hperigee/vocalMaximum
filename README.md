@@ -15,9 +15,4 @@ Made for School Project for Korea Science Academy of KAIST
 
 # Licence
 
-the code of Vocal Maximum is MIT-Licenced
-
-used spleeter by deezer
-https://github.com/deezer/spleeter
-
-used PyQt5: GPL 2.0 Licenced
+the code of Vocal Maximum is GPLv2-Licenced
