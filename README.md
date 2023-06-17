@@ -2,7 +2,7 @@
 
 music analysis  & live feedback
 
-latest-release - https://github.com/Hperigee/vocalMaximum/releases/tag/vocal
+latest-release - [https://github.com/Hperigee/vocalMaximum/releases/tag/vocal](vocalMaximum)
 After downloading vocalmaximum.zip, unzip and read README.pdf to learn how to use the program
 
 summarized installation
@@ -15,9 +15,9 @@ Make sure that you are connected to the internet while installing
 Made for School Project for Korea Science Academy of KAIST
 
 # Contributor
-Hperigee - https://github.com/Hperigee 
+[Hperigee](https://github.com/Hperigee) 
 
-Syeosle - https://github.com/Syeosle
+[Syeosle](https://github.com/Syeosle)
 # Licence
 
 the code of Vocal Maximum is [GPLv3-Licenced](LICENSE)
