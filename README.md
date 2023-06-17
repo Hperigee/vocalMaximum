@@ -2,7 +2,8 @@
 
 music analysis  & live feedback
 
-latest-release - [https://github.com/Hperigee/vocalMaximum/releases/tag/vocal](vocalMaximum)
+latest-release - [vocalMaximum](https://github.com/Hperigee/vocalMaximum/releases/tag/vocal)
+
 After downloading vocalmaximum.zip, unzip and read README.pdf to learn how to use the program
 
 summarized installation
