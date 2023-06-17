@@ -398,7 +398,8 @@ class SongListView(QWidget):
     def handle_analysis_result(self, result):
         # Process the analysis result
         new_song = assets.SongFile(1, result)
-        self.add_new_widget(new_song)
+        new_song_recommend = assets.SongFile(1, result)
+        self.add_new_widget(new_song,new_song_recommend)
         # Re-enable the button
         notification_window = assets.NotiFication("New Song Uploaded", 3000,
                                                   self.main)  # Display the notification for 3000 milliseconds (3 seconds)
@@ -451,17 +452,17 @@ class SongListView(QWidget):
         self._sort_widgets()
         self.layout.update()
 
-    def add_new_widget(self, song_widget):
+    def add_new_widget(self, song_widget,song_widget_recommend):
         global song_added
         self.main.song_widget_list = [song_widget] + self.main.song_widget_list
-        self.main.song_widget_recommend_list = [song_widget] + self.main.song_widget_recommend_list
+        self.main.song_widget_recommend_list = [song_widget_recommend] + self.main.song_widget_recommend_list
         if self.name in song_widget.label1.text():
-            print(self.name, song_widget.label1.text())
+            #print(self.name, song_widget.label1.text())
             self.layout.insertWidget(0, song_widget)
             self.to_display = [song_widget] + self.to_display
         song_widget.clicked.connect(self.main._handle_song_file_click)
+        song_widget_recommend.clicked.connect(self.main._handle_song_file_click)
         song_added = True
-        print(song_added)
         self._sort_widgets()
         self.layout.update()
 
