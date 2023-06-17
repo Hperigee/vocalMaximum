@@ -15,7 +15,7 @@ Make sure that you are connected to the internet while installing
 
 Made for School Project for Korea Science Academy of KAIST
 
-# Contributor
+# Contributors
 [Hperigee](https://github.com/Hperigee) 
 
 [Syeosle](https://github.com/Syeosle)
