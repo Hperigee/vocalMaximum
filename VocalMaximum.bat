@@ -11,8 +11,9 @@ if not exist venv\Scripts\activate.bat (
 REM Step 3: Activate virtual environment and install requirements
 echo Activating virtual environment...
 call venv\Scripts\activate
+pip install --upgrade pip
 echo Installing requirements...
-pip install --no-cache-dir --no-deps -r requirements.txt
+pip install --no-deps -r requirements.txt
 echo Requirements installed.
 
 REM Step 4: Run Python file using the virtual environment

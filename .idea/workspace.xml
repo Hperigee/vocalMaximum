@@ -5,10 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4bb3950c-9614-4d0b-bfaf-5de0812fd3c8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/OriginalSong/IU (아이유)-좋은날(Good Day).mp3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Datas/Addedlist.dat" beforeDir="false" afterPath="$PROJECT_DIR$/Datas/Addedlist.dat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Interface.py" beforeDir="false" afterPath="$PROJECT_DIR$/Interface.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UI/uiFiles/Resources.qrc" beforeDir="false" afterPath="$PROJECT_DIR$/UI/uiFiles/Resources.qrc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VocalMaximum.bat" beforeDir="false" afterPath="$PROJECT_DIR$/VocalMaximum.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pretrained_models/2stems/checkpoint" beforeDir="false" afterPath="$PROJECT_DIR$/pretrained_models/2stems/checkpoint" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profile.dat" beforeDir="false" afterPath="$PROJECT_DIR$/profile.dat" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
