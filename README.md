@@ -11,6 +11,6 @@ summarized installation
 
 Make sure that you are connected to the internet while installing
 
-Made for School Assignment for Korea Science Academy of KAIST
+Made for School Project for Korea Science Academy of KAIST
 
 GPL 2.0 Licenced
