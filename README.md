@@ -22,3 +22,7 @@ Made for School Project for Korea Science Academy of KAIST
 # Licence
 
 the code of Vocal Maximum is [GPLv3-Licenced](LICENSE)
+
+Copyright (C) 2023 Hperigee and Syeosle
+
+This program was developed with PyQt
