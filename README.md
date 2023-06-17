@@ -13,4 +13,11 @@ Make sure that you are connected to the internet while installing
 
 Made for School Project for Korea Science Academy of KAIST
 
-GPL 2.0 Licenced
+# Licence
+
+the code of Vocal Maximum is MIT-Licenced
+
+used spleeter by deezer
+https://github.com/deezer/spleeter
+
+used PyQt5: GPL 2.0 Licenced
