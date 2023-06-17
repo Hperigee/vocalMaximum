@@ -1,6 +1,6 @@
 # vocalMaximum
 
-Free music analysis  & live feedback
+music analysis  & live feedback
 
 After downloading vocalmaximum.zip, unzip and read README.pdf to learn how to use the program
 
