@@ -15,4 +15,4 @@ Made for School Project for Korea Science Academy of KAIST
 
 # Licence
 
-the code of Vocal Maximum is GPLv2-Licenced
+the code of Vocal Maximum is [GPLv3-Licenced](LICENSE)
