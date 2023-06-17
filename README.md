@@ -13,6 +13,9 @@ Make sure that you are connected to the internet while installing
 
 Made for School Project for Korea Science Academy of KAIST
 
+# Contributor
+Hperigee - (https://github.com/Hperigee)
+Syeosle - (https://github.com/Syeosle)
 # Licence
 
 the code of Vocal Maximum is [GPLv3-Licenced](LICENSE)
